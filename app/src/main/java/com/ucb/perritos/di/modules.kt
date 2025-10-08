@@ -8,11 +8,14 @@ package com.ucb.perritos.di
 //import org.koin.android.ext.koin.androidContext
 //import org.koin.androidx.viewmodel.dsl.viewModel
 //import org.koin.core.qualifier.named
+import com.ucb.perritos.features.bienvenida.domain.usecase.IrInicioSesionUseCase
+import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.login.presentation.LoginViewModel
+import com.ucb.perritos.navigation.NavigationViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -102,4 +105,10 @@ val appModule = module {
     single<ILoginRepository> { LoginRepository(get()) }
     factory { SetTokenUseCase(get()) }
     viewModel{ LoginViewModel(get()) }
+
+
+
+    viewModel { NavigationViewModel() }
+    factory { IrInicioSesionUseCase(get()) }
+    viewModel{ BienvenidaViewModel(get()) }
 }

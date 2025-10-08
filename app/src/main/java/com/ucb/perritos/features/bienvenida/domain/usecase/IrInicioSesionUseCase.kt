@@ -1,4 +1,12 @@
 package com.ucb.perritos.features.bienvenida.domain.usecase
 
-class irInicioSesion {
+import com.ucb.perritos.navigation.NavigationViewModel
+import com.ucb.perritos.navigation.Screen
+
+class IrInicioSesionUseCase(
+    private val navigationViewModel: NavigationViewModel
+) {
+    fun invoke() {
+        navigationViewModel.navigateTo(Screen.Login.route)
+    }
 }
