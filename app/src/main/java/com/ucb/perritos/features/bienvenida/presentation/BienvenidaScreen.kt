@@ -1,6 +1,7 @@
 package com.ucb.perritos.features.bienvenida.presentation
 
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -46,7 +47,7 @@ fun BienvenidaScreen(
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = Color.White
     ) {
         Column(
             modifier = Modifier
@@ -68,17 +69,16 @@ fun BienvenidaScreen(
             Spacer(modifier = Modifier.height(48.dp))
 
 
-            Button(
-                onClick = {},
+            OutlinedButton(
+                onClick = {  },
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 32.dp)
-                    .height(48.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFF5A623),
-                    contentColor = Color.White
+                    .width(190.dp)
+                    .height(44.dp),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = Color(0xFFF5A623),
+                    containerColor = Color.White
                 ),
-                shape = MaterialTheme.shapes.medium
+                border = BorderStroke(1.dp, Color(0xFFF5A623))
             ) {
                 Text(
                     text = "Registrarse",
