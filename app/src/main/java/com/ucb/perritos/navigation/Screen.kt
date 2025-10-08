@@ -3,7 +3,7 @@ package com.ucb.perritos.navigation
 sealed class Screen(val route: String) {
     // EXAMPLES
     object Login: Screen("login")
-//    object Github: Screen("github")
+    object Bienvenida: Screen("bienvenida")
 //    object Profile: Screen("profile")
 //
 //    object CardExamples: Screen("card")

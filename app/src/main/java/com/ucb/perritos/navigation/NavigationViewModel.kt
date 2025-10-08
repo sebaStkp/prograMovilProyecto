@@ -60,12 +60,12 @@ class NavigationViewModel : ViewModel() {
 //                    }
 //                    else -> {
 //                        Log.d("NavigationViewModel", "Navegación por defecto a Dollar")
-//                        navigateTo(Screen.Dollar.route, NavigationOptions.CLEAR_BACK_STACK)
+//                        navigateTo(Screen.Bienvenida.route, NavigationOptions.CLEAR_BACK_STACK)
 //                    }
 //                }
 //            } catch (e: Exception) {
 //                Log.e("NavigationViewModel", "Error en handleDeepLink", e)
-//                navigateTo(Screen.Dollar.route, NavigationOptions.CLEAR_BACK_STACK)
+//                navigateTo(Screen.Bienvenida.route, NavigationOptions.CLEAR_BACK_STACK)
 //            }
 //        }
 //    }
@@ -78,7 +78,7 @@ class NavigationViewModel : ViewModel() {
 //            else -> navigateTo(Screen.Dollar.route, NavigationOptions.CLEAR_BACK_STACK)
 //        }
 //    }
-//
+
 //    private fun handleUriDeepLink(uri: android.net.Uri?) {
 //        when (uri?.host) {
 //            "profile" -> {
@@ -101,7 +101,7 @@ class NavigationViewModel : ViewModel() {
 //            }
 //        }
 //    }
-//
+
 //    private fun handleNavigationDestination(destination: String?) {
 //        when (destination?.uppercase()) {
 //            "PROFILE" -> navigateTo(Screen.Profile.route, NavigationOptions.REPLACE_HOME)
