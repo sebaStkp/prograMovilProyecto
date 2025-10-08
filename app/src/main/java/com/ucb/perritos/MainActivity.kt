@@ -9,20 +9,26 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
+
 import com.ucb.perritos.navigation.AppNavigation
 import com.ucb.perritos.navigation.NavigationViewModel
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 
 class MainActivity : ComponentActivity() {
+    private val navigationViewModel: NavigationViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
         setContent {
-            AppNavigation()
+                AppNavigation(navigationViewModel)
+
         }
     }
 }
+
 
 
 
