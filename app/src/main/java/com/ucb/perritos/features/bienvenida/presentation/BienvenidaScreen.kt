@@ -26,9 +26,11 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.ucb.perritos.R
 import org.koin.androidx.compose.koinViewModel
+import androidx.navigation.NavController
 
 @Composable
 fun BienvenidaScreen(
+    navController: NavController,
     vm: BienvenidaViewModel = koinViewModel(),
 ) {
     val state by vm.state.collectAsState()
@@ -70,7 +72,9 @@ fun BienvenidaScreen(
 
 
             OutlinedButton(
-                onClick = {  },
+                onClick = {
+                    navController.navigate("registro")
+                },
                 modifier = Modifier
                     .width(190.dp)
                     .height(44.dp),

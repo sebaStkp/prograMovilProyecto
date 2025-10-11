@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
+import com.ucb.perritos.features.registro.presentation.RegistroScreen
 @Composable
 fun AppNavigation(navigationViewModel: NavigationViewModel) {
     val navController: NavHostController = rememberNavController()
@@ -50,7 +51,10 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
             LoginScreen()
         }
         composable(Screen.Bienvenida.route) {
-            BienvenidaScreen()
+            BienvenidaScreen(navController)
+        }
+        composable("registro") {
+            RegistroScreen(navController)
         }
     }
 
