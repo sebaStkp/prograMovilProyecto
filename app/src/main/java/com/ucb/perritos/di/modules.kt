@@ -8,6 +8,8 @@ package com.ucb.perritos.di
 //import org.koin.android.ext.koin.androidContext
 //import org.koin.androidx.viewmodel.dsl.viewModel
 //import org.koin.core.qualifier.named
+
+import com.ucb.perritos.appRoomDataBase.AppRoomDataBase
 import com.ucb.perritos.features.bienvenida.domain.usecase.IrInicioSesionUseCase
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
@@ -15,9 +17,15 @@ import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.login.presentation.LoginViewModel
+import com.ucb.perritos.features.registroMascota.data.datasource.RegistroPerroLocalDataSource
+import com.ucb.perritos.features.registroMascota.data.repository.RegistroPerroRepository
+import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
+import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
+import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 //import retrofit2.Retrofit
 //import retrofit2.converter.gson.GsonConverterFactory
@@ -107,8 +115,16 @@ val appModule = module {
     viewModel{ LoginViewModel(get()) }
 
 
-
     viewModel { NavigationViewModel() }
     factory { IrInicioSesionUseCase(get()) }
     viewModel{ BienvenidaViewModel(get()) }
+
+
+    single { AppRoomDataBase.getDatabase((get())) }
+    single(named("registroPerroDao")) { get<AppRoomDataBase>().registroPerroDao() }
+    single { RegistroPerroLocalDataSource(get(named("registroPerroDao"))) }
+    single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
+    factory { RegistrarPerroUseCase(get()) }
+    viewModel{ RegistroPerroViewModel(get()) }
+
 }
