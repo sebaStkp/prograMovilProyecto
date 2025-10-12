@@ -28,22 +28,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ucb.perritos.features.login.presentation.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextFieldDefaults
-
+import androidx.compose.material3.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
-
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-
-
 
 
 @Composable
@@ -67,8 +61,10 @@ fun LoginScreen(
                 .fillMaxSize()
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
-        ) {
+            verticalArrangement = Arrangement.Top,
+
+            ) {
+
             Text(
                 text = "Inicio de sesión",
                 fontSize = 24.sp,
@@ -79,7 +75,7 @@ fun LoginScreen(
                     .padding(top = 16.dp),
                 textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "Bienvenido de nueva!!",
                 fontSize = 16.sp,
@@ -101,7 +97,7 @@ fun LoginScreen(
                         fontSize = 14.sp
                     )
                 },
-                        textStyle = LocalTextStyle.current.copy(color = Color(0xFF437D99)),
+                textStyle = LocalTextStyle.current.copy(color = Color(0xFF437D99)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(10.dp))
@@ -129,12 +125,14 @@ fun LoginScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Contraseña",
-                    color = Color(0xFF437D99),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light
-                )
-                        },
+                label = {
+                    Text(
+                        text = "Contraseña",
+                        color = Color(0xFF437D99),
+                        fontWeight = FontWeight.Light,
+                        fontSize = 14.sp
+                    )
+                },
                 textStyle = LocalTextStyle.current.copy(color = Color(0xFF437D99)),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -160,27 +158,21 @@ fun LoginScreen(
             )
 
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-
-            ClickableText(
-                text = AnnotatedString("Olvidaste tu contraseña?"),
-                onClick = {
-
-                },
+            Text(
+                text = "Olvidaste tu contraseña?",
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Medium,
+                color = Color(0xFFFF9800),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 8.dp),
-                style = LocalTextStyle.current.copy(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFFFF9800),
-                    textAlign = TextAlign.End
-                )
+                textAlign = TextAlign.End
             )
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Spacer(modifier = Modifier.height(20.dp))
-
+            // Botón de Registrarme
             Button(
                 onClick = { vm.setToken(email) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
@@ -191,16 +183,17 @@ fun LoginScreen(
             ) {
                 Text(text = "Registrarme", color = Color.White)
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-
+            // Texto "Crearme una cuenta"
             ClickableText(
                 text = AnnotatedString("Crearme una cuenta"),
                 onClick = { navigateLogin() },
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color(0xFF437D99),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Medium,
                 )
             )
         }

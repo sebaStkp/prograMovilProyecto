@@ -4,15 +4,12 @@ package com.ucb.perritos.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
-import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroScreen
-
 @Composable
 fun AppNavigation(navigationViewModel: NavigationViewModel) {
     val navController: NavHostController = rememberNavController()
@@ -56,12 +53,11 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
             )
         }
         composable(Screen.Bienvenida.route) {
-            BienvenidaScreen( navigateLogin = {
-                navController.navigate(Screen.Login.route)
-            })
-        }
-        composable(Screen.RegistroPerro.route) {
-            RegistroPerroScreen()
+            BienvenidaScreen(
+                navigateLogin = {
+                    navController.navigate(Screen.Login.route)
+                }
+            )
         }
     }
 
