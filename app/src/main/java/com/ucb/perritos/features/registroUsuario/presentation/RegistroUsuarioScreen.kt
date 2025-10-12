@@ -11,9 +11,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ucb.perritos.R
+import kotlin.Unit
 
 @Composable
-fun RegistroScreen(navController: NavController) {
+fun RegistroUsuarioScreen(
+    onRegistrarClick: () -> Unit,
+    onVolverClick: () -> Unit
+) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -52,10 +56,10 @@ fun RegistroScreen(navController: NavController) {
 
             RegistroForm(
                 onRegistrarClick = {
-                    navController.popBackStack()
+                        onRegistrarClick()
                 },
                 onVolverClick = {
-                    navController.popBackStack()
+                        onVolverClick()
                 }
             )
         }

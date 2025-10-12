@@ -1,4 +1,4 @@
-package com.ucb.perritos.features.registro.presentation
+package com.ucb.perritos.features.registroUsuario.presentation
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
