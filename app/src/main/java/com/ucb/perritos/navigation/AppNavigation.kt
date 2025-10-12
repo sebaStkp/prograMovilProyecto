@@ -46,13 +46,19 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.RegistroPerro.route
+        startDestination = Screen.Bienvenida.route
     ) {
         composable(Screen.Login.route) {
-            LoginScreen()
+            LoginScreen(
+                navigateLogin = {
+                    navController.navigate(Screen.Login.route)
+                }
+            )
         }
         composable(Screen.Bienvenida.route) {
-            BienvenidaScreen()
+            BienvenidaScreen( navigateLogin = {
+                navController.navigate(Screen.Login.route)
+            })
         }
         composable(Screen.RegistroPerro.route) {
             RegistroPerroScreen()

@@ -10,7 +10,7 @@ package com.ucb.perritos.di
 //import org.koin.core.qualifier.named
 
 import com.ucb.perritos.appRoomDataBase.AppRoomDataBase
-import com.ucb.perritos.features.bienvenida.domain.usecase.IrInicioSesionUseCase
+
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.data.repository.LoginRepository
@@ -116,8 +116,7 @@ val appModule = module {
 
 
     viewModel { NavigationViewModel() }
-    factory { IrInicioSesionUseCase(get()) }
-    viewModel{ BienvenidaViewModel(get()) }
+    viewModel{ BienvenidaViewModel() }
 
 
     single { AppRoomDataBase.getDatabase((get())) }

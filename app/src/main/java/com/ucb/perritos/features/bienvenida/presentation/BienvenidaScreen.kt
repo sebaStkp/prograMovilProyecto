@@ -30,18 +30,14 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun BienvenidaScreen(
     vm: BienvenidaViewModel = koinViewModel(),
+    navigateLogin: () -> Unit
 ) {
     val state by vm.state.collectAsState()
 
+    // Navega automáticamente si el estado es Success
     LaunchedEffect(state) {
-        when (state) {
-            BienvenidaViewModel.BienvenidaUIState.Init -> {
-
-            }
-            is BienvenidaViewModel.BienvenidaUIState.Error -> {
-
-            }
-            else -> Unit
+        if (state is BienvenidaViewModel.BienvenidaUIState.Success) {
+            navigateLogin()
         }
     }
 
@@ -56,21 +52,16 @@ fun BienvenidaScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             AsyncImage(
                 model = R.drawable.icono_bienvenida,
                 contentDescription = "Ubicación de mascotas",
                 modifier = Modifier
                     .width(200.dp)
                     .height(140.dp)
-
             )
-
             Spacer(modifier = Modifier.height(48.dp))
-
-
             OutlinedButton(
-                onClick = {  },
+                onClick = { navigateLogin() },
                 modifier = Modifier
                     .width(190.dp)
                     .height(44.dp),
@@ -86,26 +77,21 @@ fun BienvenidaScreen(
                     fontWeight = FontWeight.Medium
                 )
             }
-
             Spacer(modifier = Modifier.height(16.dp))
-
-
             val annotatedText = buildAnnotatedString {
-                append("Si ya tiene una cuenta porfavor ")
+                append("Si ya tiene una cuenta por favor ")
                 withStyle(style = SpanStyle(color = Color.Blue)) {
                     append("inicie sesión")
                 }
             }
-
             Text(
                 text = annotatedText,
                 fontSize = 14.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .clickable { vm.onLoginClick() }
+                    .clickable { navigateLogin() }
                     .padding(16.dp)
             )
-
         }
     }
 }
