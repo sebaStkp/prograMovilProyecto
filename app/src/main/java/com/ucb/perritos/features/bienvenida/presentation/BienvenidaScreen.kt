@@ -25,7 +25,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun BienvenidaScreen(
     vm: BienvenidaViewModel = koinViewModel(),
-    navigateLogin: () -> Unit
+    navigateLogin: () -> Unit,
+    navigateRegistroUsuario: () -> Unit
 ) {
     val state by vm.state.collectAsState()
 
@@ -54,7 +55,7 @@ fun BienvenidaScreen(
 
 
             Button(
-                onClick = {},
+                onClick = {navigateRegistroUsuario()},
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 32.dp)
