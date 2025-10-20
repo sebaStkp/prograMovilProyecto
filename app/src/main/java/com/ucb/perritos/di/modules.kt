@@ -22,6 +22,11 @@ import com.ucb.perritos.features.registroMascota.data.repository.RegistroPerroRe
 import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
+import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuarioLocalDataSource
+import com.ucb.perritos.features.registroUsuario.data.repository.RegistroUsuarioRepository
+import com.ucb.perritos.features.registroUsuario.domain.repository.IRegistroUsuarioRepository
+import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
+import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -125,5 +130,12 @@ val appModule = module {
     single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
     factory { RegistrarPerroUseCase(get()) }
     viewModel{ RegistroPerroViewModel(get()) }
+
+
+    single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
+    single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
+    single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
+    factory { RegistrarUsuarioUseCase(get()) }
+    viewModel{ RegistroUsuarioViewModel(get()) }
 
 }

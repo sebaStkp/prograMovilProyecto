@@ -6,11 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ucb.perritos.features.registroMascota.data.database.dao.IRegistroPerroDao
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
+import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
+import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
 
 
-@Database(entities = [RegistroPerroEntity::class], version = 1)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class], version = 2)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
+    abstract fun registroUsuarioDao(): IRegistroUsuarioDao
 
 
     companion object {
@@ -21,7 +24,8 @@ abstract class AppRoomDataBase : RoomDatabase() {
         fun getDatabase(context: Context): AppRoomDataBase {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
-                Room.databaseBuilder(context, AppRoomDataBase::class.java, "proyecto_perros_db")
+                Room.databaseBuilder(context, AppRoomDataBase::class.java, "proyecto_perritos_db")
+                    .fallbackToDestructiveMigration()
                     .build()
                     .also { Instance = it }
             }
