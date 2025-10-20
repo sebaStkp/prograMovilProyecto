@@ -70,9 +70,6 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
         }
         composable(Screen.RegistroUsuario.route) {
             RegistroUsuarioScreen(
-                onRegistrarClick = {
-
-                },
                 onVolverClick = {
                     navController.navigate(Screen.Bienvenida.route)
                 }
