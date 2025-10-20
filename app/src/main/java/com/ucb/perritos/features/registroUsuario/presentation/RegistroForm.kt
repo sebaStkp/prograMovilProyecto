@@ -15,16 +15,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
+import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
+import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegistroForm(
-    onRegistrarClick: () -> Unit,
-    onVolverClick: () -> Unit
+    vm: RegistroUsuarioViewModel = koinViewModel(),
+    onVolverClick: () -> Unit,
+
 ) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmarPassword by remember { mutableStateOf("") }
+
+    val state by vm.state.collectAsState()
 
     val borderColor = Color(0xFFF5A623)
 
@@ -123,7 +129,14 @@ fun RegistroForm(
 
         // Botón de registro
         Button(
-            onClick = onRegistrarClick,
+            onClick = {
+                vm.registrarUsuario(
+                UsuarioModel(
+                    nombre,
+                    correo,
+                    password
+                )
+            )},
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -141,5 +154,22 @@ fun RegistroForm(
         TextButton(onClick = onVolverClick) {
             Text("Volver al inicio", color = Color.Gray)
         }
+        when (val st = state) {
+            is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Error -> {
+                Text("Error: ${st.message}", color = Color.Red)
+            }
+            is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Init -> {
+                Text("Ingrese los datos para registrar.", color = Color.Gray)
+            }
+            is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Loading -> {
+                Text("Cargando...", color = Color.Gray)
+            }
+            is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success -> {
+                Text("Perro registrado correctamente", color = Color(0xFFFF9800))
+
+            }
+
+        }
     }
+
 }

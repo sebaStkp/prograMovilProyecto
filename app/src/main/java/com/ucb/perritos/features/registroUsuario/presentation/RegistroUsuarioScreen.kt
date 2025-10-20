@@ -4,20 +4,23 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.ucb.perritos.R
+import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
+import org.koin.androidx.compose.koinViewModel
 import kotlin.Unit
 
 @Composable
 fun RegistroUsuarioScreen(
-    onRegistrarClick: () -> Unit,
     onVolverClick: () -> Unit
 ) {
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -55,13 +58,11 @@ fun RegistroUsuarioScreen(
             Spacer(modifier = Modifier.height(32.dp))
 
             RegistroForm(
-                onRegistrarClick = {
-                        onRegistrarClick()
-                },
                 onVolverClick = {
                         onVolverClick()
                 }
             )
+
         }
     }
 }
