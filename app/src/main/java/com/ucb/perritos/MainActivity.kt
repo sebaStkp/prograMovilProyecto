@@ -7,8 +7,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.ucb.perritos.features.menu.presentation.MenuScreen
 
 import com.ucb.perritos.navigation.AppNavigation
 import com.ucb.perritos.navigation.NavigationViewModel
@@ -23,9 +31,24 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-                AppNavigation(navigationViewModel)
-
+            Scaffold(
+                bottomBar = {
+                    MenuScreen()
+                },
+                content = { paddingValues ->
+                    Box(
+                        modifier = Modifier
+                            .padding(paddingValues)
+                            .navigationBarsPadding()
+                    )
+                    {
+                        AppNavigation(navigationViewModel)
+                    }
+                },
+                contentWindowInsets = WindowInsets(bottom = 0.dp)
+            )
         }
+
     }
 }
 
