@@ -43,7 +43,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 @Composable
 fun LoginScreen(
     vm: LoginViewModel = koinViewModel(),
-    navigateLogin: () -> Unit
+    irRegistroCuenta: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -188,7 +188,7 @@ fun LoginScreen(
             // Texto "Crearme una cuenta"
             ClickableText(
                 text = AnnotatedString("Crearme una cuenta"),
-                onClick = { navigateLogin() },
+                onClick = { irRegistroCuenta() },
                 modifier = Modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color(0xFF437D99),

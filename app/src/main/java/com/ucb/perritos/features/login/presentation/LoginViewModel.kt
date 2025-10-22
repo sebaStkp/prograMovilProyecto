@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel (
-    val usecase: SetTokenUseCase
+    val usecaseSetToken: SetTokenUseCase
 ): ViewModel() {
     sealed class LoginStateUI{
         object Loading: LoginStateUI()
@@ -30,7 +30,8 @@ class LoginViewModel (
     fun setToken(nickname: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = LoginStateUI.Loading
-            val result = usecase.invoke(nickname)
+            val result = usecaseSetToken.invoke(nickname)
+
 
             result.fold(
                 onSuccess = {

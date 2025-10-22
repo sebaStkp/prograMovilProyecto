@@ -24,6 +24,8 @@ room = "2.8.0"
 firebaseMessaging = "25.0.0"
 datastore = "1.0.0"
 
+kotlinx-serialization = "1.7.3"
+
 
 
 [libraries]
@@ -63,11 +65,13 @@ room-guava = { group="androidx.room", name="room-guava", version.ref="room"}
 room-testing = { group="androidx.room", name="room-testing", version.ref="room"}
 room-paging = { group="androidx.room", name="room-paging", version.ref="room"}
 
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
 
 ksp = { id = "com.google.devtools.ksp", version.ref="ksp"}
 

@@ -50,8 +50,8 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
-                navigateLogin = {
-                    navController.navigate(Screen.Login.route)
+                irRegistroCuenta = {
+                    navController.navigate(Screen.RegistroUsuario.route)
                 }
             )
         }
