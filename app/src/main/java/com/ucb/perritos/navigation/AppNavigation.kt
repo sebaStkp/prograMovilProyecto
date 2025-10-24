@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
 import com.ucb.perritos.features.menu.presentation.MenuScreen
+import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroScreen
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroScreen
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioScreen
 
@@ -47,7 +48,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Bienvenida.route
+        startDestination = Screen.PerfilPerro.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -78,6 +79,9 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
         }
         composable(Screen.Menu.route) {
             MenuScreen()
+        }
+        composable(Screen.PerfilPerro.route) {
+            PerfilPerroScreen()
         }
     }
 

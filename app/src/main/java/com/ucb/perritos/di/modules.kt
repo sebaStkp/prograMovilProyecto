@@ -128,6 +128,7 @@ val appModule = module {
     single(named("registroPerroDao")) { get<AppRoomDataBase>().registroPerroDao() }
     single { RegistroPerroLocalDataSource(get(named("registroPerroDao"))) }
     single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
+    //single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     factory { RegistrarPerroUseCase(get()) }
     viewModel{ RegistroPerroViewModel(get()) }
 
@@ -138,4 +139,16 @@ val appModule = module {
     factory { RegistrarUsuarioUseCase(get()) }
     viewModel{ RegistroUsuarioViewModel(get()) }
 
+    // DAO
+    single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
+
+// DataSource + Repo
+    single { com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
+    single<com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository> {
+        com.ucb.perritos.features.perfilPerro.data.repository.PerfilPerroRepository(get())
+    }
+// Use case
+    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase(get()) }
+// ViewModel
+    viewModel { com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel(get()) }
 }
