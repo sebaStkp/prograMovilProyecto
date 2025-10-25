@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ucb.perritos.features.perfilPerro.data.database.dao.IFotoPerroDao
 import com.ucb.perritos.features.perfilPerro.data.database.dao.IPerfilPerroDao
+import com.ucb.perritos.features.perfilPerro.data.database.entity.FotoPerroEntity
 import com.ucb.perritos.features.perfilPerro.data.database.entity.PerfilPerroEntity
 import com.ucb.perritos.features.registroMascota.data.database.dao.IRegistroPerroDao
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
@@ -12,13 +14,13 @@ import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsua
 import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
 
 
-@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 3)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class, FotoPerroEntity::class], version = 4)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
 
     abstract fun perfilPerroDao(): IPerfilPerroDao
-
+    abstract fun fotoPerroDao(): IFotoPerroDao
 
     companion object {
         @Volatile

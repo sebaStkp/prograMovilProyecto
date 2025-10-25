@@ -79,5 +79,16 @@ dependencies {
     testImplementation(libs.mockk)
     testImplementation(libs.kotlinx.coroutines.test)
     implementation(libs.kotlinx.serialization.json)
+    // ---- TESTS INSTRUMENTADOS PARA ROOM MIGRATION ----
+    androidTestImplementation("androidx.room:room-testing:2.6.1")
+    //androidTestImplementation("androidx.test:core:1.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    // Para migración Room en tests instrumentados
+    androidTestImplementation(libs.room.testing)
+
+// Para ApplicationProvider y demás utilidades de androidTest
+    androidTestImplementation(libs.androidx.test.core)
+
+
 
 }
