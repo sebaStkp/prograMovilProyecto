@@ -4,16 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.ucb.perritos.features.perfilPerro.data.database.dao.IPerfilPerroDao
+import com.ucb.perritos.features.perfilPerro.data.database.entity.PerfilPerroEntity
 import com.ucb.perritos.features.registroMascota.data.database.dao.IRegistroPerroDao
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
 import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
 import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
 
 
-@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class], version = 2)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 3)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
+
+    abstract fun perfilPerroDao(): IPerfilPerroDao
 
 
     companion object {
