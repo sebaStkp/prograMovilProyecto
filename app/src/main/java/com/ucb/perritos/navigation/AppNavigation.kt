@@ -14,6 +14,7 @@ import com.ucb.perritos.features.menu.presentation.MenuScreen
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroScreen
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroScreen
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioScreen
+import com.ucb.perritos.ui.paginaDeCarga.PaginaDeCargaScreen
 
 @Composable
 fun AppNavigation(navigationViewModel: NavigationViewModel) {
@@ -48,7 +49,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.PerfilPerro.route
+        startDestination = Screen.PaginaDeCarga.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -82,6 +83,17 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
         }
         composable(Screen.PerfilPerro.route) {
             PerfilPerroScreen()
+        }
+        composable(Screen.PaginaDeCarga.route) {
+            PaginaDeCargaScreen(
+                irBienvenida = {
+                    navController.navigate(Screen.Bienvenida.route) {
+                        // esto hace que al apretar "back" después,
+                        // NO vuelva a la pantalla de carga
+                        popUpTo(Screen.PaginaDeCarga.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 
