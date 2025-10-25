@@ -64,6 +64,7 @@ room-rxjava3 = { group="androidx.room", name="room-rxjava3", version.ref="room"}
 room-guava = { group="androidx.room", name="room-guava", version.ref="room"}
 room-testing = { group="androidx.room", name="room-testing", version.ref="room"}
 room-paging = { group="androidx.room", name="room-paging", version.ref="room"}
+androidx-test-core = { group = "androidx.test", name = "core", version = "1.5.0" }
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
