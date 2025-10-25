@@ -18,7 +18,8 @@ import kotlin.Unit
 
 @Composable
 fun RegistroUsuarioScreen(
-    onVolverClick: () -> Unit
+    onVolverClick: () -> Unit,
+    onRegistered: (com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel) -> Unit = {}
 ) {
 
     Surface(
@@ -59,8 +60,9 @@ fun RegistroUsuarioScreen(
 
             RegistroForm(
                 onVolverClick = {
-                        onVolverClick()
-                }
+                    onVolverClick()
+                },
+                onRegistered = { usuario -> onRegistered(usuario) }
             )
 
         }

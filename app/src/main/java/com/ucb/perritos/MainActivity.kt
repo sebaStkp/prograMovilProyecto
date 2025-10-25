@@ -1,26 +1,25 @@
 package com.ucb.perritos
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.navigation.compose.rememberNavController
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ucb.perritos.features.menu.presentation.MenuScreen
-
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.ucb.perritos.navigation.AppNavigation
 import com.ucb.perritos.navigation.NavigationViewModel
-import kotlinx.coroutines.flow.distinctUntilChanged
+import com.ucb.perritos.features.menu.presentation.MenuScreen
 
 
 class MainActivity : ComponentActivity() {
@@ -31,9 +30,28 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+            val navController: NavHostController = rememberNavController()
+
+            // Obtener ruta actual para mostrar/ocultar el bottom bar
+            val navBackStackEntry by navController.currentBackStackEntryAsState()
+            val currentRoute = navBackStackEntry?.destination?.route
+
+            val showBottomBar = currentRoute in listOf(
+                "${"menu"}", // Screen.Menu.route
+                "${"perfilPerro"}",
+                "${"perfilDueno"}"
+            )
+
             Scaffold(
                 bottomBar = {
-                    MenuScreen()
+                    if (showBottomBar) {
+                        MenuScreen(
+                            onShieldClick = { /* TODO */ },
+                            onCalendarClick = { /* TODO */ },
+                            onPawClick = { navController.navigate("perfilPerro") },
+                            onProfileClick = { navController.navigate("perfilDueno") }
+                        )
+                    }
                 },
                 content = { paddingValues ->
                     Box(
@@ -42,7 +60,7 @@ class MainActivity : ComponentActivity() {
                             .navigationBarsPadding()
                     )
                     {
-                        AppNavigation(navigationViewModel)
+                        AppNavigation(navigationViewModel, navController)
                     }
                 },
                 contentWindowInsets = WindowInsets(bottom = 0.dp)
@@ -51,8 +69,6 @@ class MainActivity : ComponentActivity() {
 
     }
 }
-
-
 
 
 

@@ -137,6 +137,8 @@ val appModule = module {
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
     single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
     factory { RegistrarUsuarioUseCase(get()) }
+    factory { com.ucb.perritos.features.registroUsuario.domain.usecase.AutenticarUsuarioUseCase(get()) }
+    viewModel { com.ucb.perritos.features.registroUsuario.presentation.LoginAuthViewModel(get()) }
     viewModel{ RegistroUsuarioViewModel(get()) }
 
     // DAO

@@ -2,6 +2,7 @@ package com.ucb.perritos.features.registroUsuario.data.datasource
 
 import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
 import com.ucb.perritos.features.registroUsuario.data.mapper.toEntity
+import com.ucb.perritos.features.registroUsuario.data.mapper.toModel
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 
 class RegistroUsuarioLocalDataSource(
@@ -13,6 +14,14 @@ class RegistroUsuarioLocalDataSource(
             Result.success(usuario)
         } catch (e: Exception) {
             Result.failure(e)
+        }
+    }
+
+    suspend fun getAll(): List<UsuarioModel> {
+        return try {
+            dao.getUsuarios().map { it.toModel() }
+        } catch (e: Exception) {
+            emptyList()
         }
     }
 }

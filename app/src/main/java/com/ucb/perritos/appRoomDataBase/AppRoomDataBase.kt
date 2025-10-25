@@ -10,14 +10,17 @@ import com.ucb.perritos.features.registroMascota.data.database.dao.IRegistroPerr
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
 import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
 import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
+import com.ucb.perritos.features.perfildueno.data.database.IPerfilDuenoDao
+import com.ucb.perritos.features.perfildueno.data.database.PerfilDuenoEntity
 
 
-@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 3)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class, PerfilDuenoEntity::class], version = 3)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
 
     abstract fun perfilPerroDao(): IPerfilPerroDao
+    abstract fun perfilDuenoDao(): IPerfilDuenoDao
 
 
     companion object {

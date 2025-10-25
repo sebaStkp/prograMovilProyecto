@@ -14,7 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ucb.perritos.features.login.presentation.LoginViewModel
+import com.ucb.perritos.features.registroUsuario.presentation.LoginAuthViewModel
 import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -42,15 +42,16 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 
 @Composable
 fun LoginScreen(
-    vm: LoginViewModel = koinViewModel(),
-    irRegistroCuenta: () -> Unit
+    authVm: LoginAuthViewModel = koinViewModel(),
+    irRegistroCuenta: () -> Unit,
+    onLoginSuccess: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isEmailFocused by remember { mutableStateOf(false) }
     var isPasswordFocused by remember { mutableStateOf(false) }
 
-    val state = vm.state.collectAsState()
+    val state = authVm.state.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -85,6 +86,14 @@ fun LoginScreen(
                     .padding(bottom = 32.dp),
                 textAlign = TextAlign.Center
             )
+
+            // Cuando el estado del ViewModel es Success, llamamos callback onLoginSuccess
+            val stateValue by state
+            LaunchedEffect(stateValue) {
+                if (stateValue is com.ucb.perritos.features.registroUsuario.presentation.LoginAuthViewModel.AuthState.Success) {
+                    onLoginSuccess()
+                }
+            }
 
             OutlinedTextField(
                 value = email,
@@ -174,14 +183,14 @@ fun LoginScreen(
 
             // Botón de Registrarme
             Button(
-                onClick = { vm.setToken(email) },
+                onClick = { authVm.login(email, password) },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF9800)),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(48.dp)
                     .clip(RoundedCornerShape(10.dp))
             ) {
-                Text(text = "Registrarme", color = Color.White)
+                Text(text = "Iniciar sesión", color = Color.White)
             }
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -15,7 +15,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
-import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -23,6 +22,7 @@ import org.koin.androidx.compose.koinViewModel
 fun RegistroForm(
     vm: RegistroUsuarioViewModel = koinViewModel(),
     onVolverClick: () -> Unit,
+    onRegistered: (UsuarioModel) -> Unit = {}
 
 ) {
     var nombre by remember { mutableStateOf("") }
@@ -131,12 +131,13 @@ fun RegistroForm(
         Button(
             onClick = {
                 vm.registrarUsuario(
-                UsuarioModel(
-                    nombre,
-                    correo,
-                    password
+                    UsuarioModel(
+                        nombre,
+                        correo,
+                        password
+                    )
                 )
-            )},
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -165,7 +166,9 @@ fun RegistroForm(
                 Text("Cargando...", color = Color.Gray)
             }
             is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success -> {
-                Text("Perro registrado correctamente", color = Color(0xFFFF9800))
+                Text("Usuario registrado correctamente", color = Color(0xFFFF9800))
+                // Llamar callback onRegistered
+                LaunchedEffect(Unit) { onRegistered(st.usuario) }
 
             }
 

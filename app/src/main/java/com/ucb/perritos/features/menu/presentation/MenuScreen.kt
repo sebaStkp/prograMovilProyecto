@@ -1,6 +1,7 @@
 package com.ucb.perritos.features.menu.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,12 +17,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MenuScreen() {
-    BottomNavigationBar()
+fun MenuScreen(
+    onShieldClick: () -> Unit = {},
+    onCalendarClick: () -> Unit = {},
+    onPawClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {}
+) {
+    BottomNavigationBar(
+        onShieldClick = onShieldClick,
+        onCalendarClick = onCalendarClick,
+        onPawClick = onPawClick,
+        onProfileClick = onProfileClick
+    )
 }
 
 @Composable
-fun BottomNavigationBar() {
+fun BottomNavigationBar(
+    onShieldClick: () -> Unit = {},
+    onCalendarClick: () -> Unit = {},
+    onPawClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {}
+) {
     val inactiveColor = Color(0xFFBDBDBD)
     val activeColor = Color(0xFFFF9800)
 
@@ -51,11 +67,11 @@ fun BottomNavigationBar() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            EmojiIcon("🛡️", inactiveColor)
-            EmojiIcon("📅", inactiveColor)
+            IconButtonEmoji("🛡️", inactiveColor, onClick = onShieldClick)
+            IconButtonEmoji("📅", inactiveColor, onClick = onCalendarClick)
             Spacer(modifier = Modifier.width(64.dp))
-            EmojiIcon("🐾", inactiveColor)
-            EmojiIcon("👤", inactiveColor)
+            IconButtonEmoji("🐾", inactiveColor, onClick = onPawClick)
+            IconButtonEmoji("👤", inactiveColor, onClick = onProfileClick)
         }
 
 
@@ -77,15 +93,16 @@ fun BottomNavigationBar() {
     }
 }
 
-
 @Composable
-fun EmojiIcon(emoji: String, tint: Color) {
+fun IconButtonEmoji(emoji: String, tint: Color, onClick: () -> Unit) {
     Text(
         text = emoji,
         fontSize = 24.sp,
         color = tint,
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Normal,
-        modifier = Modifier.padding(bottom = 12.dp)
+        modifier = Modifier
+            .padding(bottom = 12.dp)
+            .clickable { onClick() }
     )
 }
