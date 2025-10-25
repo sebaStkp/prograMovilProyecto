@@ -5,4 +5,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface IPerfilPerroRepository {
     fun observePerfil(perroId: Long): Flow<PerfilPerroModel?>
+
+    suspend fun setPerfilActual(
+        perroId: Long,
+        nombre: String,
+        raza: String,
+        avatarUrl: String?
+    )
 }

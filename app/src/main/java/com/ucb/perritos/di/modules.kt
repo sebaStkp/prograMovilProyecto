@@ -130,7 +130,7 @@ val appModule = module {
     single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
     //single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     factory { RegistrarPerroUseCase(get()) }
-    viewModel{ RegistroPerroViewModel(get()) }
+    viewModel{ RegistroPerroViewModel(get(), get()) }
 
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
@@ -149,6 +149,8 @@ val appModule = module {
     }
 // Use case
     factory { com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase(get()) }
+    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase(get()) }
+
 // ViewModel
     viewModel { com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel(get()) }
 }
