@@ -4,9 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+
+import com.ucb.perritos.features.perfilPerro.data.database.dao.IFotoPerroDao
+
 import com.ucb.perritos.features.perfilPerro.data.database.dao.IPerfilPerroDao
+import com.ucb.perritos.features.perfilPerro.data.database.entity.FotoPerroEntity
 import com.ucb.perritos.features.perfilPerro.data.database.entity.PerfilPerroEntity
 import com.ucb.perritos.features.registroMascota.data.database.dao.IRegistroPerroDao
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
@@ -25,7 +30,6 @@ abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
 
     abstract fun perfilPerroDao(): IPerfilPerroDao
-
 
     companion object {
         @Volatile

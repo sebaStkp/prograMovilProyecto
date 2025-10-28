@@ -153,4 +153,25 @@ val appModule = module {
 
 // ViewModel
     viewModel { com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel(get()) }
+
+
+    // DAO de fotos
+    single(named("fotoPerroDao")) { get<AppRoomDataBase>().fotoPerroDao() }
+
+// DataSource
+    single {
+        com.ucb.perritos.features.perfilPerro.data.datasource.FotoPerroLocalDataSource(
+            get(named("fotoPerroDao"))
+        )
+    }
+
+// Repository
+    single<com.ucb.perritos.features.perfilPerro.domain.repository.IFotoPerroRepository> {
+        com.ucb.perritos.features.perfilPerro.data.repository.FotoPerroRepository(get())
+    }
+
+// UseCases
+    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.AgregarFotoPerroUseCase(get()) }
+    //factory { com.ucb.perritos.features.perfilPerro.domain.usecase.EliminarFotoPerroUseCase(get()) }
+
 }
