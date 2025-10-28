@@ -24,18 +24,17 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun RegistroForm(
     vm: RegistroUsuarioViewModel = koinViewModel(),
-    onVolverClick: () -> Unit,
-    onIrRegistroPerro: () -> Unit
+    onVolverClick: () -> Unit
 ) {
 
     val state by vm.state.collectAsState()
 
-    LaunchedEffect(state) {
-        if (state is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success) {
-
-            onIrRegistroPerro()
-        }
-    }
+//    LaunchedEffect(state) {
+//        if (state is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success) {
+//
+//            onIrRegistroPerro()
+//        }
+//    }
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
