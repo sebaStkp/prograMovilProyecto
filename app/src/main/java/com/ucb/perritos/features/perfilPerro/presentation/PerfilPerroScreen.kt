@@ -1,5 +1,9 @@
 package com.ucb.perritos.features.perfilPerro.presentation
 
+import android.Manifest
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -33,15 +37,60 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.FileProvider
 
 import org.koin.androidx.compose.koinViewModel
+import java.io.File
+
 //modifier: Modifier = Modifier,
 //    vm: RegistroPerroViewModel = koinViewModel()
 @Composable
-fun PerfilPerroScreen(modifier: Modifier = Modifier,vm: PerfilPerroViewModel = koinViewModel(), perroId: Long = 1L) {
+fun PerfilPerroScreen(
+    modifier: Modifier = Modifier,
+    vm: PerfilPerroViewModel = koinViewModel(),
+    perroId: Long = 1L
+) {
+    val context = LocalContext.current
     val state by vm.state.collectAsState()
 
+
     LaunchedEffect(perroId) { vm.init(perroId) }
+
+
+    val photoFile = remember {
+        File(context.getExternalFilesDir(null), "foto_perro_${System.currentTimeMillis()}.jpg")
+    }
+    val photoUri = remember {
+        FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider",
+            photoFile
+        )
+    }
+    val photoUriState = remember { mutableStateOf<Uri?>(null) }
+
+
+    val takePictureLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            photoUriState.value = photoUri
+            vm.agregarFoto(perroId, photoUri)
+        }
+    }
+
+
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            takePictureLauncher.launch(photoUri)
+        }
+    }
+
 
     Box(
         modifier = modifier
@@ -68,17 +117,17 @@ fun PerfilPerroScreen(modifier: Modifier = Modifier,vm: PerfilPerroViewModel = k
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
-
             Spacer(Modifier.height(16.dp))
+
+
             AsyncImage(
-                model = state.perfil?.avatarUrl,
+                model = state.perfil?.avatarUrl ?: photoUriState.value,
                 contentDescription = "Avatar perro",
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
-
             Spacer(Modifier.height(12.dp))
             Text(
                 text = state.perfil?.nombre ?: "—",
@@ -88,40 +137,40 @@ fun PerfilPerroScreen(modifier: Modifier = Modifier,vm: PerfilPerroViewModel = k
                 text = state.perfil?.raza ?: "",
                 style = MaterialTheme.typography.bodyMedium
             )
-
             Spacer(Modifier.height(16.dp))
-            // Acciones (dummy por ahora)
+
+
             Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
                 OutlinedButton(
                     onClick = { /* TODO: navegar a Datos de la mascota */ },
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("Datos de la mascota") }
-
                 Spacer(Modifier.height(8.dp))
                 OutlinedButton(
                     onClick = { /* TODO: navegar a Medallas */ },
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("Medallas") }
-
                 Spacer(Modifier.height(8.dp))
                 OutlinedButton(
                     onClick = { /* TODO: navegar a Familiares */ },
                     modifier = Modifier.fillMaxWidth()
                 ) { Text("Familiares") }
             }
-
             Spacer(Modifier.height(16.dp))
             Text(
-                "FOTOS DEL PERRO (próxima iteración)",
+                "FOTOS DEL PERRO",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(horizontal = 24.dp)
             )
-
             Spacer(Modifier.height(12.dp))
+
+
             Button(
-                onClick = { /* TODO: abrir picker y agregar foto */ },
+                onClick = {
+                    requestPermissionLauncher.launch(Manifest.permission.CAMERA)
+                },
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                 modifier = Modifier
                     .fillMaxWidth()

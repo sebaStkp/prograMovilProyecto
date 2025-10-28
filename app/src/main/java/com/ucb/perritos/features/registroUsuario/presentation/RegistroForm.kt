@@ -15,24 +15,36 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
+import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun RegistroForm(
     vm: RegistroUsuarioViewModel = koinViewModel(),
     onVolverClick: () -> Unit,
-
+    onIrRegistroPerro: () -> Unit
 ) {
+
+    val state by vm.state.collectAsState()
+
+    LaunchedEffect(state) {
+        if (state is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success) {
+
+            onIrRegistroPerro()
+        }
+    }
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmarPassword by remember { mutableStateOf("") }
 
-    val state by vm.state.collectAsState()
+
 
     val borderColor = Color(0xFFF5A623)
+
 
     Column(
         modifier = Modifier
@@ -165,10 +177,8 @@ fun RegistroForm(
                 Text("Cargando...", color = Color.Gray)
             }
             is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success -> {
-                Text("Perro registrado correctamente", color = Color(0xFFFF9800))
-
+                Text("Registro exitoso", color = Color(0xFF4CAF50))
             }
-
         }
     }
 

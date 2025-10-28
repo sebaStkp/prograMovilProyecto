@@ -21,4 +21,7 @@ data class RegistroPerroEntity(
 
     @ColumnInfo(name = "descripcion")
     var descripcion: String? = null,
+
+    @ColumnInfo(name = "idUsuario")
+    var idUsuario: String? = null,
 )

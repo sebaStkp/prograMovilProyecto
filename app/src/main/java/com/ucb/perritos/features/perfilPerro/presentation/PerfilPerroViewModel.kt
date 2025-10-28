@@ -1,7 +1,9 @@
 package com.ucb.perritos.features.perfilPerro.presentation
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
 import com.ucb.perritos.features.perfilPerro.domain.model.PerfilPerroModel
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,4 +31,14 @@ class PerfilPerroViewModel(
             }
         }
     }
+
+    fun agregarFoto(perroId: Long, imageUri: Uri) {
+        viewModelScope.launch {
+            _state.update { it.copy(loading = true) }
+            // Podrías usar el use case aquí
+            // agregarFotoPerroUseCase(perroId, imageUri)
+            _state.update { it.copy(loading = false) }
+        }
+    }
+
 }
