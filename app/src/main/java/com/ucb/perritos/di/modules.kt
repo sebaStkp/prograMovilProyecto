@@ -17,6 +17,11 @@ import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.login.presentation.LoginViewModel
+import com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroLocalDataSource
+import com.ucb.perritos.features.perfilPerro.data.repository.PerfilPerroRepository
+import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository
+import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
+import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
 import com.ucb.perritos.features.registroMascota.data.datasource.RegistroPerroLocalDataSource
 import com.ucb.perritos.features.registroMascota.data.repository.RegistroPerroRepository
 import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
@@ -117,11 +122,11 @@ val appModule = module {
     single { LoginDataStore(androidContext()) }
     single<ILoginRepository> { LoginRepository(get()) }
     factory { SetTokenUseCase(get()) }
-    viewModel{ LoginViewModel(get()) }
+    viewModel { LoginViewModel(get()) }
 
 
     viewModel { NavigationViewModel() }
-    viewModel{ BienvenidaViewModel() }
+    viewModel { BienvenidaViewModel() }
 
 
     single { AppRoomDataBase.getDatabase((get())) }
@@ -130,48 +135,19 @@ val appModule = module {
     single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
     //single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     factory { RegistrarPerroUseCase(get()) }
-    viewModel{ RegistroPerroViewModel(get(), get()) }
+    viewModel { RegistroPerroViewModel(get(), get()) }
 
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
     single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
     factory { RegistrarUsuarioUseCase(get()) }
-    viewModel{ RegistroUsuarioViewModel(get()) }
+    viewModel { RegistroUsuarioViewModel(get()) }
 
-    // DAO
     single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
-
-// DataSource + Repo
-    single { com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
-    single<com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository> {
-        com.ucb.perritos.features.perfilPerro.data.repository.PerfilPerroRepository(get())
-    }
-// Use case
-    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase(get()) }
-    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase(get()) }
-
-// ViewModel
-    viewModel { com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel(get()) }
-
-
-    // DAO de fotos
-    single(named("fotoPerroDao")) { get<AppRoomDataBase>().fotoPerroDao() }
-
-// DataSource
-    single {
-        com.ucb.perritos.features.perfilPerro.data.datasource.FotoPerroLocalDataSource(
-            get(named("fotoPerroDao"))
-        )
-    }
-
-// Repository
-    single<com.ucb.perritos.features.perfilPerro.domain.repository.IFotoPerroRepository> {
-        com.ucb.perritos.features.perfilPerro.data.repository.FotoPerroRepository(get())
-    }
-
-// UseCases
-    factory { com.ucb.perritos.features.perfilPerro.domain.usecase.AgregarFotoPerroUseCase(get()) }
-    //factory { com.ucb.perritos.features.perfilPerro.domain.usecase.EliminarFotoPerroUseCase(get()) }
-
+    single { PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
+    single<IPerfilPerroRepository> { PerfilPerroRepository(get()) }
+    factory { ObtenerPerfilPerroUseCase(get()) }
+    viewModel { PerfilPerroViewModel(get()) }
 }
+
