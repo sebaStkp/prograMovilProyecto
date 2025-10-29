@@ -18,4 +18,7 @@ data class RegistroUsuarioEntity(
 
     @ColumnInfo(name = "contraseña")
     var contraseña: String? = null,
+
+    @ColumnInfo(name = "fotoUsuario")
+    var fotoUsuario: String? = null,
 )
