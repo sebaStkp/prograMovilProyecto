@@ -49,12 +49,15 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.PaginaDeCarga.route
+        startDestination = Screen.Bienvenida.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
                 irRegistroCuenta = {
                     navController.navigate(Screen.RegistroUsuario.route)
+                },
+                irRegistroMascota = {
+                    navController.navigate(Screen.RegistroPerro.route)
                 }
             )
         }
@@ -75,7 +78,10 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
             RegistroUsuarioScreen(
                 onVolverClick = {
                     navController.navigate(Screen.Bienvenida.route)
-                }
+                },
+//                on = {
+//                    navController.navigate(Screen.RegistroPerro.route)
+//                }
             )
         }
         composable(Screen.Menu.route) {

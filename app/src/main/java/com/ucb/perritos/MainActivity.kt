@@ -8,7 +8,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -16,13 +18,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.ucb.perritos.features.header.AppHeader
 import com.ucb.perritos.features.menu.presentation.MenuScreen
 
 import com.ucb.perritos.navigation.AppNavigation
 import com.ucb.perritos.navigation.NavigationViewModel
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 
+
+
+
+val supabase = createSupabaseClient(
+    supabaseUrl = "https://efxdadwzzvsuvtefmlbm.supabase.co",
+    supabaseKey = BuildConfig.SUPABASE_KEY
+) {
+    install(Postgrest)
+}
 class MainActivity : ComponentActivity() {
     private val navigationViewModel: NavigationViewModel by viewModels()
 
@@ -36,13 +50,23 @@ class MainActivity : ComponentActivity() {
                     MenuScreen()
                 },
                 content = { paddingValues ->
-                    Box(
+                    // USAMOS UNA COLUMNA PARA APILAR: HEADER + PANTALLAS
+                    Column(
                         modifier = Modifier
                             .padding(paddingValues)
-                            .navigationBarsPadding()
-                    )
-                    {
-                        AppNavigation(navigationViewModel)
+                            .fillMaxSize() // Llenar la pantalla disponible
+                    ) {
+                        // 1. EL HEADER GLOBAL (Fijo arriba en todas las páginas)
+                        AppHeader()
+
+                        // 2. EL CONTENEDOR DE TUS PANTALLAS
+                        Box(
+                            modifier = Modifier
+                                .weight(1f) // Ocupa todo el espacio restante
+                                .navigationBarsPadding()
+                        ) {
+                            AppNavigation(navigationViewModel)
+                        }
                     }
                 },
                 contentWindowInsets = WindowInsets(bottom = 0.dp)

@@ -21,7 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+private val HeaderGray = Color(0xFFF2F2F2)
 @Composable
 fun MenuScreen() {
     BottomNavigationBar()
