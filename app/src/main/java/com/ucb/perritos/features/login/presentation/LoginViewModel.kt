@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ucb.perritos.features.core.supabase
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
+import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
@@ -16,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(
     private val registrarUsuarioUseCase: RegistrarUsuarioUseCase,
+    private val getUserUseCase: GetUserUseCase,
     private val usecaseSetToken: SetTokenUseCase
 ) : ViewModel() {
 
@@ -23,7 +25,7 @@ class LoginViewModel(
         object Init : LoginStateUI()
         object Loading : LoginStateUI()
         class Error(val message: String) : LoginStateUI()
-        class Success(val mensaje: String) : LoginStateUI()
+        class Success(val mensaje: String, val irAlMapa: Boolean) : LoginStateUI()
     }
 
     private val _state = MutableStateFlow<LoginStateUI>(LoginStateUI.Init)
@@ -37,39 +39,46 @@ class LoginViewModel(
 
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = LoginStateUI.Loading
+
             try {
+
                 supabase.auth.signInWith(Email) {
                     this.email = email
                     this.password = pass
                 }
 
+
                 val userSupabase = supabase.auth.currentUserOrNull()
                 val nombreGuardado = userSupabase?.userMetadata?.get("nombre_dueno")
                     ?.toString()?.replace("\"", "") ?: "Usuario"
 
+
+
+                val existeEnRoom = getUserUseCase.invoke(email).isSuccess
+
+
+                val irAlMapa = existeEnRoom
+
+
+
                 registrarUsuarioUseCase.invoke(
                     UsuarioModel(
                         email = email,
-                        nombreDueño = nombreGuardado,
+                        nombreDueño = if(nombreGuardado.isNotEmpty()) nombreGuardado else "Usuario",
                         contraseña = pass
                     )
                 )
 
-                val resultToken = usecaseSetToken.invoke(email)
 
-                resultToken.fold(
-                    onSuccess = {
-                        _state.value = LoginStateUI.Success("Bienvenido $nombreGuardado")
-                    },
-                    onFailure = {
-                        _state.value = LoginStateUI.Error("Login correcto, pero falló la generación del Token")
-                    }
-                )
+                usecaseSetToken.invoke(email)
+
+
+                _state.value = LoginStateUI.Success("Bienvenido $nombreGuardado", irAlMapa)
 
             } catch (e: Exception) {
                 val errorMsg = when {
-                    e.message?.contains("Email not confirmed") == true -> "Tu correo no ha sido confirmado. Revisa tu bandeja de entrada."
-                    e.message?.contains("Invalid login credentials") == true -> "Correo o contraseña incorrectos."
+                    e.message?.contains("Email not confirmed") == true -> "Tu correo no ha sido confirmado."
+                    e.message?.contains("Invalid login credentials") == true -> "Credenciales incorrectas."
                     else -> "Error: ${e.message}"
                 }
                 _state.value = LoginStateUI.Error(errorMsg)

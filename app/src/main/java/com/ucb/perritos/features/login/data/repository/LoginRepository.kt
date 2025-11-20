@@ -6,6 +6,7 @@ import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.domain.model.LoginModel
+import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 
 
 class LoginRepository(
@@ -40,5 +41,7 @@ class LoginRepository(
             Result.failure(e)
         }
     }
+
+
 
 }
