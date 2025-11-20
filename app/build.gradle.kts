@@ -175,6 +175,8 @@ dependencies {
     implementation("io.ktor:ktor-client-android:3.0.1")
     implementation("androidx.compose.material:material-icons-extended")
 
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+
 
 
     runtimeOnly(libs.grpc.okhttp)
