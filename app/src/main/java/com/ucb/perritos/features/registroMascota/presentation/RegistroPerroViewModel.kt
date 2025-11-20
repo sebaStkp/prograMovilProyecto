@@ -39,21 +39,16 @@ class RegistroPerroViewModel(
             val result = registrarPerroUseCase.invoke(perro)
 
             result.fold(
-//                onSuccess = {
-//                    perro -> _state.value = RegistrarPerroStateUI.Success( perro )
-//                },
+
                 onSuccess = { perroGuardado ->
-                    // 1. Marcamos este perro como el perfil activo en perfiles_perro
-                    //    Nota: perroId = 1L fijo por ahora. Cuando tengamos IDs reales,
-                    //    aquí usamos el id real (el autogenerado en la tabla perros).
                     establecerPerfilActualUseCase(
                         perroId = 1L,
                         nombre = perroGuardado.nombrePerro.orEmpty(),
                         raza = perroGuardado.raza.orEmpty(),
-                        avatarUrl = "https://picsum.photos/200" // placeholder
+                        avatarUrl = "https://picsum.photos/200"
                     )
 
-                    // 2. Avisamos éxito a la UI
+
                     _state.value = RegistrarPerroStateUI.Success(perroGuardado)
                 },
                 onFailure = {
