@@ -34,8 +34,6 @@ class RegistroUsuarioViewModel : ViewModel() {
 
     fun registrarUsuario(usuario: UsuarioModel) {
 
-
-
         val email = usuario.email
         val pass = usuario.contraseña
         val nombre = usuario.nombreDueño
@@ -53,16 +51,10 @@ class RegistroUsuarioViewModel : ViewModel() {
                 supabase.auth.signUpWith(Email) {
                     this.email = email
                     this.password = pass
-
-
-
-
                     data = buildJsonObject {
                         put("nombre_dueno", nombre)
                     }
                 }
-
-
 
                 _state.value = RegistrarUsuarioStateUI.Success("¡Cuenta creada! Revisa tu correo ${email} para activarla.")
 

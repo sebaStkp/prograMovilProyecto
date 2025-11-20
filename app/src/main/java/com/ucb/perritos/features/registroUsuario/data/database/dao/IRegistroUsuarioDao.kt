@@ -11,6 +11,9 @@ interface IRegistroUsuarioDao {
     @Query("SELECT * FROM usuarios")
     suspend fun getUsuarios(): List<RegistroUsuarioEntity>
 
+    @Query("SELECT * FROM usuarios WHERE email = :email LIMIT 1")
+    suspend fun getUsuarioPorEmail(email: String): RegistroUsuarioEntity?
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(usuario: RegistroUsuarioEntity)

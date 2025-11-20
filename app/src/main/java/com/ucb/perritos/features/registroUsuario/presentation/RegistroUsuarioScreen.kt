@@ -42,7 +42,9 @@ val WhiteBackground = Color.White
 @Composable
 fun RegistroUsuarioScreen(
     vm: RegistroUsuarioViewModel = koinViewModel(),
-    onVolverClick: () -> Unit
+    onVolverClick: () -> Unit,
+    irLogin: () -> Unit
+
 ) {
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -58,11 +60,8 @@ fun RegistroUsuarioScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-
             ProfilePhotoSection()
-
             Spacer(modifier = Modifier.height(16.dp))
-
 
             Text(
                 text = "Registro de Usuario",
@@ -74,7 +73,7 @@ fun RegistroUsuarioScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
 
-            RegistroFormContent(vm, onVolverClick)
+            RegistroFormContent(vm, onVolverClick, irLogin )
         }
     }
 }
@@ -123,7 +122,8 @@ fun ProfilePhotoSection() {
 @Composable
 fun RegistroFormContent(
     vm: RegistroUsuarioViewModel,
-    onVolverClick: () -> Unit
+    onVolverClick: () -> Unit,
+    irLogin: () -> Unit
 ) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
@@ -229,7 +229,7 @@ fun RegistroFormContent(
                         fontSize = 14.sp,
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
-                    TextButton(onClick = onVolverClick) {
+                    TextButton(onClick = irLogin) {
                         Text("Ir a Iniciar Sesión", color = OrangePrimary)
                     }
                 }

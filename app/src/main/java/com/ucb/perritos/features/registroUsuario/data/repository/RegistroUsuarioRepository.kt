@@ -1,5 +1,6 @@
 package com.ucb.perritos.features.registroUsuario.data.repository
 
+import com.ucb.perritos.features.login.domain.model.LoginModel
 import com.ucb.perritos.features.registroMascota.data.datasource.RegistroPerroLocalDataSource
 import com.ucb.perritos.features.registroMascota.domain.model.RegistroPerroModel
 import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
@@ -12,6 +13,10 @@ class RegistroUsuarioRepository(
 ): IRegistroUsuarioRepository {
     override suspend fun registrarUsuario(usuario: UsuarioModel): Result<UsuarioModel> {
         return registroUsuarioLocalDataSource.insert(usuario)
+    }
+
+    override suspend fun getUsuario(email: String): Result<UsuarioModel> {
+        return registroUsuarioLocalDataSource.getUser(email = email)
     }
 
 }
