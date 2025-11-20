@@ -20,6 +20,7 @@ import com.ucb.perritos.features.login.presentation.LoginViewModel
 import com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroLocalDataSource
 import com.ucb.perritos.features.perfilPerro.data.repository.PerfilPerroRepository
 import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository
+import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
 import com.ucb.perritos.features.registroMascota.data.datasource.RegistroPerroLocalDataSource
@@ -33,10 +34,14 @@ import com.ucb.perritos.features.registroUsuario.domain.repository.IRegistroUsua
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
+import io.github.jan.supabase.createSupabaseClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+
+import io.github.jan.supabase.postgrest.Postgrest
+//import io.github.jan.supabase.gotrue.
 //import retrofit2.Retrofit
 //import retrofit2.converter.gson.GsonConverterFactory
 //import java.util.concurrent.TimeUnit
@@ -49,6 +54,16 @@ import org.koin.dsl.module
 //}
 //
 val appModule = module {
+//    single {
+//        createSupabaseClient(
+//            supabaseUrl = "https://TU_URL_DE_SUPABASE.supabase.co",
+//            supabaseKey = "TU_ANON_KEY_DE_SUPABASE"
+//        ) {
+//            // Aquí puedes configurar módulos específicos si lo necesitas
+//            install(GoTrue)
+//            install(Postgrest)
+//        }
+//    }
 
 
 //    // OkHttpClient
@@ -122,7 +137,7 @@ val appModule = module {
     single { LoginDataStore(androidContext()) }
     single<ILoginRepository> { LoginRepository(get()) }
     factory { SetTokenUseCase(get()) }
-    viewModel { LoginViewModel(get()) }
+    viewModel { LoginViewModel(get(), get ()) }
 
 
     viewModel { NavigationViewModel() }
@@ -134,6 +149,8 @@ val appModule = module {
     single { RegistroPerroLocalDataSource(get(named("registroPerroDao"))) }
     single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
     //single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
+    single { EstablecerPerfilActualUseCase(get()) }
+
     factory { RegistrarPerroUseCase(get()) }
     viewModel { RegistroPerroViewModel(get(), get()) }
 
@@ -142,7 +159,7 @@ val appModule = module {
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
     single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
     factory { RegistrarUsuarioUseCase(get()) }
-    viewModel { RegistroUsuarioViewModel(get()) }
+    viewModel { RegistroUsuarioViewModel() }
 
     single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     single { PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
