@@ -34,7 +34,8 @@ private val WhiteBackground = Color.White
 
 @Composable
 fun RegistroPerroScreen(
-    vm: RegistroPerroViewModel = koinViewModel()
+    vm: RegistroPerroViewModel = koinViewModel(),
+    irMapa: () -> Unit
 ) {
     var nombrePerro by remember { mutableStateOf("") }
     var raza by remember { mutableStateOf("") }
@@ -48,6 +49,7 @@ fun RegistroPerroScreen(
         when (val st = state) {
             is RegistroPerroViewModel.RegistrarPerroStateUI.Success -> {
                 Toast.makeText(context, "¡Mascota registrada con éxito!", Toast.LENGTH_SHORT).show()
+                irMapa()
             }
             is RegistroPerroViewModel.RegistrarPerroStateUI.Error -> {
                 Toast.makeText(context, "Error: ${st.message}", Toast.LENGTH_LONG).show()
