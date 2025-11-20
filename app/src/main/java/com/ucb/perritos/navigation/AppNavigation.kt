@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaScreen
+import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
 import com.ucb.perritos.features.menu.presentation.MenuScreen
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroScreen
@@ -49,7 +50,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Bienvenida.route
+        startDestination = Screen.BuscarPerro.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -100,6 +101,10 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
                     }
                 }
             )
+        }
+
+        composable(Screen.BuscarPerro.route) {
+            BuscarMascotaScreen()
         }
     }
 
