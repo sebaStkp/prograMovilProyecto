@@ -5,7 +5,7 @@ converterGson = "3.0.0"
 koinAndroid = "3.3.0"
 koinAndroidxCompose = "3.3.0"
 koinAndroidxNavigation = "3.3.0"
-kotlin = "2.0.21"
+kotlin = "2.1.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -19,13 +19,26 @@ retrofit = "3.0.0"
 navcompose = "2.9.3"
 googleGmsGoogleServices = "4.4.3"
 firebaseDatabase = "22.0.0"
-ksp = "2.0.20-1.0.24"
+ksp = "2.1.0-1.0.29"
 room = "2.8.0"
 firebaseMessaging = "25.0.0"
 datastore = "1.0.0"
 
 kotlinx-serialization = "1.7.3"
+foundation = "1.9.4"
 
+google-maps-compose = "2.11.4"
+google-play-services-maps = "18.1.0"
+
+play-services-location = "21.3.0"
+
+
+
+grpc = "1.67.1"
+protobuf = "3.25.1"
+protobufPlugin = "0.9.4"
+grpcKotlin = "1.4.1"
+protoc = "4.26.1"
 
 
 [libraries]
@@ -55,6 +68,17 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navcompose"}
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location"}
+
+grpc-okhttp = { group = "io.grpc", name = "grpc-okhttp", version.ref = "grpc" }
+grpc-protobuf-lite = { group = "io.grpc", name = "grpc-protobuf-lite", version.ref = "grpc" }
+grpc-kotlin-stub = { group = "io.grpc", name = "grpc-kotlin-stub", version.ref = "grpcKotlin" }
+protobuf-kotlin-lite = { group = "com.google.protobuf", name = "protobuf-kotlin-lite", version.ref = "protoc" }
+protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protoc" }
+protoc-gen-grpc-java = { group = "io.grpc", name = "protoc-gen-grpc-java", version.ref = "grpc" }
+protoc-gen-grpc-kotlin = { group = "io.grpc", name = "protoc-gen-grpc-kotlin", version.ref = "grpcKotlin" }
+
+
 #room
 room-runtime = { group="androidx.room", name="room-runtime", version.ref="room"}
 room-compiler = { group="androidx.room", name="room-compiler", version.ref="room"}
@@ -66,14 +90,18 @@ room-testing = { group="androidx.room", name="room-testing", version.ref="room"}
 room-paging = { group="androidx.room", name="room-paging", version.ref="room"}
 androidx-test-core = { group = "androidx.test", name = "core", version = "1.5.0" }
 
+google-maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "google-maps-compose" }
+google-play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "google-play-services-maps" }
+
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+androidx-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin"}
-
+google-protobuf = { id = "com.google.protobuf", version.ref = "protobufPlugin"}
 ksp = { id = "com.google.devtools.ksp", version.ref="ksp"}
 
 [bundles]
