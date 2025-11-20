@@ -3,6 +3,9 @@ package com.ucb.perritos.features.registroMascota.presentation
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develoop.logs.LogApi
+import com.google.protobuf.ByteString
+import com.ucb.perritos.features.logs.data.datasource.LogsRemoteDataSource
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.registroMascota.domain.model.RegistroPerroModel
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
@@ -29,6 +32,7 @@ class RegistroPerroViewModel(
         val state : StateFlow<RegistrarPerroStateUI> = _state.asStateFlow()
 
     fun registrarPerro(perro: RegistroPerroModel) {
+
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = RegistrarPerroStateUI.Loading
             //val result = usecase.invoke(perro)
