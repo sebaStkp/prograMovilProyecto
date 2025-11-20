@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -67,7 +68,7 @@ fun BienvenidaScreen(
                 shape = MaterialTheme.shapes.medium
             ) {
                 Text(
-                    text = "Registrarse",
+                    text = stringResource(id = R.string.bienvenida_name),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -77,9 +78,11 @@ fun BienvenidaScreen(
 
 
             val annotatedText = buildAnnotatedString {
-                append("Si ya tiene una cuenta porfavor ")
+                append(stringResource(id = R.string.registrarse_inicio_sesion))
+                append(" ")
                 withStyle(style = SpanStyle(color = Color.Blue)) {
-                    append("inicie sesión")
+                    append(stringResource(id = R.string.bienvenida_iniciar_sesion))
+
                 }
             }
 
