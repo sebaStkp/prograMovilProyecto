@@ -12,6 +12,11 @@ package com.ucb.perritos.di
 import com.ucb.perritos.appRoomDataBase.AppRoomDataBase
 
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
+//import com.ucb.perritos.features.buscarMascota.data.datasource.BuscarPerroLocalDataSource
+//import com.ucb.perritos.features.buscarMascota.data.repository.BuscarMascotaRepository
+//import com.ucb.perritos.features.buscarMascota.domain.repository.IBuscarMascotaRepository
+import com.ucb.perritos.features.buscarMascota.domain.usecase.ObtenerUbicacionActualUseCase
+import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaViewModel
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
@@ -166,5 +171,9 @@ val appModule = module {
     single<IPerfilPerroRepository> { PerfilPerroRepository(get()) }
     factory { ObtenerPerfilPerroUseCase(get()) }
     viewModel { PerfilPerroViewModel(get()) }
+
+
+//    factory { ObtenerUbicacionActualUseCase(get()) }
+    viewModel { BuscarMascotaViewModel() }
 }
 
