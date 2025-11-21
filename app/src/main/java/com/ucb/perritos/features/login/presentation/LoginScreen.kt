@@ -31,7 +31,7 @@ import com.ucb.perritos.R
 import com.ucb.perritos.features.login.presentation.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
 
-// --- COLORES DEL DISEÑO ---
+
 private val OrangePrimary = Color(0xFFF89A22)
 private val TextBlueGray = Color(0xFF6A8693)
 private val HeaderGray = Color(0xFFF2F2F2)
@@ -40,7 +40,8 @@ private val HeaderGray = Color(0xFFF2F2F2)
 fun LoginScreen(
     vm: LoginViewModel = koinViewModel(),
     irRegistroCuenta: () -> Unit,
-    irRegistroMascota: () -> Unit
+    irRegistroMascota: () -> Unit,
+    irMapa: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -48,12 +49,18 @@ fun LoginScreen(
     val state by vm.state.collectAsState()
     val context = LocalContext.current
 
-    // Escuchar el estado para navegación o errores
+
     LaunchedEffect(state) {
         when (val st = state) {
             is LoginViewModel.LoginStateUI.Success -> {
                 Toast.makeText(context, st.mensaje, Toast.LENGTH_SHORT).show()
-                irRegistroMascota()
+
+
+                if (st.irAlMapa) {
+                    irMapa()
+                } else {
+                    irRegistroMascota()
+                }
             }
             is LoginViewModel.LoginStateUI.Error -> {
                 Toast.makeText(context, st.message, Toast.LENGTH_LONG).show()
@@ -69,11 +76,11 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState()), // Scroll por si el teclado tapa campos
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // Contenedor del formulario (Subimos un poco con offset negativo para acercarlo a la onda)
+
             Column(
                 modifier = Modifier
                     .padding(horizontal = 24.dp)
@@ -81,7 +88,7 @@ fun LoginScreen(
             ) {
                 Spacer(modifier = Modifier.height(10.dp))
 
-                // 2. TÍTULOS
+
                 Text(
                     text = "Inicio de sesión",
                     color = OrangePrimary,
@@ -103,7 +110,7 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // 3. INPUTS (Estilo Labels Afuera)
+
                 LoginCustomTextField(
                     label = "Email",
                     value = email,
@@ -120,7 +127,7 @@ fun LoginScreen(
                     isPassword = true
                 )
 
-                // 4. OLVIDASTE CONTRASEÑA (Alineado a la derecha)
+
                 Box(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.CenterEnd
@@ -136,7 +143,7 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 5. BOTÓN INGRESAR
+
                 Button(
                     onClick = { vm.iniciarSesion(email, password) },
                     modifier = Modifier
@@ -157,7 +164,7 @@ fun LoginScreen(
                         )
                     } else {
                         Text(
-                            text = "Ingresar", // En tu diseño dice "Registrarme" pero es confuso para Login
+                            text = "Ingresar",
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -166,7 +173,7 @@ fun LoginScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // 6. CREAR CUENTA LINK
+
                 Text(
                     text = "Crearme una cuenta",
                     color = TextBlueGray,
@@ -184,9 +191,7 @@ fun LoginScreen(
     }
 }
 
-// --- HEADER CON FONDO ONDULADO ---
 
-// --- COMPONENTE INPUT PERSONALIZADO ---
 @Composable
 fun LoginCustomTextField(
     label: String,
@@ -196,7 +201,7 @@ fun LoginCustomTextField(
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        // Etiqueta arriba
+
         Text(
             text = label,
             color = TextBlueGray,
@@ -204,7 +209,7 @@ fun LoginCustomTextField(
             modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
         )
 
-        // Campo con borde naranja
+
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,

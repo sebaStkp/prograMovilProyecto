@@ -36,6 +36,7 @@ import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewM
 import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuarioLocalDataSource
 import com.ucb.perritos.features.registroUsuario.data.repository.RegistroUsuarioRepository
 import com.ucb.perritos.features.registroUsuario.domain.repository.IRegistroUsuarioRepository
+import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
@@ -142,7 +143,8 @@ val appModule = module {
     single { LoginDataStore(androidContext()) }
     single<ILoginRepository> { LoginRepository(get()) }
     factory { SetTokenUseCase(get()) }
-    viewModel { LoginViewModel(get(), get ()) }
+    factory { GetUserUseCase(get()) }
+    viewModel { LoginViewModel(get(), get (), get()) }
 
 
     viewModel { NavigationViewModel() }

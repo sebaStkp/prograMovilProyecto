@@ -50,7 +50,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.BuscarPerro.route
+        startDestination = Screen.Bienvenida.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -59,6 +59,9 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
                 },
                 irRegistroMascota = {
                     navController.navigate(Screen.RegistroPerro.route)
+                },
+                irMapa = {
+                    navController.navigate(Screen.BuscarPerro.route)
                 }
             )
         }
@@ -73,16 +76,20 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
             )
         }
         composable(Screen.RegistroPerro.route) {
-            RegistroPerroScreen()
+            RegistroPerroScreen(
+                irMapa = {
+                    navController.navigate(Screen.BuscarPerro.route)
+                }
+            )
         }
         composable(Screen.RegistroUsuario.route) {
             RegistroUsuarioScreen(
                 onVolverClick = {
                     navController.navigate(Screen.Bienvenida.route)
                 },
-//                on = {
-//                    navController.navigate(Screen.RegistroPerro.route)
-//                }
+                irLogin = {
+                    navController.navigate(Screen.Login.route)
+                }
             )
         }
         composable(Screen.Menu.route) {
