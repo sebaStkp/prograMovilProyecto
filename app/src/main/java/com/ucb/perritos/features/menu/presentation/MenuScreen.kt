@@ -27,16 +27,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MenuScreen() {
-    BottomNavigationBar()
+fun MenuScreen(
+
+) {
+    BottomNavigationBar(irMisPerros = {})
 }
 
 @Composable
-fun BottomNavigationBar() {
-
+fun BottomNavigationBar(
+    irMisPerros: () -> Unit
+) {
     val inactiveColor = Color(0xFF9E9E9E)
     val activeColor = Color(0xFFFF6F00)
-
 
     val activeGradient = Brush.linearGradient(
         colors = listOf(
@@ -84,30 +86,32 @@ fun BottomNavigationBar() {
                 label = "Seguro",
                 color = inactiveColor,
                 isActive = false,
-                icon = Icons.Default.Shield
+                icon = Icons.Default.Shield,
+                onClick = { /* Acción Seguro */ }
             )
             NavItem(
                 label = "Citas",
                 color = inactiveColor,
                 isActive = false,
-                icon = Icons.Default.Event
+                icon = Icons.Default.Event,
+                onClick = { /* Acción Citas */ }
             )
 
-
             Spacer(modifier = Modifier.width(80.dp))
-
 
             NavItem(
                 label = "Mascotas",
                 color = inactiveColor,
                 isActive = false,
-                icon = Icons.Default.Pets
+                icon = Icons.Default.Pets,
+                onClick = { irMisPerros() }
             )
             NavItem(
                 label = "Perfil",
                 color = inactiveColor,
                 isActive = false,
-                icon = Icons.Default.Person
+                icon = Icons.Default.Person,
+                onClick = { /* Acción Perfil */ }
             )
         }
 
@@ -129,7 +133,6 @@ fun BottomNavigationBar() {
                 },
             contentAlignment = Alignment.Center
         ) {
-
             Box(
                 modifier = Modifier
                     .size(60.dp)
@@ -152,14 +155,16 @@ fun NavItem(
     label: String,
     color: Color,
     isActive: Boolean,
-    icon: ImageVector
+    icon: ImageVector,
+    onClick: () -> Unit
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.clickable {
-
-        }
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .clickable { onClick() }
+            .padding(4.dp)
     ) {
         Icon(
             imageVector = icon,
@@ -176,7 +181,6 @@ fun NavItem(
             textAlign = TextAlign.Center
         )
 
-
         if (isActive) {
             Box(
                 modifier = Modifier
@@ -184,7 +188,6 @@ fun NavItem(
                     .background(Color(0xFFFF6F00), CircleShape)
             )
         } else {
-
             Spacer(modifier = Modifier.height(4.dp))
         }
     }
