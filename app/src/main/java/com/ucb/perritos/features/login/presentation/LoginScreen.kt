@@ -41,6 +41,7 @@ fun LoginScreen(
     vm: LoginViewModel = koinViewModel(),
     irRegistroCuenta: () -> Unit,
     irRegistroMascota: () -> Unit,
+    irMisPerros: () -> Unit,
     irMapa: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
@@ -57,7 +58,7 @@ fun LoginScreen(
 
 
                 if (st.irAlMapa) {
-                    irMapa()
+                    irMisPerros()
                 } else {
                     irRegistroMascota()
                 }
