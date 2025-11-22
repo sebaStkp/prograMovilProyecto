@@ -13,6 +13,7 @@ import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
 import com.ucb.perritos.features.menu.presentation.MenuScreen
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroScreen
+import com.ucb.perritos.features.perrosRegistrados.presentation.PerrosRegistradosScreen
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroScreen
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioScreen
 import com.ucb.perritos.ui.paginaDeCarga.PaginaDeCargaScreen
@@ -50,7 +51,7 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Bienvenida.route
+        startDestination = Screen.Login.route
     ) {
         composable(Screen.Login.route) {
             LoginScreen(
@@ -62,6 +63,9 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
                 },
                 irMapa = {
                     navController.navigate(Screen.BuscarPerro.route)
+                },
+                irMisPerros = {
+                    navController.navigate(Screen.MisPerros.route)
                 }
             )
         }
@@ -93,7 +97,9 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
             )
         }
         composable(Screen.Menu.route) {
-            MenuScreen()
+            MenuScreen(
+
+            )
         }
         composable(Screen.PerfilPerro.route) {
             PerfilPerroScreen()
@@ -112,6 +118,16 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
         composable(Screen.BuscarPerro.route) {
             BuscarMascotaScreen()
+        }
+        composable(Screen.MisPerros.route) {
+            PerrosRegistradosScreen(
+                irRegistroPerro = {
+                    navController.navigate(Screen.RegistroPerro.route)
+                },
+//                irEditarPerro = {
+//                    navController.navigate("registro_mascota?id=$idPerro&editar=true")
+//                }
+            )
         }
     }
 
