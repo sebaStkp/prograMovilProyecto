@@ -15,8 +15,8 @@ import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 //import com.ucb.perritos.features.buscarMascota.data.datasource.BuscarPerroLocalDataSource
 //import com.ucb.perritos.features.buscarMascota.data.repository.BuscarMascotaRepository
 //import com.ucb.perritos.features.buscarMascota.domain.repository.IBuscarMascotaRepository
-import com.ucb.perritos.features.buscarMascota.domain.usecase.ObtenerUbicacionActualUseCase
 import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaViewModel
+import com.ucb.perritos.features.core.supabase
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
@@ -28,7 +28,11 @@ import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepos
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
-import com.ucb.perritos.features.registroMascota.data.datasource.RegistroPerroLocalDataSource
+import com.ucb.perritos.features.perrosRegistrados.domain.EditarPerroUseCase
+import com.ucb.perritos.features.perrosRegistrados.domain.ObtenerPerrosUseCase
+import com.ucb.perritos.features.perrosRegistrados.presentation.PerrosRegistradosViewModel
+import com.ucb.perritos.features.registroMascota.data.datasource.PerroLocalDataSource
+import com.ucb.perritos.features.registroMascota.data.datasource.PerroRemoteSupabase
 import com.ucb.perritos.features.registroMascota.data.repository.RegistroPerroRepository
 import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
@@ -46,7 +50,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-import io.github.jan.supabase.postgrest.Postgrest
 //import io.github.jan.supabase.gotrue.
 //import retrofit2.Retrofit
 //import retrofit2.converter.gson.GsonConverterFactory
@@ -60,6 +63,10 @@ import io.github.jan.supabase.postgrest.Postgrest
 //}
 //
 val appModule = module {
+
+
+    single { supabase }
+
 //    single {
 //        createSupabaseClient(
 //            supabaseUrl = "https://TU_URL_DE_SUPABASE.supabase.co",
@@ -153,13 +160,15 @@ val appModule = module {
 
     single { AppRoomDataBase.getDatabase((get())) }
     single(named("registroPerroDao")) { get<AppRoomDataBase>().registroPerroDao() }
-    single { RegistroPerroLocalDataSource(get(named("registroPerroDao"))) }
-    single<IRegistroPerroRepository> { RegistroPerroRepository(get()) }
+    single { PerroLocalDataSource(get(named("registroPerroDao"))) }
+    single { PerroRemoteSupabase(get()) }
+    single<IRegistroPerroRepository> { RegistroPerroRepository(get(), get()) }
     //single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     single { EstablecerPerfilActualUseCase(get()) }
 
+    factory { EditarPerroUseCase(get()) }
     factory { RegistrarPerroUseCase(get()) }
-    viewModel { RegistroPerroViewModel(get(), get()) }
+    viewModel { RegistroPerroViewModel(get(), get(), get()) }
 
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
@@ -177,5 +186,10 @@ val appModule = module {
 
 //    factory { ObtenerUbicacionActualUseCase(get()) }
     viewModel { BuscarMascotaViewModel() }
+
+
+    factory { ObtenerPerrosUseCase(get()) }
+    viewModel { PerrosRegistradosViewModel(get()) }
+
 }
 
