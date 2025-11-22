@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ucb.perritos.features.registroMascota.domain.model.RegistroPerroModel
+import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -139,11 +139,13 @@ fun RegistroPerroScreen(
                 Button(
                     onClick = {
                         vm.registrarPerro(
-                            RegistroPerroModel(
-                                nombrePerro = nombrePerro,
+                            PerroModel(
+                                nombre_perro = nombrePerro,
                                 raza = raza,
                                 edad = edad.toIntOrNull() ?: 0,
-                                descripcion = descripcion
+                                descripcion = descripcion,
+                                id_usuario = "",
+                                foto_perro = null,
                             )
                         )
                     },

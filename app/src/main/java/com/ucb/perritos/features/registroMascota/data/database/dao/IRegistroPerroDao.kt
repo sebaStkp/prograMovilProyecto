@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPerroEntity
 
 @Dao
@@ -22,4 +23,7 @@ interface IRegistroPerroDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertPerros(lists: List<RegistroPerroEntity>)
+
+    @Update
+    suspend fun update(perro: RegistroPerroEntity): Int
 }
