@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+
+option java_package = "com.develoop.logs";
+
+
+service LogService {
+  rpc send(LogRequest) returns (LogResponse);
+}
+
+
+message LogRequest {
+  repeated LogData logs = 1;
+}
+
+
+message LogData {
+  bytes androidId = 1;
+  bytes appInstanceId = 2;
+  ELogLevel logLevel = 3;
+  string message = 4;
+  string stackTrace = 5;
+  int64 serverTimeStamp = 6;
+  int64 mobileTimeStamp = 7;
+  int32 versionCode = 8;
+  string userId = 9;
+}
+
+
+message LogResponse {
+  ELogResultCode resultCode = 1;
+}
+
+
+enum ELogResultCode {
+  LOG_RESULT_UNDEFINED = 0;
+  LOG_RESULT_ERROR = 1;
+  LOG_RESULT_OK = 2;
+}
+
+
+enum ELogLevel {
+  LEVEL_UNKNOWN = 0;
+  LEVEL_INFO = 1;
+  LEVEL_DEBUG = 2;
+  LEVEL_TRACE = 3;
+  LEVEL_WARN = 4;
+  LEVEL_ERROR = 5;
+  LEVEL_FATAL = 6;
+}
