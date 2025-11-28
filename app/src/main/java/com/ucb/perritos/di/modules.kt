@@ -168,7 +168,7 @@ val appModule = module {
 
     factory { EditarPerroUseCase(get()) }
     factory { RegistrarPerroUseCase(get()) }
-    viewModel { RegistroPerroViewModel(get(), get(), get()) }
+    viewModel { RegistroPerroViewModel(get(), get(), get(), appContext = androidContext()) }
 
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }

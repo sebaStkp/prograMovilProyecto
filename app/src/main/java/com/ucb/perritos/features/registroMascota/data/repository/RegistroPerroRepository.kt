@@ -12,11 +12,14 @@ class RegistroPerroRepository(
     private val registroPerroLocalDataSource: PerroLocalDataSource,
     private val registroPerroSupabase: PerroRemoteSupabase
 ): IRegistroPerroRepository {
-    override suspend fun registrarPerro(perro: PerroModel): Result<PerroModel> {
+    override suspend fun registrarPerro(perro: PerroModel,avatarBytes: ByteArray?): Result<PerroModel> {
         return try {
-            registroPerroSupabase.registrarEnSupabase(perro)
-            registroPerroLocalDataSource.insert(perro)
-            Result.success(perro)
+            //registroPerroSupabase.registrarEnSupabase(perro)
+            //registroPerroLocalDataSource.insert(perro)
+            //Result.success(perro)
+            val perroConDatos = registroPerroSupabase.registrarEnSupabase(perro, avatarBytes)
+            // 2) Guardar en Room local
+            registroPerroLocalDataSource.insert(perroConDatos)
         } catch (e: Exception) {
             Result.failure(e)
         }

@@ -4,7 +4,7 @@ import io.github.jan.supabase.postgrest.Postgrest
 
 
 import io.github.jan.supabase.auth.Auth
-
+import io.github.jan.supabase.storage.Storage
 import com.ucb.perritos.BuildConfig
 
 import io.github.jan.supabase.createSupabaseClient
@@ -15,4 +15,5 @@ val supabase = createSupabaseClient(
 ) {
     install(Postgrest)
     install(Auth)
+    install(Storage)
 }

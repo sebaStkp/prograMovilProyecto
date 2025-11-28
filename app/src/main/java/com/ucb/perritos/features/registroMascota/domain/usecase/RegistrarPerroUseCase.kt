@@ -6,7 +6,7 @@ import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerr
 class RegistrarPerroUseCase(
     val repository: IRegistroPerroRepository
 ) {
-    suspend fun invoke(perro: PerroModel): Result<PerroModel>{
-        return repository.registrarPerro(perro)
+    suspend fun invoke(perro: PerroModel,avatarBytes: ByteArray?): Result<PerroModel>{
+        return repository.registrarPerro(perro, avatarBytes)
     }
 }
