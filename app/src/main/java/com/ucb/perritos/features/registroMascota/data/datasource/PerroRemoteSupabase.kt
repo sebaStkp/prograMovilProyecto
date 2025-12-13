@@ -33,9 +33,7 @@ class PerroRemoteSupabase(
                 .upload(path, avatarBytes)
 
             // Ojo: según versión puede ser publicUrl(...) o getPublicUrl(...)
-//            avatarUrl = supabase.storage
-//                .from("perros_avatars")
-//                .publicUrl(path)           // si te marca error, prueba getPublicUrl(path)
+            avatarUrl = supabase.storage.from("perros_avatars").publicUrl(path)           // si te marca error, prueba getPublicUrl(path)
         }
 
         val perroDto = PerroDto(
