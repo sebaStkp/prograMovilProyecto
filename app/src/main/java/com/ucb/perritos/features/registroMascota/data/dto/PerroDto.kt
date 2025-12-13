@@ -10,5 +10,6 @@ data class PerroDto(
     val raza: String,
     val edad: Int,
     val descripcion: String,
-    @SerialName("id_usuario") val id_usuario: String
+    @SerialName("id_usuario") val id_usuario: String,
+    @SerialName("foto_perro") val foto_perro: String? = null
 )

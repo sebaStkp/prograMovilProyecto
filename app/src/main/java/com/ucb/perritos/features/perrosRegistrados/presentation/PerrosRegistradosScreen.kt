@@ -26,6 +26,8 @@ import com.ucb.perritos.R
 import com.ucb.perritos.features.registroMascota.data.dto.PerroDto
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
+import coil3.compose.AsyncImage
+import androidx.compose.ui.layout.ContentScale
 
 
 private val OrangePrimary = Color(0xFFF89A22)
@@ -157,12 +159,21 @@ fun DogCardItem(
                         .background(Color.LightGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.logo_perrito),
-                        contentDescription = null,
-                        tint = Color.Unspecified,
-                        modifier = Modifier.size(50.dp)
-                    )
+                    if (!perro.foto_perro.isNullOrBlank()) {
+                        AsyncImage(
+                            model = perro.foto_perro,
+                            contentDescription = "Avatar del perro",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.logo_perrito),
+                            contentDescription = null,
+                            tint = Color.Unspecified,
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(16.dp))
 

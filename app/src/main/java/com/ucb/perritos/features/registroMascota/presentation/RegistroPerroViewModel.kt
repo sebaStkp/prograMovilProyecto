@@ -22,6 +22,7 @@ class RegistroPerroViewModel(
     private val registrarPerroUseCase: RegistrarPerroUseCase,
     private val establecerPerfilActualUseCase: EstablecerPerfilActualUseCase,
     private val editarPerroUseCase: EditarPerroUseCase,
+    private val appContext: android.content.Context,
 ): ViewModel() {
 
     sealed class RegistrarPerroStateUI {
@@ -66,10 +67,17 @@ class RegistroPerroViewModel(
             )
         }
     }
-    fun registrarPerro(perro: PerroModel) {
+    fun registrarPerro(perro: PerroModel, avatarUri: android.net.Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.value = RegistrarPerroStateUI.Loading
-            val result = registrarPerroUseCase.invoke(perro)
+
+            val avatarBytes: ByteArray? = avatarUri?.let { uri ->
+                appContext.contentResolver.openInputStream(uri)?.use { input ->
+                    input.readBytes()
+                }
+            }
+
+            val result = registrarPerroUseCase.invoke(perro, avatarBytes)
 
             result.fold(
                 onSuccess = { perroGuardado ->

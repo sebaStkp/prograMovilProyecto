@@ -1,6 +1,9 @@
 package com.ucb.perritos.features.registroMascota.presentation
 
+import android.net.Uri
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -18,12 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -44,6 +49,17 @@ fun RegistroPerroScreen(
 
     val state by vm.state.collectAsState()
     val context = LocalContext.current
+
+    // 👇 nuevo: estado para el avatar
+    var avatarUri by remember { mutableStateOf<Uri?>(null) }
+
+    // 👇 launcher para abrir galería
+    val pickImageLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent()
+        ) { uri: Uri? ->
+            avatarUri = uri
+        }
 
     LaunchedEffect(state) {
         when (val st = state) {
@@ -84,7 +100,12 @@ fun RegistroPerroScreen(
             ) {
 
 
-                PetPhotoSection()
+                PetPhotoSection(
+                    avatarUri = avatarUri,
+                    onClickChangePhoto = {
+                        pickImageLauncher.launch("image/*")
+                    }
+                )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -146,7 +167,8 @@ fun RegistroPerroScreen(
                                 descripcion = descripcion,
                                 id_usuario = "",
                                 foto_perro = null,
-                            )
+                            ),
+                            avatarUri = avatarUri
                         )
                     },
                     modifier = Modifier
@@ -179,8 +201,7 @@ fun RegistroPerroScreen(
 
 
 @Composable
-fun PetPhotoSection() {
-
+fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -198,12 +219,29 @@ fun PetPhotoSection() {
                     .background(Color(0xFFE0E0E0)),
                 contentAlignment = Alignment.Center
             ) {
-                Icon(
-                    imageVector = Icons.Default.Person,
-                    contentDescription = "Foto Mascota",
-                    tint = TextBlueGray,
-                    modifier = Modifier.size(70.dp)
-                )
+                if (avatarUri != null) {
+                    AsyncImage(
+                        model = avatarUri,
+                        contentDescription = "Foto Mascota",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Foto Mascota",
+                        tint = TextBlueGray,
+                        modifier = Modifier.size(70.dp)
+                    )
+                }
+//                Icon(
+//                    imageVector = Icons.Default.Person,
+//                    contentDescription = "Foto Mascota",
+//                    tint = TextBlueGray,
+//                    modifier = Modifier.size(70.dp)
+//                )
             }
 
 
@@ -215,12 +253,17 @@ fun PetPhotoSection() {
                     .border(1.dp, OrangePrimary, CircleShape)
                     .padding(4.dp)
             ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowUpward,
-                    contentDescription = "Subir foto",
-                    tint = OrangePrimary,
+                IconButton(
+                    onClick = onClickChangePhoto,
                     modifier = Modifier.fillMaxSize()
-                )
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowUpward,
+                        contentDescription = "Subir foto",
+                        tint = OrangePrimary,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
         }
     }

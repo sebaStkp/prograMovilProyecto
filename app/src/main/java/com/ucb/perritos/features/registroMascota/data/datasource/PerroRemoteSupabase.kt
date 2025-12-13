@@ -7,7 +7,7 @@ import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import io.github.jan.supabase.SupabaseClient
 
 import io.github.jan.supabase.auth.auth
-
+import io.github.jan.supabase.storage.storage
 import io.github.jan.supabase.postgrest.from
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
@@ -15,19 +15,34 @@ import kotlinx.serialization.json.put
 class PerroRemoteSupabase(
     private val supabase: SupabaseClient
 ) {
-    suspend fun registrarEnSupabase(perro: PerroModel): PerroModel {
+    suspend fun registrarEnSupabase(perro: PerroModel,avatarBytes: ByteArray?): PerroModel {
 
 
         val userId = supabase.auth.currentUserOrNull()?.id
             ?: throw Exception("No hay usuario logueado para registrar la mascota")
 
+        var avatarUrl: String? = null
+
+        if (avatarBytes != null) {
+            val fileName = "avatar_${userId}_${System.currentTimeMillis()}.jpg"
+            val path = "avatars/$fileName"   // carpeta dentro del bucket
+
+            // 👇 bucket que tú crees en Supabase Storage
+            supabase.storage
+                .from("perros_avatars")
+                .upload(path, avatarBytes)
+
+            // Ojo: según versión puede ser publicUrl(...) o getPublicUrl(...)
+            avatarUrl = supabase.storage.from("perros_avatars").publicUrl(path)           // si te marca error, prueba getPublicUrl(path)
+        }
 
         val perroDto = PerroDto(
             nombre_perro = perro.nombre_perro ?: "",
             raza = perro.raza ?: "",
             edad = perro.edad ?: 0,
             descripcion = perro.descripcion ?: "",
-            id_usuario = userId
+            id_usuario = userId,
+            foto_perro = avatarUrl
         )
 
 
@@ -44,7 +59,7 @@ class PerroRemoteSupabase(
             println("No se pudo actualizar la etiqueta tiene_perro: ${e.message}")
         }
 
-        return perro.copy(id_usuario = userId)
+        return perro.copy(id_usuario = userId,foto_perro = avatarUrl)
     }
 
     suspend fun getAllPerros(id_usuario: String): List<PerroDto> {
