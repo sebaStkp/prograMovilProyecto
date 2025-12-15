@@ -16,7 +16,7 @@ class RegistroUsuarioRepository(
     }
 
     override suspend fun getActualUser(): Result<UsuarioModel> {
-        TODO("Not yet implemented")
+        return registroUsuarioLocalDataSource.getUsuarioActual()
     }
 
 }

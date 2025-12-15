@@ -28,6 +28,7 @@ import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepos
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
+import com.ucb.perritos.features.perfilUsuario.presentation.PerfilUsuarioViewModel
 
 
 import com.ucb.perritos.features.perrosRegistrados.presentation.PerrosRegistradosViewModel
@@ -43,6 +44,7 @@ import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuario
 import com.ucb.perritos.features.registroUsuario.data.repository.RegistroUsuarioRepository
 import com.ucb.perritos.features.registroUsuario.domain.repository.IRegistroUsuarioRepository
 import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
+import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUsuarioActual
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
@@ -192,6 +194,9 @@ val appModule = module {
 
     factory { ObtenerPerrosUseCase(get()) }
     viewModel { PerrosRegistradosViewModel(get()) }
+
+    factory { GetUsuarioActual(get()) }
+    viewModel { PerfilUsuarioViewModel(get()) }
 
 }
 
