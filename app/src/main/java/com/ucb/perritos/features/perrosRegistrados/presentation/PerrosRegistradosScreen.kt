@@ -100,13 +100,14 @@ fun PerrosRegistradosScreen(
                 }
                 is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Success -> {
                     LazyColumn(
-                        contentPadding = PaddingValues(bottom = 80.dp),
+                        // CAMBIO 1: Aumentamos el padding inferior de la lista (80dp -> 180dp)
+                        // para que el último perro se vea completo encima del botón.
+                        contentPadding = PaddingValues(bottom = 180.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         items(st.perros) { perro ->
                             DogCardItem(
                                 perro = perro,
-
                                 onEditarClick = {
                                     vm.onEditarPerroClicked(perro.id ?: 0)
                                 }
@@ -123,7 +124,7 @@ fun PerrosRegistradosScreen(
             onClick = { irRegistroPerro() },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 24.dp)
+                .padding(bottom = 110.dp)
                 .fillMaxWidth()
                 .height(50.dp),
             shape = RoundedCornerShape(25.dp),

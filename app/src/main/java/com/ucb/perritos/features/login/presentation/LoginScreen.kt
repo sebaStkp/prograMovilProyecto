@@ -129,18 +129,18 @@ fun LoginScreen(
                 )
 
 
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.CenterEnd
-                ) {
-                    TextButton(onClick = { /* Acción Olvidé contraseña */ }) {
-                        Text(
-                            text = "Olvidaste tu contraseña?",
-                            color = OrangePrimary,
-                            fontSize = 14.sp
-                        )
-                    }
-                }
+//                Box(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    contentAlignment = Alignment.CenterEnd
+//                ) {
+//                    TextButton(onClick = { /* Acción Olvidé contraseña */ }) {
+//                        Text(
+//                            text = "Olvidaste tu contraseña?",
+//                            color = OrangePrimary,
+//                            fontSize = 14.sp
+//                        )
+//                    }
+//                }
 
                 Spacer(modifier = Modifier.height(24.dp))
 

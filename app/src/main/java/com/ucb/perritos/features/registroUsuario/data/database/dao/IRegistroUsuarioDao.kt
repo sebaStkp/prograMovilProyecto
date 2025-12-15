@@ -22,6 +22,9 @@ interface IRegistroUsuarioDao {
     @Query("DELETE FROM usuarios")
     suspend fun deleteAll()
 
+    @Query("SELECT * FROM usuarios ORDER BY id DESC LIMIT 1")
+    fun getUsuarioActual(): RegistroUsuarioEntity? // O Flow<UsuarioEntity?>
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertUsuarios(lists: List<RegistroUsuarioEntity>)

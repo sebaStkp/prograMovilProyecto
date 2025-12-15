@@ -3,7 +3,7 @@ package com.ucb.perritos.features.perrosRegistrados.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucb.perritos.features.core.supabase
-import com.ucb.perritos.features.perrosRegistrados.domain.ObtenerPerrosUseCase
+import com.ucb.perritos.features.registroMascota.domain.usecase.ObtenerPerrosUseCase
 import com.ucb.perritos.features.registroMascota.data.dto.PerroDto
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase

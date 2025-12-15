@@ -15,4 +15,8 @@ class RegistroUsuarioRepository(
         return registroUsuarioLocalDataSource.getUser(email = email)
     }
 
+    override suspend fun getActualUser(): Result<UsuarioModel> {
+        TODO("Not yet implemented")
+    }
+
 }

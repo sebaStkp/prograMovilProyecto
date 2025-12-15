@@ -28,4 +28,17 @@ class RegistroUsuarioLocalDataSource(
             Result.failure(e)
         }
     }
+
+    suspend fun getUsuarioActual(): Result<UsuarioModel> {
+        return try {
+            val entity = dao.getUsuarioActual()
+            if (entity != null) {
+                Result.success(entity.toModel())
+            } else {
+                Result.failure(Exception("Usuario no encontrado"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

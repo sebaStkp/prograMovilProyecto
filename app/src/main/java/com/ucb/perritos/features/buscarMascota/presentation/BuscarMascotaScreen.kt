@@ -141,12 +141,12 @@ fun MapaOSMContent(ubicacion: BuscarMascotaModel) {
                 controller.setCenter(geoPoint)
 
 
-                val marker = Marker(this)
-                marker.position = geoPoint
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                marker.title = "Mi Ubicación"
-                marker.snippet = ubicacion.direccion
-                overlays.add(marker)
+//                val marker = Marker(this)
+//                marker.position = geoPoint
+//                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+//                marker.title = "Mi Ubicación"
+//                marker.snippet = ubicacion.direccion
+//                overlays.add(marker)
             }
         },
         modifier = Modifier.fillMaxSize(),
@@ -154,13 +154,13 @@ fun MapaOSMContent(ubicacion: BuscarMascotaModel) {
             mapView.controller.setCenter(geoPoint)
 
             mapView.overlays.clear()
-            val marker = Marker(mapView)
-            marker.position = geoPoint
-            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-            marker.title = "Mi Ubicación"
-            marker.snippet = ubicacion.direccion
-            mapView.overlays.add(marker)
-            mapView.invalidate()
+//            val marker = Marker(mapView)
+//            marker.position = geoPoint
+//            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+//            marker.title = "Mi Ubicación"
+//            marker.snippet = ubicacion.direccion
+//            mapView.overlays.add(marker)
+//            mapView.invalidate()
         }
     )
 }
@@ -174,9 +174,9 @@ fun InfoSection(direccion: String) {
             .padding(24.dp)
             .padding(bottom = 40.dp)
     ) {
-        LocationInfoRow(label = "Ultima ubicacion:", value = "Av America")
-        Spacer(modifier = Modifier.height(16.dp))
-        LocationInfoRow(label = "Ubicacion actual:", value = direccion)
+//        LocationInfoRow(label = "Ultima ubicacion:", value = "Av America")
+//        Spacer(modifier = Modifier.height(16.dp))
+//        LocationInfoRow(label = "Ubicacion actual:", value = direccion)
     }
 }
 

@@ -101,21 +101,21 @@ fun ProfilePhotoSection() {
         }
 
 
-        Box(
-            modifier = Modifier
-                .size(30.dp)
-                .offset(x = 4.dp, y = 4.dp)
-                .background(WhiteBackground, CircleShape)
-                .border(1.dp, OrangePrimary, CircleShape)
-                .padding(4.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.FileUpload,
-                contentDescription = "Subir foto",
-                tint = OrangePrimary,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
+//        Box(
+//            modifier = Modifier
+//                .size(30.dp)
+//                .offset(x = 4.dp, y = 4.dp)
+//                .background(WhiteBackground, CircleShape)
+//                .border(1.dp, OrangePrimary, CircleShape)
+//                .padding(4.dp)
+//        ) {
+//            Icon(
+//                imageVector = Icons.Default.FileUpload,
+//                contentDescription = "Subir foto",
+//                tint = OrangePrimary,
+//                modifier = Modifier.fillMaxSize()
+//            )
+//        }
     }
 }
 

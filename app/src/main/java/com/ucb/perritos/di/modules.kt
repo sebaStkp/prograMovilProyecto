@@ -28,13 +28,15 @@ import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepos
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
-import com.ucb.perritos.features.perrosRegistrados.domain.EditarPerroUseCase
-import com.ucb.perritos.features.perrosRegistrados.domain.ObtenerPerrosUseCase
+
+
 import com.ucb.perritos.features.perrosRegistrados.presentation.PerrosRegistradosViewModel
 import com.ucb.perritos.features.registroMascota.data.datasource.PerroLocalDataSource
 import com.ucb.perritos.features.registroMascota.data.datasource.PerroRemoteSupabase
 import com.ucb.perritos.features.registroMascota.data.repository.RegistroPerroRepository
 import com.ucb.perritos.features.registroMascota.domain.repository.IRegistroPerroRepository
+import com.ucb.perritos.features.registroMascota.domain.usecase.EditarPerroUseCase
+import com.ucb.perritos.features.registroMascota.domain.usecase.ObtenerPerrosUseCase
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
 import com.ucb.perritos.features.registroMascota.presentation.RegistroPerroViewModel
 import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuarioLocalDataSource
@@ -168,7 +170,7 @@ val appModule = module {
 
     factory { EditarPerroUseCase(get()) }
     factory { RegistrarPerroUseCase(get()) }
-    viewModel { RegistroPerroViewModel(get(), get(), get(), appContext = androidContext()) }
+    viewModel { RegistroPerroViewModel(get(),get(),get(), appContext = androidContext())}
 
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }

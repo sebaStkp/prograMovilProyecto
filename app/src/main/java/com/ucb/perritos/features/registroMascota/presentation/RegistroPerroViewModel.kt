@@ -4,9 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucb.perritos.features.core.supabase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
-import com.ucb.perritos.features.perrosRegistrados.domain.EditarPerroUseCase
+
 import com.ucb.perritos.features.registroMascota.data.dto.PerroDto
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
+import com.ucb.perritos.features.registroMascota.domain.usecase.EditarPerroUseCase
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.postgrest.from

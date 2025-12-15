@@ -13,10 +13,7 @@ sealed class Screen(val route: String) {
     object PaginaDeCarga : Screen("pagina_de_carga")
     object BuscarPerro : Screen("buscar_perro")
     object MisPerros: Screen("mis_perros")
+    object PerfilUsuario: Screen("perfil_usuario")
 
-//")
-//
-//    object CardExamples: Screen("card")
-//    object Dollar: Screen("dollar")
-//    object PopularMovies: Screen("popularMovies")
+
 }

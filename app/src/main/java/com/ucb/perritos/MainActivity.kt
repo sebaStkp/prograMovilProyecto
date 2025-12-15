@@ -19,7 +19,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ucb.perritos.features.header.AppHeader
-import com.ucb.perritos.features.menu.presentation.MenuScreen
+//import com.ucb.perritos.features.menu.presentation.MenuScreen
 
 import com.ucb.perritos.navigation.AppNavigation
 import com.ucb.perritos.navigation.NavigationViewModel
@@ -46,23 +46,23 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             Scaffold(
-                bottomBar = {
-                    MenuScreen()
-                },
+//                bottomBar = {
+//                    MenuScreen()
+//                },
                 content = { paddingValues ->
-                    // USAMOS UNA COLUMNA PARA APILAR: HEADER + PANTALLAS
+
                     Column(
                         modifier = Modifier
                             .padding(paddingValues)
-                            .fillMaxSize() // Llenar la pantalla disponible
+                            .fillMaxSize()
                     ) {
-                        // 1. EL HEADER GLOBAL (Fijo arriba en todas las páginas)
+
                         AppHeader()
 
-                        // 2. EL CONTENEDOR DE TUS PANTALLAS
+
                         Box(
                             modifier = Modifier
-                                .weight(1f) // Ocupa todo el espacio restante
+                                .weight(1f)
                                 .navigationBarsPadding()
                         ) {
                             AppNavigation(navigationViewModel)
@@ -82,24 +82,24 @@ class MainActivity : ComponentActivity() {
 
 
 //class MainActivity : ComponentActivity() {
-//    private val navigationViewModel: NavigationViewModel by viewModels()
-//    private var currentIntent: Intent? = null
+
+
 //
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        currentIntent = intent
+
+
+
 //
-//        enableEdgeToEdge()
-//        setContent {
-//            LaunchedEffect(Unit) {
-//                Log.d("MainActivity", "onCreate - Procesando intent inicial")
-//                navigationViewModel.handleDeepLink(currentIntent)
-//            }
+
+
+
+
+
+
 //
-//            LaunchedEffect(Unit) {
-//                snapshotFlow { currentIntent }
-//                    .distinctUntilChanged()
-//                    .collect { intent ->
+
+
+
+
 //                        Log.d("MainActivity", "Nuevo intent recibido: ${intent?.action}")
 //                        navigationViewModel.handleDeepLink(intent)
 //                    }
