@@ -2,7 +2,7 @@ package com.ucb.perritos.features.registroUsuario.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucb.perritos.features.core.supabase
+//import com.ucb.perritos.features.core.supabase
 
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 import io.github.jan.supabase.auth.auth
@@ -14,11 +14,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
+import io.github.jan.supabase.SupabaseClient
 
 import io.github.jan.supabase.auth.auth
 
 
-class RegistroUsuarioViewModel : ViewModel() {
+class RegistroUsuarioViewModel(
+    private val supabaseClient: SupabaseClient
+) : ViewModel() {
 
 
     sealed class RegistrarUsuarioStateUI {
@@ -48,7 +51,7 @@ class RegistroUsuarioViewModel : ViewModel() {
 
             try {
 
-                supabase.auth.signUpWith(Email) {
+                supabaseClient.auth.signUpWith(Email){
                     this.email = email
                     this.password = pass
                     data = buildJsonObject {
