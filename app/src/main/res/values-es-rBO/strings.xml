@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Loco xml export: Android strings
+ Project: Untitled project
+ Locale: es-BO, Spanish (Bolivia)
+ Exported by: Agustinrobolero Ledezma
+ Exported at: Tue, 16 Dec 2025 01:10:49 -0400
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Where am I?</string>
+    <string name="bienvenida_name">bienvenida_name</string>
+    <string name="registrarse_inicio_sesion">registrarse_inicio_sesion</string>
+    <string name="bienvenida_iniciar_sesion">bienvenida_iniciar_sesion</string>
+    <string name="hello_word">hello_word</string>
+    <string name="donde_estoy">DONDE ESTOY?</string>
+    <string name="Inicio_Sesion">Inicio de sesión</string>
+    <string name="email">Email</string>
+    <string name="Creame_cuenta">Crearme una cuenta</string>
+    <string name="ingresar">Ingresar</string>
+    <string name="mascotas">Mascotas</string>
+    <string name="perfil">Perfil</string>
+    <string name="mapa">Mapa</string>
+    <string name="Perfil_mascota">Perfil de la mascota</string>
+    <string name="Perro_avatar">Avatar perro</string>
+    <string name="fotos_perro">FOTOS DEL PERRO</string>
+    <string name="mi_perfil">Mi Perfil</string>
+    <string name="sin_nombre">Sin nombre</string>
+    <string name="correo_electronico">Correo Electrónico</string>
+    <string name="sin_email">Sin email</string>
+    <string name="mis_perros">Mis perros</string>
+    <string name="No_tienes_perros_registrados">No tienes perros registrados aun</string>
+    <string name="Registrar_perro">Registrar Nuevo Perro</string>
+    <string name="raza">Raza</string>
+    <string name="edad">Edad</string>
+    <string name="anios">años</string>
+    <string name="ver_detalles">Ver detalles</string>
+    <string name="editar">Editar</string>
+    <string name="Error_obteniendo_perros">Error obteniendo perros</string>
+    <string name="No_hay_sesion_activa">No hay sesión activa.</string>
+    <string name="Mascota_registrada_con_exito">¡Mascota registrada con éxito!</string>
+    <string name="registro_mascota">Registro de Mascota</string>
+    <string name="nombre_perro">Nombre del perro</string>
+    <string name="bienvenido_de_nuevo">Bienvenido de nuevo!!</string>
+    <string name="descripcion">Descripcion</string>
+    <string name="registrarme">Registrarme</string>
+    <string name="subir_foto">Subir foto</string>
+    <string name="foto_mascota">Foto Mascota</string>
+    <string name="No_econtro_ID">No se encontró el ID del perro a editar</string>
+    <string name="Error_editar">Error al editar</string>
+    <string name="error_registro_perro">Error al registrar perro</string>
+    <string name="registro_usuario">Registro de Usuario</string>
+    <string name="foto_perfil">Foto de perfil</string>
+    <string name="confirmar_contrasenia">Confirmar contraseñia</string>
+    <string name="cuenta_creada">Cuenta creada</string>
+    <string name="ir_iniciar_sesion">Ir a Iniciar Sesión</string>
+    <string name="porfavor_llena_los_campos">Por favor, llena todos los campos.</string>
+    <string name="Este_correo_ya_registrado">Este correo ya está registrado.</string>
+    <string name="la_contrasenia_es_muy_debil">La contraseña es muy débil (mínimo 6 caracteres).</string>
+    <string name="el_email_no_es_valido">El email no es válido.</string>
+    <string name="contrasenia">Contraseñia</string>
+    <string name="Aniadir_Foto">Añadir foto</string>
+    <string name="nombre_duenio">Nombre del Dueño</string>
+    <string name="exepcion">Excepción</string>
+    <string name="ubicacion_mascotas">Ubicación de mascotas</string>
+</resources>
