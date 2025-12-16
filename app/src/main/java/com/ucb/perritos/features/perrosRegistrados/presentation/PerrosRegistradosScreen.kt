@@ -38,6 +38,7 @@ private val TextGray = Color(0xFF9E9E9E)
 fun PerrosRegistradosScreen(
     vm: PerrosRegistradosViewModel = koinViewModel(),
     irRegistroPerro: () -> Unit,
+    irDetallePerro: (Long) -> Unit
 ) {
     val state by vm.state.collectAsState()
 
@@ -108,9 +109,8 @@ fun PerrosRegistradosScreen(
                         items(st.perros) { perro ->
                             DogCardItem(
                                 perro = perro,
-                                onEditarClick = {
-                                    vm.onEditarPerroClicked(perro.id ?: 0)
-                                }
+                                onEditarClick = { vm.onEditarPerroClicked(perro.id ?: 0) },
+                                irDetallePerro = { irDetallePerro(perro.id?.toLong() ?: 0L) }
                             )
                         }
                     }
@@ -139,9 +139,7 @@ fun PerrosRegistradosScreen(
 }
 
 @Composable
-fun DogCardItem(
-    perro: PerroDto,
-    onEditarClick: () -> Unit
+fun DogCardItem(perro: PerroDto, onEditarClick: () -> Unit, irDetallePerro: () -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -160,9 +158,10 @@ fun DogCardItem(
                         .background(Color.LightGray),
                     contentAlignment = Alignment.Center
                 ) {
-                    if (!perro.foto_perro.isNullOrBlank()) {
+                    val url = perro.foto_perro
+                    if (!url.isNullOrBlank()) {
                         AsyncImage(
-                            model = perro.foto_perro,
+                            model = url,
                             contentDescription = "Avatar del perro",
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
@@ -197,12 +196,15 @@ fun DogCardItem(
 
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 Button(
-                    onClick = {},
+                    onClick = irDetallePerro,
                     colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary),
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.weight(1f).height(36.dp),
                     contentPadding = PaddingValues(0.dp)
-                ) { Text("Ver detalles", fontSize = 12.sp) }
+                ) {
+                    Text("Ver detalles", fontSize = 12.sp)
+                }
+
 
                 OutlinedButton(
                     onClick = { onEditarClick() },
