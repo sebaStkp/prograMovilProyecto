@@ -2,13 +2,14 @@ package com.ucb.perritos.features.perrosRegistrados.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucb.perritos.features.core.supabase
+//import com.ucb.perritos.features.core.supabase
 import com.ucb.perritos.features.registroMascota.domain.usecase.ObtenerPerrosUseCase
 import com.ucb.perritos.features.registroMascota.data.dto.PerroDto
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import com.ucb.perritos.features.registroMascota.domain.usecase.RegistrarPerroUseCase
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,6 +24,7 @@ import kotlinx.serialization.json.put
 
 class PerrosRegistradosViewModel(
     private val obtenerPerrosUseCase: ObtenerPerrosUseCase,
+    private val supabaseClient: SupabaseClient
 ): ViewModel() {
 
 
@@ -52,7 +54,7 @@ class PerrosRegistradosViewModel(
             _state.value = PerrosRegistradosStateUI.Loading
 
             try {
-                val currentUser = supabase.auth.currentUserOrNull()
+                val currentUser = supabaseClient.auth.currentUserOrNull()
                 val userId = currentUser?.id
 
                 if (userId != null) {

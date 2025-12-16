@@ -172,6 +172,7 @@ dependencies {
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:realtime-kt")
     implementation("io.github.jan-tennert.supabase:storage-kt")
+
     implementation("io.ktor:ktor-client-android:3.0.1") //3.3.2
     implementation("androidx.compose.material:material-icons-extended")
 
@@ -194,6 +195,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     androidTestImplementation("androidx.room:room-testing:2.6.1")
+
 
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 

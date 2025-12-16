@@ -2,11 +2,11 @@ package com.ucb.perritos.features.login.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucb.perritos.features.core.supabase
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
+import io.github.jan.supabase.SupabaseClient // <--- IMPORTANTE
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +18,8 @@ import kotlinx.coroutines.launch
 class LoginViewModel(
     private val registrarUsuarioUseCase: RegistrarUsuarioUseCase,
     private val getUserUseCase: GetUserUseCase,
-    private val usecaseSetToken: SetTokenUseCase
+    private val usecaseSetToken: SetTokenUseCase,
+    private val supabaseClient: SupabaseClient // <--- AGREGADO AQUÍ
 ) : ViewModel() {
 
     sealed class LoginStateUI {
@@ -41,25 +42,18 @@ class LoginViewModel(
             _state.value = LoginStateUI.Loading
 
             try {
-
-                supabase.auth.signInWith(Email) {
+                // USAMOS supabaseClient (la variable del constructor)
+                supabaseClient.auth.signInWith(Email) {
                     this.email = email
                     this.password = pass
                 }
 
-
-                val userSupabase = supabase.auth.currentUserOrNull()
+                val userSupabase = supabaseClient.auth.currentUserOrNull()
                 val nombreGuardado = userSupabase?.userMetadata?.get("nombre_dueno")
                     ?.toString()?.replace("\"", "") ?: "Usuario"
 
-
-
                 val existeEnRoom = getUserUseCase.invoke(email).isSuccess
-
-
                 val irAlMapa = existeEnRoom
-
-
 
                 registrarUsuarioUseCase.invoke(
                     UsuarioModel(
@@ -69,9 +63,7 @@ class LoginViewModel(
                     )
                 )
 
-
                 usecaseSetToken.invoke(email)
-
 
                 _state.value = LoginStateUI.Success("Bienvenido $nombreGuardado", irAlMapa)
 

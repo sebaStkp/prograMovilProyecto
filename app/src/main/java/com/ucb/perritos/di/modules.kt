@@ -16,7 +16,7 @@ import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
 //import com.ucb.perritos.features.buscarMascota.data.repository.BuscarMascotaRepository
 //import com.ucb.perritos.features.buscarMascota.domain.repository.IBuscarMascotaRepository
 import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaViewModel
-import com.ucb.perritos.features.core.supabase
+
 import com.ucb.perritos.features.login.data.datasource.LoginDataStore
 import com.ucb.perritos.features.login.data.repository.LoginRepository
 import com.ucb.perritos.features.login.domain.repository.ILoginRepository
@@ -29,6 +29,7 @@ import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepos
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import com.ucb.perritos.features.perfilPerro.presentation.PerfilPerroViewModel
+import com.ucb.perritos.features.perfilUsuario.presentation.PerfilUsuarioViewModel
 
 
 import com.ucb.perritos.features.perrosRegistrados.presentation.PerrosRegistradosViewModel
@@ -44,6 +45,7 @@ import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuario
 import com.ucb.perritos.features.registroUsuario.data.repository.RegistroUsuarioRepository
 import com.ucb.perritos.features.registroUsuario.domain.repository.IRegistroUsuarioRepository
 import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
+import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUsuarioActual
 import com.ucb.perritos.features.registroUsuario.domain.usecase.RegistrarUsuarioUseCase
 import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import com.ucb.perritos.navigation.NavigationViewModel
@@ -52,6 +54,12 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
+import com.ucb.perritos.BuildConfig
+
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.storage.Storage
+import com.ucb.perritos.features.core.SessionManagerAndroid
 
 //import io.github.jan.supabase.gotrue.
 //import retrofit2.Retrofit
@@ -68,7 +76,19 @@ import org.koin.dsl.module
 val appModule = module {
 
 
-    single { supabase }
+    single {
+        createSupabaseClient(
+            supabaseUrl = "https://efxdadwzzvsuvtefmlbm.supabase.co",
+            supabaseKey = BuildConfig.SUPABASE_KEY
+        ) {
+            install(Postgrest)
+            install(Storage)
+            install(Auth) {
+                // Aquí usamos el contexto de Android para guardar la sesión
+                sessionManager = SessionManagerAndroid(androidContext())
+            }
+        }
+    }
 
 //    single {
 //        createSupabaseClient(
@@ -154,7 +174,7 @@ val appModule = module {
     single<ILoginRepository> { LoginRepository(get()) }
     factory { SetTokenUseCase(get()) }
     factory { GetUserUseCase(get()) }
-    viewModel { LoginViewModel(get(), get (), get()) }
+    viewModel { LoginViewModel(get(), get (), get(), get()) }
 
 
     viewModel { NavigationViewModel() }
@@ -178,7 +198,7 @@ val appModule = module {
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
     single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
     factory { RegistrarUsuarioUseCase(get()) }
-    viewModel { RegistroUsuarioViewModel() }
+    viewModel { RegistroUsuarioViewModel(get()) }
 
     single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     single { PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
@@ -193,7 +213,10 @@ val appModule = module {
 
 
     factory { ObtenerPerrosUseCase(get()) }
-    viewModel { PerrosRegistradosViewModel(get()) }
+    viewModel { PerrosRegistradosViewModel(get(), get()) }
+
+    factory { GetUsuarioActual(get()) }
+    viewModel { PerfilUsuarioViewModel(get()) }
 
 }
 
