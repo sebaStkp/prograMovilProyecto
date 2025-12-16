@@ -213,7 +213,7 @@ val appModule = module {
 //    factory { ObtenerUbicacionActualUseCase(get()) }
     single(named("flaskRetrofit")) {
         Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:5000/") // emulador
+            .baseUrl("https://simulacion-perritos.onrender.com") // emulador
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
