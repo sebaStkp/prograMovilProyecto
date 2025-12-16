@@ -9,7 +9,10 @@ sealed class Screen(val route: String) {
 
     object Menu: Screen("menu")
 
-    object PerfilPerro: Screen("perfilPerro")
+    //object PerfilPerro: Screen("perfilPerro")
+    object PerfilPerro: Screen("perfilPerro/{perroId}") {
+        fun createRoute(perroId: Long) = "perfilPerro/$perroId"
+    }
     object PaginaDeCarga : Screen("pagina_de_carga")
     object BuscarPerro : Screen("buscar_perro")
     object MisPerros: Screen("mis_perros")

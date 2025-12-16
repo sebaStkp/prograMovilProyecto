@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Loco xml export: Android strings
+ Project: Untitled project
+ Locale: es-BO, Spanish (Bolivia)
+ Exported by: Sebastian Terrazas
+ Exported at: Sat, 15 Nov 2025 08:19:58 -0400
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">perritos</string>
+    <string name="bienvenida_name">Registrarse</string>
+    <string name="registrarse_inicio_sesion">Si ya tiene una cuenta, por favor</string>
+    <string name="bienvenida_iniciar_sesion">inicie sesión</string>
+</resources>

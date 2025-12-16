@@ -11,10 +11,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaScreen
 import com.ucb.perritos.features.buscarMascota.presentation.BuscarMascotaScreen
 import com.ucb.perritos.features.login.presentation.LoginScreen
@@ -113,9 +115,15 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
                 Box(modifier = Modifier.fillMaxSize()) // Placeholder
             }
 
-            composable(Screen.PerfilPerro.route) {
-                PerfilPerroScreen()
+//            composable(Screen.PerfilPerro.route) {
+//                PerfilPerroScreen()
+//            }
+            composable(route = Screen.PerfilPerro.route, arguments = listOf(navArgument("perroId") { type = NavType.LongType })
+            ) { backStackEntry ->
+                val perroId = backStackEntry.arguments?.getLong("perroId") ?: 0L
+                PerfilPerroScreen(perroId = perroId)
             }
+
 
             composable(Screen.PaginaDeCarga.route) {
                 PaginaDeCargaScreen(
@@ -133,7 +141,11 @@ fun AppNavigation(navigationViewModel: NavigationViewModel) {
 
             composable(Screen.MisPerros.route) {
                 PerrosRegistradosScreen(
-                    irRegistroPerro = { navController.navigate(Screen.RegistroPerro.route) }
+                    irRegistroPerro = { navController.navigate(Screen.RegistroPerro.route)},
+                    irDetallePerro = { perroId ->
+                        navController.navigate(Screen.PerfilPerro.createRoute(perroId))
+                    }
+
                 )
             }
             composable(Screen.PerfilUsuario.route) {

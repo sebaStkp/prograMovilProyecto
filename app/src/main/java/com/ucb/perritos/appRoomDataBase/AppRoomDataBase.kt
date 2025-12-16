@@ -18,13 +18,15 @@ import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPe
 import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
 import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
 
-val MIGRATION_5_6 = object : Migration(5, 6){
+val MIGRATION_6_7 = object : Migration(6, 7){
     override fun migrate(database: SupportSQLiteDatabase){
-        database.execSQL("ALTER TABLE `usuarios` ADD COLUMN fotoUsuario TEXT")
-        database.execSQL("UPDATE usuarios SET fotoUsuario = '' WHERE fotoUsuario IS NULL")
+        database.execSQL("ALTER TABLE perfiles_perro ADD COLUMN edad INTEGER")
+        database.execSQL("ALTER TABLE perfiles_perro ADD COLUMN descripcion TEXT")
+        database.execSQL("UPDATE perfiles_perro SET edad = 0 WHERE edad IS NULL")
+        database.execSQL("UPDATE perfiles_perro SET descripcion = '' WHERE descripcion IS NULL")
     }
 }
-@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 6)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 7)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
@@ -40,7 +42,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, AppRoomDataBase::class.java, "proyecto_perritos_db")
-                    .addMigrations(MIGRATION_5_6)
+                    .addMigrations(MIGRATION_6_7)
                     .build()
                     .also { Instance = it }
             }

@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -70,16 +69,6 @@ fun LoginScreen(
             else -> {}
         }
     }
-    // LLAMAMOS A LA UI "TONTA" (Solo pinta cosas)
-    LoginScreenContent(
-        email = email,
-        password = password,
-        onEmailChange = { email = it },
-        onPasswordChange = { password = it },
-        onLoginClick = { vm.iniciarSesion(email, password) },
-        isLoading = state is LoginViewModel.LoginStateUI.Loading,
-        irRegistroCuenta = irRegistroCuenta
-    )
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -127,8 +116,7 @@ fun LoginScreen(
                     label = "Email",
                     value = email,
                     onValueChange = { email = it },
-                    keyboardType = KeyboardType.Email,
-                    tag = "tagEmail"
+                    keyboardType = KeyboardType.Email
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -137,8 +125,7 @@ fun LoginScreen(
                     label = "Contraseña",
                     value = password,
                     onValueChange = { password = it },
-                    isPassword = true,
-                    tag = "tagEmail"
+                    isPassword = true
                 )
 
 
@@ -162,8 +149,7 @@ fun LoginScreen(
                     onClick = { vm.iniciarSesion(email, password) },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp)
-                        .testTag("tagBotonLogin"),
+                        .height(50.dp),
                     shape = RoundedCornerShape(25.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = OrangePrimary,
@@ -213,8 +199,7 @@ fun LoginCustomTextField(
     value: String,
     onValueChange: (String) -> Unit,
     isPassword: Boolean = false,
-    keyboardType: KeyboardType = KeyboardType.Text,
-    tag: String // <--- 1. NUEVO PARAMETRO
+    keyboardType: KeyboardType = KeyboardType.Text
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -225,12 +210,11 @@ fun LoginCustomTextField(
             modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
         )
 
+
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier
-                .fillMaxWidth()
-                .testTag(tag), // <--- 2. USAMOS EL PARAMETRO AQUÍ
+            modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = OrangePrimary,
@@ -245,119 +229,5 @@ fun LoginCustomTextField(
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             singleLine = true
         )
-    }
-}
-
-
-@Composable
-fun LoginScreenContent(
-    email: String,
-    password: String,
-    onEmailChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    isLoading: Boolean,
-    irRegistroCuenta: () -> Unit
-) {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 24.dp)
-                    .offset(y = (-10).dp)
-            ) {
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Text(
-                    text = "Inicio de sesión",
-                    color = OrangePrimary,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                Text(
-                    text = "Bienvenido de nuevo!!",
-                    color = TextBlueGray,
-                    fontSize = 14.sp,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                // CAMPO EMAIL
-                LoginCustomTextField(
-                    label = "Email",
-                    value = email,
-                    onValueChange = onEmailChange,
-                    keyboardType = KeyboardType.Email,
-                    tag = "tagEmail"
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // CAMPO PASSWORD
-                LoginCustomTextField(
-                    label = "Contraseña",
-                    value = password,
-                    onValueChange = onPasswordChange,
-                    isPassword = true,
-                    tag = "tagPassword"
-                )
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                // BOTÓN INGRESAR
-                Button(
-                    onClick = onLoginClick,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .testTag("tagBotonLogin"),
-                    shape = RoundedCornerShape(25.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = OrangePrimary,
-                        contentColor = Color.White
-                    ),
-                    enabled = !isLoading
-                ) {
-                    if (isLoading) {
-                        CircularProgressIndicator(
-                            color = Color.White,
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp
-                        )
-                    } else {
-                        Text(text = "Ingresar", fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                Text(
-                    text = "Crearme una cuenta",
-                    color = TextBlueGray,
-                    fontSize = 14.sp,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { irRegistroCuenta() }
-                        .padding(8.dp),
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(24.dp))
-            }
-        }
     }
 }

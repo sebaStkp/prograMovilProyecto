@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ Loco xml export: Android strings
+ Project: Untitled project
+ Locale: en-US, English (USA)
+ Exported by: Agustinrobolero Ledezma
+ Exported at: Tue, 16 Dec 2025 04:28:16 -0400
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Dogs</string>
+    <string name="bienvenida_name">Sign up</string>
+    <string name="registrarse_inicio_sesion">If you already have an account, please</string>
+    <string name="bienvenida_iniciar_sesion">log in</string>
+    <string name="hello_word">hello workd</string>
+    <string name="donde_estoy">where i am?</string>
+    <string name="Inicio_Sesion">Login</string>
+    <string name="email">Email</string>
+    <string name="Creame_cuenta">Create an account</string>
+    <string name="ingresar">get into</string>
+    <string name="mascotas">Pets</string>
+    <string name="perfil">Profile</string>
+    <string name="mapa">Map</string>
+    <string name="Perfil_mascota">Pet profile</string>
+    <string name="Perro_avatar">Avatar dog</string>
+    <string name="fotos_perro">PHOTOS OF THE DOG</string>
+    <string name="mi_perfil">My Profile</string>
+    <string name="sin_nombre">Unnamed</string>
+    <string name="correo_electronico">Email</string>
+    <string name="sin_email">No email</string>
+    <string name="mis_perros">My dogs</string>
+    <string name="No_tienes_perros_registrados">You dont have any registered dogs yet</string>
+    <string name="Registrar_perro">Register New Dog</string>
+    <string name="raza">Race</string>
+    <string name="edad">age</string>
+    <string name="anios">years</string>
+    <string name="ver_detalles">View details</string>
+    <string name="editar">edit</string>
+    <string name="Error_obteniendo_perros">Error obtaining dogs</string>
+    <string name="No_hay_sesion_activa">There is no active session</string>
+    <string name="Mascota_registrada_con_exito">¡Pet successfully registered!</string>
+    <string name="registro_mascota">Pet Registration</string>
+    <string name="nombre_perro">Dogs name</string>
+    <string name="bienvenido_de_nuevo">Welcome back!!</string>
+    <string name="descripcion">Description</string>
+    <string name="registrarme">Register</string>
+    <string name="subir_foto">Upload photo</string>
+    <string name="foto_mascota">Pet Photo</string>
+    <string name="No_econtro_ID">The dog ID to be edited could not be found</string>
+    <string name="Error_editar">Error editing</string>
+    <string name="error_registro_perro">Error registering dog</string>
+    <string name="registro_usuario">User Registration</string>
+    <string name="foto_perfil">Profile picture</string>
+    <string name="confirmar_contrasenia">Confirm Password</string>
+    <string name="cuenta_creada">Account created</string>
+    <string name="ir_iniciar_sesion">Go to Login</string>
+    <string name="porfavor_llena_los_campos">Please fill in all fields.</string>
+    <string name="Este_correo_ya_registrado">This email is already registered.</string>
+    <string name="la_contrasenia_es_muy_debil">The password is very weak (minimum 6 characters).</string>
+    <string name="el_email_no_es_valido">The email address is invalid</string>
+    <string name="contrasenia">Password</string>
+    <string name="Aniadir_Foto">Add photo</string>
+    <string name="nombre_duenio">Owner\'s Name</string>
+    <string name="exepcion">Exepcion</string>
+    <string name="ubicacion_mascotas">Pet\'s ubication</string>
+    <string name="perfil_perro_nombre_label">Name:</string>
+    <string name="perfil_perro_raza_label">Race:</string>
+    <string name="perfil_perro_edad_label">Age:</string>
+    <string name="perfil_perro_descripcion_label">Description:</string>
+    <string name="perfil_perro_fotos_placeholder">Here will go the photos</string>
+    <string name="perfil_usuario_cd_avatar_usuario">User avatar</string>
+    <!-- Bienvenida -->
+    <string name="bienvenida_btn_registro_usuario">Sign up</string>
+    <string name="bienvenida_txt_tienes_cuenta">If you already have an account, please</string>
+    <string name="bienvenida_txt_iniciar_sesion">log in</string>
+    <string name="bienvenida_img_cd_ubicacion_mascotas">Pet\'s ubication</string>
+    <!-- Registro Usuario -->
+    <string name="registro_usuario_titulo_principal">User Registration</string>
+    <string name="registro_usuario_img_cd_foto_perfil">Profile picture</string>
+    <string name="registro_usuario_tf_label_nombre_duenio">Owner\'s name</string>
+    <string name="registro_usuario_tf_label_email">Email</string>
+    <string name="registro_usuario_tf_label_contrasenia">Password</string>
+    <string name="registro_usuario_tf_label_confirmar_contrasenia">Confirm Password</string>
+    <string name="registro_usuario_btn_registrarme">Register</string>
+    <string name="registro_usuario_txt_cuenta_creada">Account Created</string>
+    <string name="registro_usuario_btn_ir_login">Go to Login</string>
+    <!-- Login -->
+    <string name="login_titulo_principal">Login</string>
+    <string name="login_subtitulo_bienvenido">Welcome back!!</string>
+    <string name="login_tf_label_email">Email</string>
+    <string name="login_tf_label_contrasenia">Password</string>
+    <string name="login_btn_ingresar">get into</string>
+    <string name="login_txt_crear_cuenta">Create an account</string>
+    <!-- Perros Registrados -->
+    <string name="perros_registrados_titulo_mis_perros">My dogs</string>
+    <string name="perros_registrados_txt_conteo_perros">%1$d My dogs</string>
+    <string name="perros_registrados_error_cargando">Error obtaining dogs</string>
+    <string name="perros_registrados_txt_sin_perros">You dont have any registered dogs yet</string>
+    <string name="perros_registrados_btn_registrar_nuevo">Register New Dog</string>
+    <string name="perros_registrados_img_cd_avatar_perro">Avatar dog</string>
+    <string name="perros_registrados_txt_raza">Race: %1$s</string>
+    <string name="perros_registrados_txt_edad_anios">age: %1$d years</string>
+    <string name="perros_registrados_btn_ver_detalles">View details</string>
+    <string name="perros_registrados_btn_editar">edit</string>
+    <!-- Perfil Usuario -->
+    <string name="perfil_usuario_titulo_principal">My Profile</string>
+    <string name="perfil_usuario_img_cd_avatar_usuario">Profile picture</string>
+    <string name="perfil_usuario_card_label_nombre_duenio">Owner\'s Name</string>
+    <string name="perfil_usuario_card_valor_sin_nombre">Unnamed</string>
+    <string name="perfil_usuario_card_label_correo_electronico">Email</string>
+    <string name="perfil_usuario_card_valor_sin_email">No email</string>
+    <!-- Menu -->
+    <string name="menu_navitem_label_mascotas">Pets</string>
+    <string name="menu_navitem_label_perfil">Profile</string>
+    <string name="menu_navitem_cd_mapa">Map</string>
+    <!-- Perfil Perro -->
+    <string name="perfil_perro_img_cd_avatar">Avatar dog</string>
+    <string name="perfil_perro_card_titulo_info">Pet profile</string>
+    <string name="perfil_perro_card_label_nombre">Dog\'s name</string>
+    <string name="perfil_perro_card_label_raza">Race</string>
+    <string name="perfil_perro_card_label_edad">age</string>
+    <string name="perfil_perro_card_label_descripcion">Description</string>
+    <string name="perfil_perro_titulo_fotos">PHOTOS OF THE DOG</string>
+    <string name="perfil_perro_placeholder_fotos">PHOTOS OF THE DOG</string>
+    <string name="perfil_perro_btn_aniadir_foto">Add photo</string>
+</resources>

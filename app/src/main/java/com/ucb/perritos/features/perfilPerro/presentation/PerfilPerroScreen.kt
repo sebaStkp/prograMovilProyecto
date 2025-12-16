@@ -4,49 +4,34 @@ import android.Manifest
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.compose.AsyncImage
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.FileProvider
-
+import coil3.compose.AsyncImage
+import com.ucb.perritos.R
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
-//modifier: Modifier = Modifier,
-//    vm: RegistroPerroViewModel = koinViewModel()
+private val OrangePrimary = androidx.compose.ui.graphics.Color(0xFFF89A22)
+private val TextBlueGray = androidx.compose.ui.graphics.Color(0xFF6A8693)
+private val TextGray = androidx.compose.ui.graphics.Color(0xFF9E9E9E)
+
 @Composable
 fun PerfilPerroScreen(
     modifier: Modifier = Modifier,
@@ -56,9 +41,7 @@ fun PerfilPerroScreen(
     val context = LocalContext.current
     val state by vm.state.collectAsState()
 
-
     LaunchedEffect(perroId) { vm.init(perroId) }
-
 
     val photoFile = remember {
         File(context.getExternalFilesDir(null), "foto_perro_${System.currentTimeMillis()}.jpg")
@@ -72,7 +55,6 @@ fun PerfilPerroScreen(
     }
     val photoUriState = remember { mutableStateOf<Uri?>(null) }
 
-
     val takePictureLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
     ) { success ->
@@ -82,108 +64,146 @@ fun PerfilPerroScreen(
         }
     }
 
-
     val requestPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
-        if (isGranted) {
-            takePictureLauncher.launch(photoUri)
-        }
+        if (isGranted) takePictureLauncher.launch(photoUri)
     }
-
 
     Box(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(top = 40.dp)
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(
-                    color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
-                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
-                )
-                .align(Alignment.BottomCenter)
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+                .padding(top = 24.dp, bottom = 100.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Spacer(Modifier.height(16.dp))
-            Text(
-                text = "Perfil de la mascota",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(Modifier.height(16.dp))
 
-
+            // AVATAR GRANDE
             AsyncImage(
                 model = state.perfil?.avatarUrl ?: photoUriState.value,
-                contentDescription = "Avatar perro",
+                contentDescription = stringResource(id = R.string.perfil_perro_img_cd_avatar),
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(140.dp) // <-- más grande (mockup)
                     .clip(CircleShape),
                 contentScale = ContentScale.Crop
             )
-            Spacer(Modifier.height(12.dp))
-            Text(
-                text = state.perfil?.nombre ?: "—",
-                style = MaterialTheme.typography.titleLarge
-            )
-            Text(
-                text = state.perfil?.raza ?: "",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Spacer(Modifier.height(16.dp))
 
+            Spacer(Modifier.height(10.dp))
 
-            Column(Modifier.fillMaxWidth().padding(horizontal = 24.dp)) {
-                OutlinedButton(
-                    onClick = { /* TODO: navegar a Datos de la mascota */ },
-                    modifier = Modifier.fillMaxWidth()
-                ) { Text("Datos de la mascota") }
-                Spacer(Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = { /* TODO: navegar a Medallas */ },
-                    modifier = Modifier.fillMaxWidth()
-                ) { Text("Medallas") }
-                Spacer(Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = { /* TODO: navegar a Familiares */ },
-                    modifier = Modifier.fillMaxWidth()
-                ) { Text("Familiares") }
+//            // NOMBRE (naranja)
+//            Text(
+//                text = state.perfil?.nombre ?: "—",
+//                fontSize = 18.sp,
+//                fontWeight = FontWeight.Bold,
+//                color = OrangePrimary
+//            )
+//
+//            // RAZA (azul/gris)
+//            Text(
+//                text = state.perfil?.raza ?: "",
+//                fontSize = 14.sp,
+//                color = TextBlueGray
+//            )
+
+            Spacer(Modifier.height(18.dp))
+
+            // CAJA "INFORMACION DE LA MASCOTA"
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
+                border = BorderStroke(2.dp, OrangePrimary)
+            ) {
+                Column(Modifier.padding(14.dp)) {
+                    Text(
+                        text = stringResource(id = R.string.perfil_perro_card_titulo_info),
+                        color = OrangePrimary,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                    Spacer(Modifier.height(10.dp))
+
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_nombre)}:", state.perfil?.nombre ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_raza)}:", state.perfil?.raza ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_edad)}:", state.perfil?.edad?.toString() ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_descripcion)}:", state.perfil?.descripcion ?: "—")
+
+                }
             }
-            Spacer(Modifier.height(16.dp))
+
+            Spacer(Modifier.height(18.dp))
+
+            // TITULO FOTOS
             Text(
-                "FOTOS DEL PERRO",
-                style = MaterialTheme.typography.titleMedium,
+                text = stringResource(id = R.string.perfil_perro_titulo_fotos),
+                color = OrangePrimary,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .align(Alignment.Start)
                     .padding(horizontal = 24.dp)
             )
+
             Spacer(Modifier.height(12.dp))
 
-
-            Button(
-                onClick = {
-                    requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+            // (Por ahora placeholder del contenedor de fotos, luego metemos LazyRow / grid)
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(50.dp)
+                    .height(140.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
-                Text("Añadir foto")
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(stringResource(id = R.string.perfil_perro_placeholder_fotos), color = TextGray)
+                }
+            }
+
+            Spacer(Modifier.height(14.dp))
+
+            // BOTÓN AÑADIR FOTO (naranja)
+            Button(
+                onClick = { requestPermissionLauncher.launch(Manifest.permission.CAMERA) },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = OrangePrimary,
+                    contentColor = androidx.compose.ui.graphics.Color.White
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp)
+                    .height(48.dp),
+                shape = RoundedCornerShape(24.dp)
+            ) {
+                Text(stringResource(id = R.string.Aniadir_Foto), fontWeight = FontWeight.Bold)
             }
 
             if (state.loading) {
                 Spacer(Modifier.height(16.dp))
-                LinearProgressIndicator(Modifier.fillMaxWidth().padding(horizontal = 24.dp))
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 24.dp),
+                    color = OrangePrimary
+                )
             }
         }
     }
+}
+
+@Composable
+private fun InfoRow(label: String, value: String) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(text = label, color = OrangePrimary, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text(text = value, color = TextBlueGray, fontSize = 13.sp)
+    }
+    Spacer(Modifier.height(6.dp))
 }

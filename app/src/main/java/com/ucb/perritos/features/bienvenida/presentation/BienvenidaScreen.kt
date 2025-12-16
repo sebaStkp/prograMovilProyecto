@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import com.ucb.perritos.R
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -20,7 +21,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.ucb.perritos.R
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -45,7 +45,7 @@ fun BienvenidaScreen(
 
             AsyncImage(
                 model = R.drawable.icono_bienvenida,
-                contentDescription = "Ubicación de mascotas",
+                contentDescription = stringResource(id = R.string.bienvenida_img_cd_ubicacion_mascotas),
                 modifier = Modifier
                     .width(200.dp)
                     .height(140.dp)
@@ -68,7 +68,7 @@ fun BienvenidaScreen(
                 shape = MaterialTheme.shapes.medium
             ) {
                 Text(
-                    text = stringResource(id = R.string.bienvenida_name),
+                    text = stringResource(id = R.string.bienvenida_btn_registro_usuario),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium
                 )
@@ -78,10 +78,10 @@ fun BienvenidaScreen(
 
 
             val annotatedText = buildAnnotatedString {
-                append(stringResource(id = R.string.registrarse_inicio_sesion))
+                append(stringResource(id = R.string.bienvenida_txt_tienes_cuenta))
                 append(" ")
                 withStyle(style = SpanStyle(color = Color.Blue)) {
-                    append(stringResource(id = R.string.bienvenida_iniciar_sesion))
+                    append(stringResource(id = R.string.bienvenida_txt_iniciar_sesion))
 
                 }
             }

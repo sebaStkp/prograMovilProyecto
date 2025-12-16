@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 
 import com.ucb.perritos.features.perfilPerro.domain.model.PerfilPerroModel
+import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository
 import com.ucb.perritos.features.perfilPerro.domain.usecase.ObtenerPerfilPerroUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,15 +19,29 @@ data class PerfilPerroUiState(
 )
 
 class PerfilPerroViewModel(
-    private val getPerfil: ObtenerPerfilPerroUseCase
+    private val getPerfil: ObtenerPerfilPerroUseCase,
+    private val repo: IPerfilPerroRepository
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(PerfilPerroUiState())
     val state: StateFlow<PerfilPerroUiState> = _state.asStateFlow()
 
+//    fun init(perroId: Long) {
+//        viewModelScope.launch {
+//            getPerfil(perroId).collect { perfil ->
+//                _state.update { it.copy(perfil = perfil, loading = false) }
+//            }
+//        }
+//    }
     fun init(perroId: Long) {
         viewModelScope.launch {
-            getPerfil(perroId).collect { perfil ->
+            _state.update { it.copy(loading = true) }
+
+        // 1) Trae de Supabase y guarda en Room
+            repo.syncPerfilDesdeSupabase(perroId)
+
+        // 2) Observa Room y actualiza UI
+            repo.observePerfil(perroId).collect { perfil ->
                 _state.update { it.copy(perfil = perfil, loading = false) }
             }
         }
