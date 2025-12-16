@@ -7,4 +7,5 @@ interface IRegistroUsuarioRepository {
     suspend fun getUsuario(email: String): Result<UsuarioModel>
 
     suspend fun getActualUser(): Result<UsuarioModel>
+    suspend fun actualizarTokenFCM(token: String)
 }

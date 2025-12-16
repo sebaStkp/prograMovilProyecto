@@ -19,6 +19,7 @@ plugins {
 
     alias(libs.plugins.google.protobuf)
     kotlin("plugin.serialization") version "2.1.0"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -56,6 +57,12 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+    packaging {
+        resources {
+            excludes += "META-INF/LICENSE.md"
+            excludes += "META-INF/LICENSE-notice.md"
+        }
     }
 
 }
@@ -125,7 +132,7 @@ tasks.named("preBuild").configure {
 
 
 dependencies {
-
+    // --- ANDROID & COMPOSE ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -134,78 +141,80 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.database)
     implementation(libs.androidx.foundation)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
-    implementation(libs.retrofit)
-    implementation(libs.converter.gson)
-    implementation (libs.koin.android)
-    implementation (libs.koin.androidx.navigation)
-    implementation (libs.koin.androidx.compose)
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.google.maps.compose)
-    implementation(libs.google.play.services.maps)
-    implementation(libs.play.services.location)
-    implementation("com.google.accompanist:accompanist-permissions:0.35.2-beta")
-    implementation("com.google.maps.android:maps-compose:4.3.3")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
-    implementation(libs.grpc.protobuf.lite)
-    implementation(libs.protobuf.kotlin.lite)
-    implementation(libs.grpc.kotlin.stub)
-    implementation(platform("io.github.jan-tennert.supabase:bom:3.2.6"))
-    implementation("io.github.jan-tennert.supabase:postgrest-kt")
-    implementation("io.ktor:ktor-client-android:3.3.2")
+    // Iconos extendidos
+    implementation("androidx.compose.material:material-icons-extended")
 
+    // --- FIREBASE (Solo lo necesario) ---
+    // implementation(libs.firebase.database) <--- BORRADO: Usas Supabase, no Firebase DB
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0")) // Recomiendo usar BOM para Firebase también
+    implementation("com.google.firebase:firebase-messaging-ktx") // Para las notificaciones
+    // implementation("com.google.firebase:firebase-analytics") // Descomenta si usas Analytics
 
-    //implementation(platform("io.github.jan-tennert.supabase:bom:3.0.2"))
-
-
+    // --- SUPABASE & KTOR (Corregido) ---
+    // Usamos el BOM para que gestione las versiones automáticamente
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.1.1")) // O la 3.2.6 si libs lo tiene
     implementation("io.github.jan-tennert.supabase:postgrest-kt")
     implementation("io.github.jan-tennert.supabase:auth-kt")
     implementation("io.github.jan-tennert.supabase:realtime-kt")
     implementation("io.github.jan-tennert.supabase:storage-kt")
 
-    implementation("io.ktor:ktor-client-android:3.0.1") //3.3.2
-    implementation("androidx.compose.material:material-icons-extended")
+    // Ktor (Motor http para Supabase) - UNA SOLA VERSIÓN
+    implementation("io.ktor:ktor-client-android:3.0.3")
+    // Nota: Si usas Supabase 3.0.0+ necesitas Ktor 3.0.0+
 
+    // --- INYECCIÓN DE DEPENDENCIAS (KOIN) ---
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.navigation)
+    implementation(libs.koin.androidx.compose)
+
+    // --- MAPAS & UBICACIÓN ---
+    implementation(libs.google.maps.compose) // Usa el del catálogo si existe
+    implementation(libs.google.play.services.maps)
+    implementation(libs.play.services.location) // Usa solo el del catálogo
+    // Si necesitas OSM también (si no, bórralo para ahorrar espacio):
     implementation("org.osmdroid:osmdroid-android:6.1.18")
 
+    // --- PERMISOS (Para notificaciones Android 13+) ---
+    implementation("com.google.accompanist:accompanist-permissions:0.36.0") // Versión más estable
 
+    // --- NAVEGACIÓN & IMÁGENES ---
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 
+    // --- NETWORK & DATA ---
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.datastore)
+
+    // --- PROTOBUF & GRPC ---
+    implementation(libs.grpc.protobuf.lite)
+    implementation(libs.protobuf.kotlin.lite)
+    implementation(libs.grpc.kotlin.stub)
     runtimeOnly(libs.grpc.okhttp)
 
-    //local bundle room
+    // --- ROOM DATABASE ---
     implementation(libs.bundles.local)
     annotationProcessor(libs.room.compiler)
     ksp(libs.room.compiler)
-    testImplementation(libs.room.testing)
 
-    implementation(libs.datastore)
-
+    // --- TESTING ---
+    testImplementation(libs.junit)
     testImplementation(libs.mockk)
+
+
     testImplementation(libs.kotlinx.coroutines.test)
-    implementation(libs.kotlinx.serialization.json)
-
+    testImplementation(libs.room.testing)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation("io.mockk:mockk-android:1.13.8")
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
     androidTestImplementation("androidx.room:room-testing:2.6.1")
-
-
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-
-    androidTestImplementation(libs.room.testing)
-
-
-    androidTestImplementation(libs.androidx.test.core)
-
-
-
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 }
 
 protobuf {

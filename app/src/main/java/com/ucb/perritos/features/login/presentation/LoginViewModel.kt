@@ -62,6 +62,14 @@ class LoginViewModel(
                         contraseña = pass
                     )
                 )
+                println("DEBUG: Guardando token para $email...")
+                val resultadoToken = usecaseSetToken.invoke(email)
+
+                if (resultadoToken.isSuccess) {
+                    println("DEBUG: ¡Token guardado exitosamente en Supabase!")
+                } else {
+                    println("DEBUG: Error al guardar token: ${resultadoToken.exceptionOrNull()?.message}")
+                }
 
                 usecaseSetToken.invoke(email)
 

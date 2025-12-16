@@ -6,8 +6,8 @@ import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 class SetTokenUseCase(
     val repository: ILoginRepository
 ) {
-    suspend fun invoke(nickname: String) : Result<LoginModel>{
-        return repository.setToken(nickname)
+    suspend operator fun invoke(email: String): Result<Unit> {
+        return repository.setToken(email)
     }
 }
 

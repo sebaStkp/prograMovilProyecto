@@ -170,7 +170,7 @@ val appModule = module {
 //    viewModel { NavigationViewModel() }
 
     single { LoginDataStore(androidContext()) }
-    single<ILoginRepository> { LoginRepository(get()) }
+    single<ILoginRepository> { LoginRepository(get(), get()) }
     factory { SetTokenUseCase(get()) }
     factory { GetUserUseCase(get()) }
     viewModel { LoginViewModel(get(), get (), get(), get()) }
@@ -195,7 +195,7 @@ val appModule = module {
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
-    single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get()) }
+    single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get(), get()) }
     factory { RegistrarUsuarioUseCase(get()) }
     viewModel { RegistroUsuarioViewModel(get()) }
 

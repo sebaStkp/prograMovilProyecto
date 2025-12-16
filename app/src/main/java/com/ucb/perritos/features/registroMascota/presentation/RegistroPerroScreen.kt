@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -32,11 +33,11 @@ import coil3.compose.AsyncImage
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
 
-
 private val OrangePrimary = Color(0xFFF89A22)
 private val TextBlueGray = Color(0xFF6A8693)
 private val WhiteBackground = Color.White
 
+// 1. PANTALLA INTELIGENTE (LOGICA)
 @Composable
 fun RegistroPerroScreen(
     vm: RegistroPerroViewModel = koinViewModel(),
@@ -46,21 +47,17 @@ fun RegistroPerroScreen(
     var raza by remember { mutableStateOf("") }
     var edad by remember { mutableStateOf("") }
     var descripcion by remember { mutableStateOf("") }
+    var avatarUri by remember { mutableStateOf<Uri?>(null) }
 
     val state by vm.state.collectAsState()
     val context = LocalContext.current
 
-    // 👇 nuevo: estado para el avatar
-    var avatarUri by remember { mutableStateOf<Uri?>(null) }
+    // Launcher para galería
+    val pickImageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? -> avatarUri = uri }
 
-    // 👇 launcher para abrir galería
-    val pickImageLauncher =
-        rememberLauncherForActivityResult(
-            contract = ActivityResultContracts.GetContent()
-        ) { uri: Uri? ->
-            avatarUri = uri
-        }
-
+    // Efectos (Toast y Navegación)
     LaunchedEffect(state) {
         when (val st = state) {
             is RegistroPerroViewModel.RegistrarPerroStateUI.Success -> {
@@ -74,41 +71,71 @@ fun RegistroPerroScreen(
         }
     }
 
+    // LLAMADA A LA VISTA PURA
+    RegistroPerroScreenContent(
+        nombrePerro = nombrePerro,
+        raza = raza,
+        edad = edad,
+        descripcion = descripcion,
+        avatarUri = avatarUri,
+        isLoading = state is RegistroPerroViewModel.RegistrarPerroStateUI.Loading,
+        onNombreChange = { nombrePerro = it },
+        onRazaChange = { raza = it },
+        onEdadChange = { edad = it },
+        onDescripcionChange = { descripcion = it },
+        onPhotoClick = { pickImageLauncher.launch("image/*") },
+        onRegistrarClick = {
+            vm.registrarPerro(
+                PerroModel(
+                    nombre_perro = nombrePerro,
+                    raza = raza,
+                    edad = edad.toIntOrNull() ?: 0,
+                    descripcion = descripcion,
+                    id_usuario = "",
+                    foto_perro = null,
+                ),
+                avatarUri = avatarUri
+            )
+        }
+    )
+}
 
-
-
-
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = WhiteBackground
-    ) {
+// 2. PANTALLA PURA (PARA TESTING) - AQUÍ AGREGAMOS LOS TAGS
+@Composable
+fun RegistroPerroScreenContent(
+    nombrePerro: String,
+    raza: String,
+    edad: String,
+    descripcion: String,
+    avatarUri: Uri?,
+    isLoading: Boolean,
+    onNombreChange: (String) -> Unit,
+    onRazaChange: (String) -> Unit,
+    onEdadChange: (String) -> Unit,
+    onDescripcionChange: (String) -> Unit,
+    onPhotoClick: () -> Unit,
+    onRegistrarClick: () -> Unit
+) {
+    Surface(modifier = Modifier.fillMaxSize(), color = WhiteBackground) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
         ) {
-
-
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
-
-
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
-
                 PetPhotoSection(
                     avatarUri = avatarUri,
-                    onClickChangePhoto = {
-                        pickImageLauncher.launch("image/*")
-                    }
+                    onClickChangePhoto = onPhotoClick,
+                    tag = "tagFotoMascota" // Tag para la foto
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
-
 
                 Text(
                     text = "Registro de Mascota",
@@ -120,11 +147,11 @@ fun RegistroPerroScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-
                 MascotaCustomTextField(
                     label = "Nombre del perro",
                     value = nombrePerro,
-                    onValueChange = { nombrePerro = it }
+                    onValueChange = onNombreChange,
+                    tag = "tagNombrePerro" // Tag Nombre
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -132,7 +159,8 @@ fun RegistroPerroScreen(
                 MascotaCustomTextField(
                     label = "Raza",
                     value = raza,
-                    onValueChange = { raza = it }
+                    onValueChange = onRazaChange,
+                    tag = "tagRaza" // Tag Raza
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -140,8 +168,9 @@ fun RegistroPerroScreen(
                 MascotaCustomTextField(
                     label = "Edad",
                     value = edad,
-                    onValueChange = { edad = it },
-                    keyboardType = KeyboardType.Number
+                    onValueChange = onEdadChange,
+                    keyboardType = KeyboardType.Number,
+                    tag = "tagEdad" // Tag Edad
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -149,67 +178,50 @@ fun RegistroPerroScreen(
                 MascotaCustomTextField(
                     label = "Descripcion",
                     value = descripcion,
-                    onValueChange = { descripcion = it },
+                    onValueChange = onDescripcionChange,
                     singleLine = false,
-                    maxLines = 3
+                    maxLines = 3,
+                    tag = "tagDescripcion" // Tag Descripcion
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-
                 Button(
-                    onClick = {
-                        vm.registrarPerro(
-                            PerroModel(
-                                nombre_perro = nombrePerro,
-                                raza = raza,
-                                edad = edad.toIntOrNull() ?: 0,
-                                descripcion = descripcion,
-                                id_usuario = "",
-                                foto_perro = null,
-                            ),
-                            avatarUri = avatarUri
-                        )
-                    },
+                    onClick = onRegistrarClick,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(50.dp),
+                        .height(50.dp)
+                        .testTag("tagBotonRegistrar"), // Tag Botón
                     shape = RoundedCornerShape(25.dp),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = OrangePrimary,
                         contentColor = Color.White
                     ),
-                    enabled = state !is RegistroPerroViewModel.RegistrarPerroStateUI.Loading
+                    enabled = !isLoading
                 ) {
-                    if (state is RegistroPerroViewModel.RegistrarPerroStateUI.Loading) {
+                    if (isLoading) {
                         CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                     } else {
-                        Text(
-                            text = "Registrarme",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Text(text = "Registrarme", fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
-
                 Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
 }
 
-
-
+// Se agrega parámetro TAG a la sección de foto
 @Composable
-fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit) {
+fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit, tag: String) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .size(110.dp)
             .background(WhiteBackground, CircleShape)
+            .testTag(tag) // <--- TAG AQUÍ
     ) {
         Box(contentAlignment = Alignment.BottomEnd) {
-
             Box(
                 modifier = Modifier
                     .size(100.dp)
@@ -223,9 +235,7 @@ fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit) {
                     AsyncImage(
                         model = avatarUri,
                         contentDescription = "Foto Mascota",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(CircleShape),
+                        modifier = Modifier.fillMaxSize().clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                 } else {
@@ -236,15 +246,7 @@ fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit) {
                         modifier = Modifier.size(70.dp)
                     )
                 }
-//                Icon(
-//                    imageVector = Icons.Default.Person,
-//                    contentDescription = "Foto Mascota",
-//                    tint = TextBlueGray,
-//                    modifier = Modifier.size(70.dp)
-//                )
             }
-
-
             Box(
                 modifier = Modifier
                     .size(30.dp)
@@ -253,22 +255,15 @@ fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit) {
                     .border(1.dp, OrangePrimary, CircleShape)
                     .padding(4.dp)
             ) {
-                IconButton(
-                    onClick = onClickChangePhoto,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowUpward,
-                        contentDescription = "Subir foto",
-                        tint = OrangePrimary,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                IconButton(onClick = onClickChangePhoto, modifier = Modifier.fillMaxSize()) {
+                    Icon(imageVector = Icons.Default.ArrowUpward, contentDescription = "Subir foto", tint = OrangePrimary, modifier = Modifier.fillMaxSize())
                 }
             }
         }
     }
 }
 
+// Se agrega parámetro TAG al TextField
 @Composable
 fun MascotaCustomTextField(
     label: String,
@@ -276,7 +271,8 @@ fun MascotaCustomTextField(
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text,
     singleLine: Boolean = true,
-    maxLines: Int = 1
+    maxLines: Int = 1,
+    tag: String // <--- NUEVO PARAMETRO
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -285,11 +281,12 @@ fun MascotaCustomTextField(
             fontSize = 14.sp,
             modifier = Modifier.padding(start = 4.dp, bottom = 6.dp)
         )
-
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .testTag(tag), // <--- USAMOS EL TAG
             shape = RoundedCornerShape(12.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = OrangePrimary,

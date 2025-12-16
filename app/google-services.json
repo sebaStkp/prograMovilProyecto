@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "157005663412",
+    "project_id": "perritos-pm",
+    "storage_bucket": "perritos-pm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157005663412:android:9289881539997bc590dbe1",
+        "android_client_info": {
+          "package_name": "com.ucb.perritos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqJRPh1Xlzf0OOXkRNf24XpT3IaUeZ3Ng"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
