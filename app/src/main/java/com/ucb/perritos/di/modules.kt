@@ -55,7 +55,9 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import com.ucb.perritos.BuildConfig
-
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import com.ucb.perritos.features.buscarMascota.data.remote.UbicacionApi
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.storage.Storage
@@ -209,7 +211,16 @@ val appModule = module {
 
 
 //    factory { ObtenerUbicacionActualUseCase(get()) }
-    viewModel { BuscarMascotaViewModel() }
+    single(named("flaskRetrofit")) {
+        Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:5000/") // emulador
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+    single<UbicacionApi> {
+        get<Retrofit>(named("flaskRetrofit")).create(UbicacionApi::class.java)
+    }
+    viewModel { BuscarMascotaViewModel(get()) }
 
 
     factory { ObtenerPerrosUseCase(get()) }
