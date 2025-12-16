@@ -75,17 +75,13 @@ fun BienvenidaScreen(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-
             val annotatedText = buildAnnotatedString {
                 append(stringResource(id = R.string.bienvenida_txt_tienes_cuenta))
                 append(" ")
                 withStyle(style = SpanStyle(color = Color.Blue)) {
                     append(stringResource(id = R.string.bienvenida_txt_iniciar_sesion))
-
                 }
             }
-
             Text(
                 text = annotatedText,
                 fontSize = 14.sp,
