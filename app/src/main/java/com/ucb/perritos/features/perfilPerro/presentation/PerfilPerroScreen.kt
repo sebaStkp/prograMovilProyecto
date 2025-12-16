@@ -18,11 +18,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.FileProvider
 import coil3.compose.AsyncImage
+import com.ucb.perritos.R
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
@@ -84,7 +86,7 @@ fun PerfilPerroScreen(
             // AVATAR GRANDE
             AsyncImage(
                 model = state.perfil?.avatarUrl ?: photoUriState.value,
-                contentDescription = "Avatar perro",
+                contentDescription = stringResource(id = R.string.perfil_perro_img_cd_avatar),
                 modifier = Modifier
                     .size(140.dp) // <-- más grande (mockup)
                     .clip(CircleShape),
@@ -121,20 +123,17 @@ fun PerfilPerroScreen(
             ) {
                 Column(Modifier.padding(14.dp)) {
                     Text(
-                        text = "Información de la mascota",
+                        text = stringResource(id = R.string.perfil_perro_card_titulo_info),
                         color = OrangePrimary,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
                     Spacer(Modifier.height(10.dp))
 
-                    InfoRow("Nombre:", state.perfil?.nombre ?: "—")
-                    InfoRow("Raza:", state.perfil?.raza ?: "—")
-
-                    // Si todavía no tienes edad/descripcion en PerfilPerroModel,
-                    // por ahora se muestra “—”. Cuando lo agreguen en el model, aquí ya sale.
-                    InfoRow("Edad:", state.perfil?.edad?.toString() ?: "—")
-                    InfoRow("Descripción:", state.perfil?.descripcion ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_nombre)}:", state.perfil?.nombre ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_raza)}:", state.perfil?.raza ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_edad)}:", state.perfil?.edad?.toString() ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_descripcion)}:", state.perfil?.descripcion ?: "—")
 
                 }
             }
@@ -143,7 +142,7 @@ fun PerfilPerroScreen(
 
             // TITULO FOTOS
             Text(
-                text = "FOTOS DEL PERRO",
+                text = stringResource(id = R.string.perfil_perro_titulo_fotos),
                 color = OrangePrimary,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -164,7 +163,7 @@ fun PerfilPerroScreen(
                 elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Aquí irán las fotos", color = TextGray)
+                    Text(stringResource(id = R.string.perfil_perro_placeholder_fotos), color = TextGray)
                 }
             }
 
@@ -183,7 +182,7 @@ fun PerfilPerroScreen(
                     .height(48.dp),
                 shape = RoundedCornerShape(24.dp)
             ) {
-                Text("Añadir foto", fontWeight = FontWeight.Bold)
+                Text(stringResource(id = R.string.Aniadir_Foto), fontWeight = FontWeight.Bold)
             }
 
             if (state.loading) {

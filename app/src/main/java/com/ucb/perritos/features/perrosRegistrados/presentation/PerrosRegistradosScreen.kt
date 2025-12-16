@@ -19,12 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
 import com.ucb.perritos.features.registroMascota.data.dto.PerroDto
-import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
 import coil3.compose.AsyncImage
 import androidx.compose.ui.layout.ContentScale
@@ -44,8 +44,7 @@ fun PerrosRegistradosScreen(
 
     LaunchedEffect(Unit) {
         vm.cargarMisPerros()
-        vm.navigationEvent.collect { idPerro ->
-        }
+        vm.navigationEvent.collect { _ -> }
     }
 
     Box(
@@ -68,7 +67,7 @@ fun PerrosRegistradosScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Column {
                     Text(
-                        text = "Mis perros",
+                        text = stringResource(id = R.string.perros_registrados_titulo_mis_perros),
                         color = OrangePrimary,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold
@@ -76,7 +75,7 @@ fun PerrosRegistradosScreen(
                     if (state is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Success) {
                         val count = (state as PerrosRegistradosViewModel.PerrosRegistradosStateUI.Success).perros.size
                         Text(
-                            text = "$count perros registrados",
+                            text = stringResource(id = R.string.perros_registrados_txt_conteo_perros, count),
                             color = TextGray,
                             fontSize = 12.sp
                         )
@@ -94,10 +93,16 @@ fun PerrosRegistradosScreen(
                     }
                 }
                 is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Error -> {
-                    Text("Error: ${st.message}", color = Color.Red)
+                    Text(
+                        text = stringResource(id = R.string.perros_registrados_error_cargando),
+                        color = Color.Red
+                    )
                 }
                 is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Empty -> {
-                    Text("No tienes perros registrados aún.", color = TextGray)
+                    Text(
+                        text = stringResource(id = R.string.perros_registrados_txt_sin_perros),
+                        color = TextGray
+                    )
                 }
                 is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Success -> {
                     LazyColumn(
@@ -133,7 +138,11 @@ fun PerrosRegistradosScreen(
                 contentColor = Color.White
             )
         ) {
-            Text("Registrar Nuevo Perro", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = stringResource(id = R.string.perros_registrados_btn_registrar_nuevo),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
@@ -162,7 +171,7 @@ fun DogCardItem(perro: PerroDto, onEditarClick: () -> Unit, irDetallePerro: () -
                     if (!url.isNullOrBlank()) {
                         AsyncImage(
                             model = url,
-                            contentDescription = "Avatar del perro",
+                            contentDescription = stringResource(id = R.string.perros_registrados_img_cd_avatar_perro),
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
@@ -180,14 +189,22 @@ fun DogCardItem(perro: PerroDto, onEditarClick: () -> Unit, irDetallePerro: () -
 
                 Column {
                     Text(
-                        text = perro.nombre_perro ?: "",
+                        text = perro.nombre_perro,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextBlueGray
                     )
                     Spacer(modifier = Modifier.height(4.dp))
-                    Text("Raza: ${perro.raza}", color = TextGray, fontSize = 12.sp)
-                    Text("Edad: ${perro.edad} años", color = TextGray, fontSize = 12.sp)
+                    Text(
+                        text = stringResource(id = R.string.perros_registrados_txt_raza, perro.raza),
+                        color = TextGray,
+                        fontSize = 12.sp
+                    )
+                    Text(
+                        text = stringResource(id = R.string.perros_registrados_txt_edad_anios, perro.edad),
+                        color = TextGray,
+                        fontSize = 12.sp
+                    )
                 }
             }
 
@@ -202,9 +219,8 @@ fun DogCardItem(perro: PerroDto, onEditarClick: () -> Unit, irDetallePerro: () -
                     modifier = Modifier.weight(1f).height(36.dp),
                     contentPadding = PaddingValues(0.dp)
                 ) {
-                    Text("Ver detalles", fontSize = 12.sp)
+                    Text(stringResource(id = R.string.perros_registrados_btn_ver_detalles), fontSize = 12.sp)
                 }
-
 
                 OutlinedButton(
                     onClick = { onEditarClick() },
@@ -213,7 +229,7 @@ fun DogCardItem(perro: PerroDto, onEditarClick: () -> Unit, irDetallePerro: () -
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.weight(1f).height(36.dp),
                     contentPadding = PaddingValues(0.dp)
-                ) { Text("Editar", fontSize = 12.sp) }
+                ) { Text(stringResource(id = R.string.perros_registrados_btn_editar), fontSize = 12.sp) }
             }
         }
     }

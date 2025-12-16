@@ -22,12 +22,14 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.ucb.perritos.R
 import com.ucb.perritos.navigation.NavigationOptions
 import com.ucb.perritos.navigation.NavigationViewModel
 import com.ucb.perritos.navigation.Screen
@@ -124,7 +126,7 @@ fun BottomNavigationBar(
 //            )
 
             NavItem(
-                label = "Mascotas",
+                label = stringResource(id = R.string.menu_navitem_label_mascotas),
                 color = inactiveColor,
                 isActive = currentRoute == Screen.MisPerros.route,
                 icon = Icons.Default.Pets,
@@ -143,7 +145,7 @@ fun BottomNavigationBar(
 //                onClick = { onNavigate(Screen.MisPerros.route) }
 //            )
             NavItem(
-                label = "Perfil",
+                label = stringResource(id = R.string.menu_navitem_label_perfil),
                 color = inactiveColor,
                 isActive = currentRoute == Screen.PerfilUsuario.route,
                 icon = Icons.Default.Person,
@@ -176,7 +178,7 @@ fun BottomNavigationBar(
             ) {
                 Icon(
                     imageVector = Icons.Default.LocationOn,
-                    contentDescription = "Mapa",
+                    contentDescription = stringResource(id = R.string.menu_navitem_cd_mapa),
                     tint = Color.White,
                     modifier = Modifier.size(30.dp)
                 )

@@ -19,12 +19,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
+import com.ucb.perritos.R
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
 import com.ucb.perritos.features.registroUsuario.domain.usecase.GetUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,7 +56,7 @@ fun PerfilUsuarioScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Mi Perfil",
+                text = stringResource(id = R.string.perfil_usuario_titulo_principal),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = orangePrimary,
@@ -103,14 +104,12 @@ fun PerfilContent(usuario: UsuarioModel, primaryColor: Color) {
             .background(Color.LightGray),
         contentAlignment = Alignment.Center
     ) {
-        // CORRECCIÓN: Restaurada la lógica para mostrar imagen o icono
-
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier.size(80.dp)
-            )
+        Icon(
+            imageVector = Icons.Default.AccountCircle,
+            contentDescription = stringResource(id = R.string.perfil_usuario_img_cd_avatar_usuario),
+            tint = Color.White,
+            modifier = Modifier.size(80.dp)
+        )
 
     }
 
@@ -119,8 +118,8 @@ fun PerfilContent(usuario: UsuarioModel, primaryColor: Color) {
     // 2. Datos
     InfoCard(
         icon = Icons.Default.Person,
-        label = "Nombre del Dueño",
-        value = usuario.nombreDueño ?: "Sin nombre",
+        label = stringResource(id = R.string.perfil_usuario_card_label_nombre_duenio),
+        value = usuario.nombreDueño ?: stringResource(id = R.string.perfil_usuario_card_valor_sin_nombre),
         primaryColor = primaryColor
     )
 
@@ -128,8 +127,8 @@ fun PerfilContent(usuario: UsuarioModel, primaryColor: Color) {
 
     InfoCard(
         icon = Icons.Default.Email,
-        label = "Correo Electrónico",
-        value = usuario.email ?: "Sin email",
+        label = stringResource(id = R.string.perfil_usuario_card_label_correo_electronico),
+        value = usuario.email ?: stringResource(id = R.string.perfil_usuario_card_valor_sin_email),
         primaryColor = primaryColor
     )
 }

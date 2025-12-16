@@ -1,6 +1,5 @@
 package com.ucb.perritos.features.registroUsuario.presentation
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -20,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
 import com.ucb.perritos.features.registroUsuario.domain.model.UsuarioModel
-import com.ucb.perritos.features.registroUsuario.presentation.RegistroUsuarioViewModel
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -64,7 +63,7 @@ fun RegistroUsuarioScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Registro de Usuario",
+                text = stringResource(id = R.string.registro_usuario_titulo_principal),
                 color = OrangePrimary,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Medium
@@ -94,7 +93,7 @@ fun ProfilePhotoSection() {
         ) {
             Icon(
                 imageVector = Icons.Default.Person,
-                contentDescription = "Foto de perfil",
+                contentDescription = stringResource(id = R.string.registro_usuario_img_cd_foto_perfil),
                 tint = TextBlueGray,
                 modifier = Modifier.size(70.dp)
             )
@@ -111,7 +110,7 @@ fun ProfilePhotoSection() {
 //        ) {
 //            Icon(
 //                imageVector = Icons.Default.FileUpload,
-//                contentDescription = "Subir foto",
+//                contentDescription = stringResource(id = R.string.registro_usuario_img_cd_subir_foto),
 //                tint = OrangePrimary,
 //                modifier = Modifier.fillMaxSize()
 //            )
@@ -136,7 +135,7 @@ fun RegistroFormContent(
 
 
         CustomTextField(
-            label = "Nombre del dueño",
+            label = stringResource(id = R.string.registro_usuario_tf_label_nombre_duenio),
             value = nombre,
             onValueChange = { nombre = it }
         )
@@ -145,7 +144,7 @@ fun RegistroFormContent(
 
 
         CustomTextField(
-            label = "Email",
+            label = stringResource(id = R.string.registro_usuario_tf_label_email),
             value = correo,
             onValueChange = { correo = it },
             keyboardType = KeyboardType.Email
@@ -155,7 +154,7 @@ fun RegistroFormContent(
 
 
         CustomTextField(
-            label = "Contraseña",
+            label = stringResource(id = R.string.registro_usuario_tf_label_contrasenia),
             value = password,
             onValueChange = { password = it },
             isPassword = true
@@ -165,7 +164,7 @@ fun RegistroFormContent(
 
 
         CustomTextField(
-            label = "Confirmar contraseña",
+            label = stringResource(id = R.string.registro_usuario_tf_label_confirmar_contrasenia),
             value = confirmarPassword,
             onValueChange = { confirmarPassword = it },
             isPassword = true
@@ -179,7 +178,7 @@ fun RegistroFormContent(
                 if (password == confirmarPassword) {
                     vm.registrarUsuario(UsuarioModel(nombre, correo, password))
                 } else {
-
+                    // Puedes mostrar un mensaje con porfavor_llena_los_campos u otro estado
                 }
             },
             modifier = Modifier
@@ -193,7 +192,7 @@ fun RegistroFormContent(
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {
             Text(
-                text = "Registrarme",
+                text = stringResource(id = R.string.registro_usuario_btn_registrarme),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -219,7 +218,7 @@ fun RegistroFormContent(
             is RegistroUsuarioViewModel.RegistrarUsuarioStateUI.Success -> {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(
-                        text = "¡Cuenta creada!",
+                        text = stringResource(id = R.string.registro_usuario_txt_cuenta_creada),
                         color = OrangePrimary,
                         fontWeight = FontWeight.Bold
                     )
@@ -230,7 +229,10 @@ fun RegistroFormContent(
                         textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
                     TextButton(onClick = irLogin) {
-                        Text("Ir a Iniciar Sesión", color = OrangePrimary)
+                        Text(
+                            text = stringResource(id = R.string.registro_usuario_btn_ir_login),
+                            color = OrangePrimary
+                        )
                     }
                 }
             }
