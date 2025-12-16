@@ -24,31 +24,23 @@ class PerfilPerroRepository(
                 perroId = perroId,
                 nombre = perro.nombre_perro,
                 raza = perro.raza,
+                edad = perro.edad,
+                descripcion = perro.descripcion,
                 avatarUrl = perro.foto_perro
             )
         )
     }
 
     override suspend fun setPerfilActual(perroId: Long, nombre: String, raza: String, avatarUrl: String?) {
-        local.upsertPerfil(PerfilPerroEntity(perroId, nombre, raza, avatarUrl))
+        local.upsertPerfil(
+            PerfilPerroEntity(
+                perroId = perroId,
+                nombre = nombre,
+                raza = raza,
+                edad = null,
+                descripcion = null,
+                avatarUrl = avatarUrl
+            )
+        )
     }
-
-//    override fun observePerfil(perrdId: Long): Flow<PerfilPerroModel?> =
-//        local.observePerfil(perrdId).map { PerfilPerroMapper.toDomain(it) }
-//
-//    override suspend fun setPerfilActual(
-//        perroId: Long,
-//        nombre: String,
-//        raza: String,
-//        avatarUrl: String?
-//    ) {
-//        local.upsertPerfil(
-//            PerfilPerroEntity(
-//                perroId = perroId,
-//                nombre = nombre,
-//                raza = raza,
-//                avatarUrl = avatarUrl
-//            )
-//        )
-//    }
 }

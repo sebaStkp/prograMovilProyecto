@@ -9,5 +9,7 @@ data class PerfilPerroEntity(
     @PrimaryKey val perroId: Long,
     val nombre: String,
     val raza: String,
+    val edad: Int?,
+    val descripcion: String?,
     val avatarUrl: String?
 )
