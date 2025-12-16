@@ -12,4 +12,5 @@ interface IPerfilPerroRepository {
         raza: String,
         avatarUrl: String?
     )
+    suspend fun syncPerfilDesdeSupabase(perroId: Long)
 }

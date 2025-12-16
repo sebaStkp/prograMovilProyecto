@@ -23,6 +23,7 @@ import com.ucb.perritos.features.login.domain.repository.ILoginRepository
 import com.ucb.perritos.features.login.domain.usecase.SetTokenUseCase
 import com.ucb.perritos.features.login.presentation.LoginViewModel
 import com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroLocalDataSource
+import com.ucb.perritos.features.perfilPerro.data.datasource.PerfilPerroRemoteSupabase
 import com.ucb.perritos.features.perfilPerro.data.repository.PerfilPerroRepository
 import com.ucb.perritos.features.perfilPerro.domain.repository.IPerfilPerroRepository
 import com.ucb.perritos.features.perfilPerro.domain.usecase.EstablecerPerfilActualUseCase
@@ -181,9 +182,10 @@ val appModule = module {
 
     single(named("perfilPerroDao")) { get<AppRoomDataBase>().perfilPerroDao() }
     single { PerfilPerroLocalDataSource(get(named("perfilPerroDao"))) }
-    single<IPerfilPerroRepository> { PerfilPerroRepository(get()) }
+    single { PerfilPerroRemoteSupabase(get()) }
+    single<IPerfilPerroRepository> { PerfilPerroRepository(get(),get()) }
     factory { ObtenerPerfilPerroUseCase(get()) }
-    viewModel { PerfilPerroViewModel(get()) }
+    viewModel { PerfilPerroViewModel(get(), get()) }
 
 
 //    factory { ObtenerUbicacionActualUseCase(get()) }
