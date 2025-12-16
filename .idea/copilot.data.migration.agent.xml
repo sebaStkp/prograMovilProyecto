@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AgentMigrationStateService">
+    <option name="migrationStatus" value="IN_PROGRESS" />
     <option name="pendingSessionIds">
       <option value="cd956658-0e4b-4031-b033-0742e2d1b65d" />
     </option>
@@ -10,37 +11,26 @@
           <value>
             <set>
               <option value="2fda8edb-74d3-42b5-bbae-326e8193fae1" />
-              <option value="83a8c562-ee8a-490f-ac84-421a473b995f" />
-              <option value="7418824f-1c28-45c9-bae9-dde0773e0f64" />
-              <option value="f6837d3a-c2b7-4ada-ac44-b5f5ed60561e" />
-              <option value="4cf5b5a4-fab3-4b05-9a61-50a57cb9ed2f" />
-              <option value="f866f3f0-3a97-4244-bb2c-e32f95636b37" />
-              <option value="412006dc-abc4-4a5c-a2c6-58bc76566b20" />
-              <option value="9b502426-a8fb-4c55-b812-d0f9d24e6461" />
-              <option value="dff4673e-8397-45ff-bedd-b6feda69b1ab" />
-              <option value="73ba32c5-bf5f-42a4-aed5-c761a3cc81a9" />
-              <option value="e05587d8-c5fa-4686-9921-96c1861f6299" />
-              <option value="9f8f26f8-6584-4ab2-9038-01dddeec1826" />
               <option value="4032e03d-5906-4719-9ea7-acbc7bc28778" />
+              <option value="412006dc-abc4-4a5c-a2c6-58bc76566b20" />
+              <option value="4cf5b5a4-fab3-4b05-9a61-50a57cb9ed2f" />
               <option value="63fa3117-d1f8-47dc-b9f5-fe0366403f2e" />
+              <option value="73ba32c5-bf5f-42a4-aed5-c761a3cc81a9" />
+              <option value="7418824f-1c28-45c9-bae9-dde0773e0f64" />
+              <option value="83a8c562-ee8a-490f-ac84-421a473b995f" />
+              <option value="9b502426-a8fb-4c55-b812-d0f9d24e6461" />
+              <option value="9f8f26f8-6584-4ab2-9038-01dddeec1826" />
+              <option value="dff4673e-8397-45ff-bedd-b6feda69b1ab" />
+              <option value="e05587d8-c5fa-4686-9921-96c1861f6299" />
+              <option value="f6837d3a-c2b7-4ada-ac44-b5f5ed60561e" />
+              <option value="f866f3f0-3a97-4244-bb2c-e32f95636b37" />
             </set>
           </value>
         </entry>
       </map>
     </option>
     <pendingWorkingSetItems>
-      <entry key="cd956658-0e4b-4031-b033-0742e2d1b65d">
-        <set>
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/registroUsuario/presentation/RegistroUsuarioScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/bienvenida/presentation/BienvenidaScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/login/presentation/LoginScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/perrosRegistrados/presentation/PerrosRegistradosScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/perfilUsuario/presentation/PerfilUsuarioScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/menu/presentation/MenuScreen.kt" />
-          <option value="file://$PROJECT_DIR$/app/src/main/java/com/ucb/perritos/features/perfilPerro/presentation/PerfilPerroScreen.kt" />
-        </set>
-      </entry>
+      <entry key="cd956658-0e4b-4031-b033-0742e2d1b65d" />
     </pendingWorkingSetItems>
   </component>
 </project>

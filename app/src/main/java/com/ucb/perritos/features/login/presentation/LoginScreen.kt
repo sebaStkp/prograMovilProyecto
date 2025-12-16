@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import com.ucb.perritos.R
 import com.ucb.perritos.features.login.presentation.LoginViewModel
 import org.koin.androidx.compose.koinViewModel
+import androidx.compose.ui.res.stringResource
 
 
 private val OrangePrimary = Color(0xFFF89A22)
@@ -91,7 +92,7 @@ fun LoginScreen(
 
 
                 Text(
-                    text = "Inicio de sesión",
+                    text = stringResource(id = R.string.login_titulo_principal),
                     color = OrangePrimary,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold,
@@ -102,7 +103,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Bienvenido de nuevo!!",
+                    text = stringResource(id = R.string.login_subtitulo_bienvenido),
                     color = TextBlueGray,
                     fontSize = 14.sp,
                     modifier = Modifier.fillMaxWidth(),
@@ -113,7 +114,7 @@ fun LoginScreen(
 
 
                 LoginCustomTextField(
-                    label = "Email",
+                    label = stringResource(id = R.string.login_tf_label_email),
                     value = email,
                     onValueChange = { email = it },
                     keyboardType = KeyboardType.Email
@@ -122,7 +123,7 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 LoginCustomTextField(
-                    label = "Contraseña",
+                    label = stringResource(id = R.string.login_tf_label_contrasenia),
                     value = password,
                     onValueChange = { password = it },
                     isPassword = true
@@ -165,7 +166,7 @@ fun LoginScreen(
                         )
                     } else {
                         Text(
-                            text = "Ingresar",
+                            text = stringResource(id = R.string.login_btn_ingresar),
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -176,7 +177,7 @@ fun LoginScreen(
 
 
                 Text(
-                    text = "Crearme una cuenta",
+                    text = stringResource(id = R.string.login_txt_crear_cuenta),
                     color = TextBlueGray,
                     fontSize = 14.sp,
                     modifier = Modifier
