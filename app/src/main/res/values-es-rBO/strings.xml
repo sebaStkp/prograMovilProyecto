@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: es-BO, Spanish (Bolivia)
  Exported by: Agustinrobolero Ledezma
- Exported at: Tue, 16 Dec 2025 11:02:00 -0400
+ Exported at: Wed, 17 Dec 2025 17:30:49 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Where am I?</string>
@@ -29,7 +29,7 @@
     <string name="sin_email">Sin email</string>
     <string name="mis_perros">Mis perros</string>
     <string name="No_tienes_perros_registrados">No tienes perros registrados aun</string>
-    <string name="Registrar_perro">Registrar Nuevo Perro</string>
+    <string name="Registrar_perro">Registro de Mascota</string>
     <string name="raza">Raza</string>
     <string name="edad">Edad</string>
     <string name="anios">años</string>

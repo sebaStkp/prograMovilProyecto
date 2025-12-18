@@ -24,12 +24,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import com.ucb.perritos.R
 import com.ucb.perritos.features.registroMascota.domain.model.PerroModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -138,7 +140,7 @@ fun RegistroPerroScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Registro de Mascota",
+                    text = stringResource(id = R.string.Registrar_perro),
                     color = OrangePrimary,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Medium,
@@ -148,7 +150,7 @@ fun RegistroPerroScreenContent(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 MascotaCustomTextField(
-                    label = "Nombre del perro",
+                    label = stringResource(id = R.string.nombre_perro),
                     value = nombrePerro,
                     onValueChange = onNombreChange,
                     tag = "tagNombrePerro" // Tag Nombre
@@ -157,7 +159,7 @@ fun RegistroPerroScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 MascotaCustomTextField(
-                    label = "Raza",
+                    label = stringResource(id = R.string.raza),
                     value = raza,
                     onValueChange = onRazaChange,
                     tag = "tagRaza" // Tag Raza
@@ -166,7 +168,7 @@ fun RegistroPerroScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 MascotaCustomTextField(
-                    label = "Edad",
+                    label = stringResource(id = R.string.edad),
                     value = edad,
                     onValueChange = onEdadChange,
                     keyboardType = KeyboardType.Number,
@@ -176,7 +178,7 @@ fun RegistroPerroScreenContent(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 MascotaCustomTextField(
-                    label = "Descripcion",
+                    label = stringResource(id = R.string.descripcion),
                     value = descripcion,
                     onValueChange = onDescripcionChange,
                     singleLine = false,
@@ -202,7 +204,7 @@ fun RegistroPerroScreenContent(
                     if (isLoading) {
                         CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
                     } else {
-                        Text(text = "Registrarme", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text(text = stringResource(id = R.string.registrarme), fontSize = 18.sp, fontWeight = FontWeight.Bold)
                     }
                 }
                 Spacer(modifier = Modifier.height(24.dp))
@@ -234,14 +236,14 @@ fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit, tag: String
                 if (avatarUri != null) {
                     AsyncImage(
                         model = avatarUri,
-                        contentDescription = "Foto Mascota",
+                        contentDescription = stringResource(id = R.string.foto_mascota),
                         modifier = Modifier.fillMaxSize().clip(CircleShape),
                         contentScale = ContentScale.Crop
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = "Foto Mascota",
+                        contentDescription = stringResource(id = R.string.foto_mascota),
                         tint = TextBlueGray,
                         modifier = Modifier.size(70.dp)
                     )
@@ -256,7 +258,7 @@ fun PetPhotoSection(avatarUri: Uri?, onClickChangePhoto: () -> Unit, tag: String
                     .padding(4.dp)
             ) {
                 IconButton(onClick = onClickChangePhoto, modifier = Modifier.fillMaxSize()) {
-                    Icon(imageVector = Icons.Default.ArrowUpward, contentDescription = "Subir foto", tint = OrangePrimary, modifier = Modifier.fillMaxSize())
+                    Icon(imageVector = Icons.Default.ArrowUpward, contentDescription = stringResource(id = R.string.subir_foto), tint = OrangePrimary, modifier = Modifier.fillMaxSize())
                 }
             }
         }

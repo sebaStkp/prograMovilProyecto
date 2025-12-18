@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: en-US, English (USA)
  Exported by: Agustinrobolero Ledezma
- Exported at: Tue, 16 Dec 2025 11:01:59 -0400
+ Exported at: Wed, 17 Dec 2025 17:30:48 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Dogs</string>
@@ -29,7 +29,7 @@
     <string name="sin_email">No email</string>
     <string name="mis_perros">My dogs</string>
     <string name="No_tienes_perros_registrados">You dont have any registered dogs yet</string>
-    <string name="Registrar_perro">Register New Dog</string>
+    <string name="Registrar_perro">Register pet</string>
     <string name="raza">Race</string>
     <string name="edad">age</string>
     <string name="anios">years</string>
