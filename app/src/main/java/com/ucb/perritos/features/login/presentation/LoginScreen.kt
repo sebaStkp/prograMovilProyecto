@@ -94,6 +94,7 @@ fun LoginScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = stringResource(id = R.string.login_titulo_principal),
+
                             color = OrangePrimary,
                             fontSize = 28.sp,
                             fontWeight = FontWeight.ExtraBold,

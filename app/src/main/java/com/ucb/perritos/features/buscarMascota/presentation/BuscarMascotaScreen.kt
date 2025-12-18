@@ -4,6 +4,7 @@ import android.Manifest
 import android.graphics.drawable.BitmapDrawable
 import android.preference.PreferenceManager
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +25,7 @@ import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -71,8 +73,7 @@ fun BuscarMascotaScreen(
             modifier = Modifier.fillMaxSize()
         ) {
 
-            Spacer(modifier = Modifier.height(80.dp))
-
+            // Spacer(modifier = Modifier.height(80.dp)) // <--- LÍNEA ELIMINADA
 
             Box(
                 modifier = Modifier
@@ -93,7 +94,8 @@ fun BuscarMascotaScreen(
                                     modifier = Modifier.size(40.dp)
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
-                                Text("Iniciando mapa...", color = Color.Gray)
+                                Text(
+                                    text = stringResource(id = R.string.mapa), color = Color.Gray)
                             }
                         }
                     }
@@ -111,7 +113,8 @@ fun BuscarMascotaScreen(
                                     modifier = Modifier.size(40.dp)
                                 )
                                 Spacer(modifier = Modifier.height(16.dp))
-                                Text("Cargando ubicación...", color = Color.Gray)
+                                Text(
+                                    text = stringResource(R.string.carga_ubi), color = Color.Gray)
                             }
                         }
                     }
@@ -144,7 +147,11 @@ fun BuscarMascotaScreen(
                     }
 
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success -> {
-                        MapaOSMContent(origin = st.origin, pet = st.pet)
+                        // Forzar que el mapa tenga un zIndex bajo para que los elementos Compose
+                        // (como el botón) puedan dibujarse por encima.
+                        Box(modifier = Modifier.fillMaxSize().zIndex(0f)) {
+                            MapaOSMContent(origin = st.origin, pet = st.pet)
+                        }
                     }
                 }
             }
@@ -179,13 +186,13 @@ fun BuscarMascotaScreen(
                 )
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
-                    text = "Find your ",
+                    text = stringResource(id = R.string.encuentra_tu),
                     color = Color.Gray,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Normal
                 )
                 Text(
-                    text = "dog",
+                    text = stringResource(id = R.string.perro),
                     color = OrangePrimary,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Bold
@@ -194,26 +201,24 @@ fun BuscarMascotaScreen(
         }
 
 
-        Button(
-            onClick = { vm.iniciarBusquedaMascota() },
+        // Botón 'pill' naranja como Box con background directamente para evitar artefactos de Surface
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
                 .padding(horizontal = 24.dp)
-                .padding(bottom = 100.dp)
-                .height(56.dp)
-                .zIndex(10f)
-                .shadow(12.dp, CircleShape),
-            shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 8.dp,
-                pressedElevation = 12.dp
-            )
+                // posicionamos el botón por encima del FAB y la nav bar
+                .padding(bottom = 88.dp)
+                .height(64.dp)
+                .zIndex(80f)
+                .shadow(12.dp, CircleShape)
+                .background(color = OrangePrimary, shape = CircleShape)
+                .clickable { vm.iniciarBusquedaMascota() },
+            contentAlignment = Alignment.Center
         ) {
             Text(
-                text = "BUSCAR MASCOTA",
+                text = stringResource(id = R.string.encuentra_tu) + " " + stringResource(id = R.string.perro),
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -222,6 +227,8 @@ fun BuscarMascotaScreen(
         }
     }
 }
+
+
 
 @Composable
 fun MapaOSMContent(origin: BuscarMascotaModel, pet: BuscarMascotaModel) {

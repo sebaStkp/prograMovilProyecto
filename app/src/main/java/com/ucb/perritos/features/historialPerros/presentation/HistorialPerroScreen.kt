@@ -74,7 +74,8 @@ fun HistorialPerroScreen(
                 is HistorialPerroViewModel.HistorialStateUI.Success -> {
                     if (state.lista.isEmpty()) {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("No hay historial registrado", color = TextBlueGray)
+                            Text(
+                                "No hay historial registrado", color = TextBlueGray)
                         }
                     } else {
                         LazyColumn(
