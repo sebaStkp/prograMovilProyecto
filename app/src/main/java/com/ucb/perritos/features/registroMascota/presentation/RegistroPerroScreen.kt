@@ -127,7 +127,7 @@ fun RegistroPerroScreenContent(
     descripcion: String,
     avatarUri: Uri?,
     isLoading: Boolean,
-    visible: Boolean,
+    visible: Boolean = true,
     onNombreChange: (String) -> Unit,
     onRazaChange: (String) -> Unit,
     onEdadChange: (String) -> Unit,

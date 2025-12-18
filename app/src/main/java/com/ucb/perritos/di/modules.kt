@@ -9,6 +9,7 @@ package com.ucb.perritos.di
 //import org.koin.androidx.viewmodel.dsl.viewModel
 //import org.koin.core.qualifier.named
 
+import android.content.Context
 import com.ucb.perritos.appRoomDataBase.AppRoomDataBase
 
 import com.ucb.perritos.features.bienvenida.presentation.BienvenidaViewModel
@@ -62,6 +63,12 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.storage.Storage
 import com.ucb.perritos.features.core.SessionManagerAndroid
+import com.ucb.perritos.features.perfilPerro.data.datasource.FotoPerroLocalDataSource
+import com.ucb.perritos.features.perfilPerro.data.datasource.FotoPerroRemoteSupabase
+import com.ucb.perritos.features.perfilPerro.data.repository.FotoPerroRepository
+import com.ucb.perritos.features.perfilPerro.domain.repository.IFotoPerroRepository
+import com.ucb.perritos.features.perfilPerro.domain.usecase.AgregarFotoPerroUseCase
+import com.ucb.perritos.features.perfilPerro.domain.usecase.SubirYGuardarFotoPerroUseCase
 import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuarioRemoteDataSource
 
 //import io.github.jan.supabase.gotrue.
@@ -131,7 +138,17 @@ val appModule = module {
     single { PerfilPerroRemoteSupabase(get()) }
     single<IPerfilPerroRepository> { PerfilPerroRepository(get(),get()) }
     factory { ObtenerPerfilPerroUseCase(get()) }
-    viewModel { PerfilPerroViewModel(get(), get()) }
+    viewModel { PerfilPerroViewModel(get(), get(), get(), get()) }
+    single { FotoPerroRemoteSupabase(supabase = get(), contentResolver = get<Context>().contentResolver) }
+    factory { AgregarFotoPerroUseCase(get()) }
+    factory { SubirYGuardarFotoPerroUseCase(get(), get()) }
+    // DAO fotos (ajusta el método)
+    single { get<AppRoomDataBase>().fotoPerroDao() }
+    single { FotoPerroLocalDataSource(get()) }
+    single<IFotoPerroRepository> { FotoPerroRepository(get()) }
+
+
+
 
 
 //    factory { ObtenerUbicacionActualUseCase(get()) }

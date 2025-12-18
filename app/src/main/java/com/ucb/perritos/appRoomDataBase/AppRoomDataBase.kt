@@ -18,20 +18,26 @@ import com.ucb.perritos.features.registroMascota.data.database.entity.RegistroPe
 import com.ucb.perritos.features.registroUsuario.data.database.dao.IRegistroUsuarioDao
 import com.ucb.perritos.features.registroUsuario.data.database.entity.RegistroUsuarioEntity
 
-val MIGRATION_6_7 = object : Migration(6, 7){
+val MIGRATION_7_8 = object : Migration(7, 8){
     override fun migrate(database: SupportSQLiteDatabase){
-        database.execSQL("ALTER TABLE perfiles_perro ADD COLUMN edad INTEGER")
-        database.execSQL("ALTER TABLE perfiles_perro ADD COLUMN descripcion TEXT")
-        database.execSQL("UPDATE perfiles_perro SET edad = 0 WHERE edad IS NULL")
-        database.execSQL("UPDATE perfiles_perro SET descripcion = '' WHERE descripcion IS NULL")
+        database.execSQL("""
+            CREATE TABLE IF NOT EXISTS fotos_perro (
+                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                perroId INTEGER NOT NULL,
+                url TEXT NOT NULL,
+                timestamp INTEGER NOT NULL
+            )
+        """.trimIndent())
     }
 }
-@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class], version = 7)
+@Database(entities = [RegistroPerroEntity::class, RegistroUsuarioEntity::class, PerfilPerroEntity::class,FotoPerroEntity::class], version = 8)
 abstract class AppRoomDataBase : RoomDatabase() {
     abstract fun registroPerroDao(): IRegistroPerroDao
     abstract fun registroUsuarioDao(): IRegistroUsuarioDao
 
     abstract fun perfilPerroDao(): IPerfilPerroDao
+    abstract fun fotoPerroDao(): IFotoPerroDao
+
 
     companion object {
         @Volatile
@@ -42,7 +48,7 @@ abstract class AppRoomDataBase : RoomDatabase() {
             // if the Instance is not null, return it, otherwise create a new database instance.
             return Instance ?: synchronized(this) {
                 Room.databaseBuilder(context, AppRoomDataBase::class.java, "proyecto_perritos_db")
-                    .addMigrations(MIGRATION_6_7)
+                    .addMigrations(MIGRATION_7_8)
                     .build()
                     .also { Instance = it }
             }
