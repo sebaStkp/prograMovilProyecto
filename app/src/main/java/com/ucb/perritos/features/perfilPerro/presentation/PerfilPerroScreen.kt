@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,6 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -28,9 +30,18 @@ import com.ucb.perritos.R
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
-private val OrangePrimary = androidx.compose.ui.graphics.Color(0xFFF89A22)
-private val TextBlueGray = androidx.compose.ui.graphics.Color(0xFF6A8693)
-private val TextGray = androidx.compose.ui.graphics.Color(0xFF9E9E9E)
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
+import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Pets
+
+
+private val OrangePrimary = Color(0xFFF89A22)
+private val OrangeLight = Color(0xFFFFF3E0)
+private val TextDark = Color(0xFF2D3436)
+private val TextBlueGray = Color(0xFF6A8693)
+private val TextGray = Color(0xFF9E9E9E)
 
 @Composable
 fun PerfilPerroScreen(
@@ -73,116 +84,205 @@ fun PerfilPerroScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .background(Color(0xFFFAFAFA))
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .padding(top = 24.dp, bottom = 100.dp),
+                .padding(top = 40.dp, bottom = 100.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            // AVATAR GRANDE
-            AsyncImage(
-                model = state.perfil?.avatarUrl ?: photoUriState.value,
-                contentDescription = stringResource(id = R.string.perfil_perro_img_cd_avatar),
-                modifier = Modifier
-                    .size(140.dp) // <-- más grande (mockup)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
+
+            val imageModel = state.perfil?.avatarUrl ?: photoUriState.value
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.size(160.dp)
+            ) {
+                if (imageModel != null) {
+                    AsyncImage(
+                        model = imageModel,
+                        contentDescription = stringResource(id = R.string.perfil_perro_img_cd_avatar),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                            .border(4.dp, OrangePrimary, CircleShape),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(CircleShape)
+                            .background(Color(0xFFEEEEEE))
+                            .border(2.dp, OrangePrimary.copy(alpha = 0.5f), CircleShape),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Image,
+                            contentDescription = "Sin foto",
+                            tint = Color.Gray,
+                            modifier = Modifier.size(64.dp)
+                        )
+                    }
+                }
+
+
+                Surface(
+                    shape = CircleShape,
+                    color = OrangePrimary,
+                    shadowElevation = 4.dp,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(8.dp)
+                        .size(40.dp)
+                ) {
+                    Box(contentAlignment = Alignment.Center) {
+                        Icon(
+                            imageVector = Icons.Default.AddAPhoto,
+                            contentDescription = null,
+                            tint = Color.White,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+                }
+            }
+
+            Spacer(Modifier.height(16.dp))
+
+
+            Text(
+                text = state.perfil?.nombre ?: "Nombre Desconocido",
+                style = MaterialTheme.typography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = TextDark
             )
 
-            Spacer(Modifier.height(10.dp))
+            Text(
+                text = state.perfil?.raza ?: "Raza no especificada",
+                style = MaterialTheme.typography.bodyLarge,
+                color = TextBlueGray,
+                fontWeight = FontWeight.Medium
+            )
 
-//            // NOMBRE (naranja)
-//            Text(
-//                text = state.perfil?.nombre ?: "—",
-//                fontSize = 18.sp,
-//                fontWeight = FontWeight.Bold,
-//                color = OrangePrimary
-//            )
-//
-//            // RAZA (azul/gris)
-//            Text(
-//                text = state.perfil?.raza ?: "",
-//                fontSize = 14.sp,
-//                color = TextBlueGray
-//            )
+            Spacer(Modifier.height(24.dp))
 
-            Spacer(Modifier.height(18.dp))
 
-            // CAJA "INFORMACION DE LA MASCOTA"
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
-                border = BorderStroke(2.dp, OrangePrimary)
+                shape = RoundedCornerShape(20.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
             ) {
-                Column(Modifier.padding(14.dp)) {
-                    Text(
-                        text = stringResource(id = R.string.perfil_perro_card_titulo_info),
-                        color = OrangePrimary,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
-                    )
-                    Spacer(Modifier.height(10.dp))
+                Column(Modifier.padding(20.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
 
-                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_nombre)}:", state.perfil?.nombre ?: "—")
-                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_raza)}:", state.perfil?.raza ?: "—")
-                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_edad)}:", state.perfil?.edad?.toString() ?: "—")
-                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_descripcion)}:", state.perfil?.descripcion ?: "—")
+                        Box(
+                            modifier = Modifier
+                                .size(width = 4.dp, height = 20.dp)
+                                .background(OrangePrimary, RoundedCornerShape(2.dp))
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.perfil_perro_card_titulo_info),
+                            color = TextDark,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
+                        )
+                    }
 
+                    Spacer(Modifier.height(16.dp))
+
+
+                    HorizontalDivider(color = Color(0xFFF0F0F0))
+                    Spacer(Modifier.height(12.dp))
+
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_nombre)}", state.perfil?.nombre ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_raza)}", state.perfil?.raza ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_edad)}", state.perfil?.edad?.toString() ?: "—")
+                    InfoRow("${stringResource(id = R.string.perfil_perro_card_label_descripcion)}", state.perfil?.descripcion ?: "—")
                 }
             }
 
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(24.dp))
 
-            // TITULO FOTOS
+
             Text(
                 text = stringResource(id = R.string.perfil_perro_titulo_fotos),
-                color = OrangePrimary,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
+                color = TextDark,
                 modifier = Modifier
                     .align(Alignment.Start)
-                    .padding(horizontal = 24.dp)
+                    .padding(horizontal = 28.dp)
             )
 
             Spacer(Modifier.height(12.dp))
 
-            // (Por ahora placeholder del contenedor de fotos, luego metemos LazyRow / grid)
+
+
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(140.dp),
-                shape = RoundedCornerShape(14.dp),
-                colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    .height(120.dp),
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = OrangeLight.copy(alpha = 0.3f)),
+                border = BorderStroke(1.dp, OrangePrimary.copy(alpha = 0.3f))
             ) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(stringResource(id = R.string.perfil_perro_placeholder_fotos), color = TextGray)
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            imageVector = Icons.Default.Image,
+                            contentDescription = null,
+                            tint = OrangePrimary.copy(alpha = 0.6f),
+                            modifier = Modifier.size(32.dp)
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = stringResource(id = R.string.perfil_perro_placeholder_fotos),
+                            color = TextBlueGray,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
             }
 
-            Spacer(Modifier.height(14.dp))
+            Spacer(Modifier.height(24.dp))
 
-            // BOTÓN AÑADIR FOTO (naranja)
+
             Button(
                 onClick = { requestPermissionLauncher.launch(Manifest.permission.CAMERA) },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = OrangePrimary,
-                    contentColor = androidx.compose.ui.graphics.Color.White
+                    contentColor = Color.White
+                ),
+                elevation = ButtonDefaults.buttonElevation(
+                    defaultElevation = 6.dp,
+                    pressedElevation = 2.dp
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
-                    .height(48.dp),
-                shape = RoundedCornerShape(24.dp)
+                    .height(54.dp),
+                shape = RoundedCornerShape(16.dp)
             ) {
-                Text(stringResource(id = R.string.Aniadir_Foto), fontWeight = FontWeight.Bold)
+                Icon(
+                    imageVector = Icons.Default.AddAPhoto,
+                    contentDescription = null,
+                    modifier = Modifier.size(20.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = stringResource(id = R.string.Aniadir_Foto),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp
+                )
             }
 
             if (state.loading) {
@@ -196,14 +296,28 @@ fun PerfilPerroScreen(
     }
 }
 
+
 @Composable
 private fun InfoRow(label: String, value: String) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = label, color = OrangePrimary, fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
-        Text(text = value, color = TextBlueGray, fontSize = 13.sp)
+        Text(
+            text = label,
+            color = TextGray,
+            fontWeight = FontWeight.Medium,
+            fontSize = 14.sp
+        )
+        Text(
+            text = value,
+            color = TextDark,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 15.sp,
+            modifier = Modifier.padding(start = 16.dp)
+        )
     }
-    Spacer(Modifier.height(6.dp))
 }

@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: en-US, English (USA)
  Exported by: Agustinrobolero Ledezma
- Exported at: Thu, 18 Dec 2025 00:42:41 -0400
+ Exported at: Thu, 18 Dec 2025 01:25:06 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Dogs</string>
@@ -88,7 +88,7 @@
     <string name="login_subtitulo_bienvenido">Welcome back!!</string>
     <string name="login_tf_label_email">Email</string>
     <string name="login_tf_label_contrasenia">Password</string>
-    <string name="login_btn_ingresar">get into</string>
+    <string name="login_btn_ingresar">Get into</string>
     <string name="login_txt_crear_cuenta">Create an account</string>
     <!-- Perros Registrados -->
     <string name="perros_registrados_titulo_mis_perros">My dogs</string>
@@ -123,4 +123,8 @@
     <string name="perfil_perro_placeholder_fotos">PHOTOS OF THE DOG</string>
     <string name="perfil_perro_btn_aniadir_foto">Add photo</string>
     <string name="mascota_moviendose">Pet simulated moving</string>
+    <string name="carga_ubi">Loading location</string>
+    <string name="encuentra_tu">Find your</string>
+    <string name="perro">dog</string>
+    <string name="buscar_mascota"></string>
 </resources>

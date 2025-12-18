@@ -62,6 +62,7 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.storage.Storage
 import com.ucb.perritos.features.core.SessionManagerAndroid
+import com.ucb.perritos.features.registroUsuario.data.datasource.RegistroUsuarioRemoteDataSource
 
 //import io.github.jan.supabase.gotrue.
 //import retrofit2.Retrofit
@@ -92,85 +93,7 @@ val appModule = module {
         }
     }
 
-//    single {
-//        createSupabaseClient(
-//            supabaseUrl = "https://TU_URL_DE_SUPABASE.supabase.co",
-//            supabaseKey = "TU_ANON_KEY_DE_SUPABASE"
-//        ) {
-//            // Aquí puedes configurar módulos específicos si lo necesitas
-//            install(GoTrue)
-//            install(Postgrest)
-//        }
-//    }
 
-
-//    // OkHttpClient
-//    single {
-//        OkHttpClient.Builder()
-//            .connectTimeout(30, TimeUnit.SECONDS)
-//            .readTimeout(30, TimeUnit.SECONDS)
-//            .writeTimeout(30, TimeUnit.SECONDS)
-//            .build()
-//    }
-//
-//    // Retrofit
-//    single(named(NetworkConstants.RETROFIT_GITHUB)) {
-//        Retrofit.Builder()
-//            .baseUrl(NetworkConstants.GITHUB_BASE_URL)
-//            .client(get())
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//
-//    // Retrofit
-//    single(named(NetworkConstants.RETROFIT_MOVIE)) {
-//        Retrofit.Builder()
-//            .baseUrl(NetworkConstants.MOVIE_BASE_URL)
-//            .client(get())
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//
-//    // GithubService
-//    single<GithubService> {
-//        get<Retrofit>( named(NetworkConstants.RETROFIT_GITHUB)).create(GithubService::class.java)
-//    }
-//    single{ GithubRemoteDataSource(get()) }
-//    single<IGithubRepository>{ GithubRepository(get()) }
-//
-//    factory { FindByNickNameUseCase(get()) }
-//    viewModel { GithubViewModel(get(), get()) }
-//
-//    single<IProfileRepository> { ProfileRepository() }
-//    factory { GetProfileUseCase(get()) }
-//    viewModel { ProfileViewModel(get()) }
-//
-//    single { AppRoomDatabase.getDatabase(get()) }
-//    single(named("dollarDao")) { get<AppRoomDatabase>().dollarDao() }
-//    single { RealTimeRemoteDataSource() }
-//    single { DollarLocalDataSource(get(named("dollarDao"))) }
-//    single<IDollarRepository> { DollarRepository(get(), get()) }
-//    factory { FetchDollarUseCase(get()) }
-//    factory { FetchDollarParallelUseCase(get()) }
-//    viewModel{ DollarViewModel(get(), get()) }
-//
-//
-//    single(named("apiKey")) {
-//        androidApplication().getString(R.string.api_key)
-//    }
-//
-//    single<MovieService> {
-//        get<Retrofit>(named(NetworkConstants.RETROFIT_MOVIE)).create(MovieService::class.java)
-//    }
-//    single(named("movieDao")) { get<AppRoomDatabase>().movieDao() }
-//    single { MovieRemoteDataSource(get(), get(named("apiKey"))) }
-//    single { MovieLocalDataSource(get(named("movieDao"))) }
-//    single<IMoviesRepository> { MovieRepository(get(), get()) }
-//    factory { FetchPopularMoviesUseCase(get()) }
-//    factory { RateMovieUseCase(get()) }
-//    viewModel{ PopularMoviesViewModel(get(), get()) }
-//
-//    viewModel { NavigationViewModel() }
 
     single { LoginDataStore(androidContext()) }
     single<ILoginRepository> { LoginRepository(get(), get()) }
@@ -198,6 +121,7 @@ val appModule = module {
 
     single(named("registroUsuarioDao")) { get<AppRoomDataBase>().registroUsuarioDao() }
     single { RegistroUsuarioLocalDataSource(get(named("registroUsuarioDao"))) }
+    single { RegistroUsuarioRemoteDataSource(get()) }
     single<IRegistroUsuarioRepository> { RegistroUsuarioRepository(get(), get()) }
     factory { RegistrarUsuarioUseCase(get()) }
     viewModel { RegistroUsuarioViewModel(get()) }
