@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: en-US, English (USA)
  Exported by: Agustinrobolero Ledezma
- Exported at: Wed, 17 Dec 2025 17:30:48 -0400
+ Exported at: Thu, 18 Dec 2025 00:42:41 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Dogs</string>
@@ -19,7 +19,7 @@
     <string name="ingresar">get into</string>
     <string name="mascotas">Pets</string>
     <string name="perfil">Profile</string>
-    <string name="mapa">Map</string>
+    <string name="mapa">starting map...</string>
     <string name="Perfil_mascota">Pet profile</string>
     <string name="Perro_avatar">Avatar dog</string>
     <string name="fotos_perro">PHOTOS OF THE DOG</string>
@@ -122,4 +122,5 @@
     <string name="perfil_perro_titulo_fotos">PHOTOS OF THE DOG</string>
     <string name="perfil_perro_placeholder_fotos">PHOTOS OF THE DOG</string>
     <string name="perfil_perro_btn_aniadir_foto">Add photo</string>
+    <string name="mascota_moviendose">Pet simulated moving</string>
 </resources>

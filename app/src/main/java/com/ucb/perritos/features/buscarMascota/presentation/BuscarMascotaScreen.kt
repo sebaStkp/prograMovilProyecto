@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 //import coil3.Bitmap
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -35,6 +36,8 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import kotlin.math.roundToInt
+
+
 
 //import R.drawable.ic_paw
 
@@ -77,7 +80,7 @@ fun BuscarMascotaScreen(
         ) {
 
             Text(
-                text = "DONDE ESTOY ?",
+                text = stringResource(id = R.string.donde_estoy),
                 color = OrangePrimary,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
@@ -94,7 +97,10 @@ fun BuscarMascotaScreen(
                 when (val st = state) {
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Init -> {
                         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Iniciando mapa...", color = Color.Gray)
+                            Text(
+                                text = stringResource(id = R.string.mapa), // 👈 Mismo estilo que me mostraste
+                                color = Color.Gray
+                            )
                         }
                     }
 
@@ -127,13 +133,16 @@ fun BuscarMascotaScreen(
                 shape = CircleShape,
                 colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
             ) {
-                Text("BUSCAR MASCOTA", color = Color.White, fontWeight = FontWeight.Bold)
+                Text(
+                    text = stringResource(id = R.string.donde_estoy),
+                    color = Color.White, fontWeight = FontWeight.Bold)
             }
 
             // INFO (si quieres mostrar algo abajo)
             if (state is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success) {
                 val st = state as BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success
-                InfoSection("Mascota simulada moviéndose...") // o usa st.pet.direccion si quieres
+                InfoSection(
+                    stringResource(R.string.mascota_moviendose)) // o usa st.pet.direccion si quieres
             } else {
                 InfoSection("Cargando...")
             }

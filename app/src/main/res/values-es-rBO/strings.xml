@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: es-BO, Spanish (Bolivia)
  Exported by: Agustinrobolero Ledezma
- Exported at: Wed, 17 Dec 2025 17:30:49 -0400
+ Exported at: Thu, 18 Dec 2025 00:42:42 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Where am I?</string>
@@ -19,7 +19,7 @@
     <string name="ingresar">Ingresar</string>
     <string name="mascotas">Mascotas</string>
     <string name="perfil">Perfil</string>
-    <string name="mapa">Mapa</string>
+    <string name="mapa">Iniciando mapa....</string>
     <string name="Perfil_mascota">Perfil de la mascota</string>
     <string name="Perro_avatar">Avatar perro</string>
     <string name="fotos_perro">FOTOS DEL PERRO</string>
@@ -122,4 +122,5 @@
     <string name="perfil_perro_titulo_fotos">PHOTOS DEL PERRO</string>
     <string name="perfil_perro_placeholder_fotos">PHOTOS DEL PERRO</string>
     <string name="perfil_perro_btn_aniadir_foto">añadir foto</string>
+    <string name="mascota_moviendose">Mascota simulada moviéndose...</string>
 </resources>
