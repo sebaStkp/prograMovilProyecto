@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pets
 import androidx.compose.material3.*
@@ -14,13 +15,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat
-//import coil3.Bitmap
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -35,8 +36,6 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import kotlin.math.roundToInt
-
-//import R.drawable.ic_paw
 
 private val OrangePrimary = Color(0xFFF89A22)
 private val TextBlueGray = Color(0xFF6A8693)
@@ -64,28 +63,17 @@ fun BuscarMascotaScreen(
         }
     }
 
-    Scaffold(
-        floatingActionButtonPosition = FabPosition.Center
-    ) { paddingValues ->
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
 
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(Color.White),
-            horizontalAlignment = Alignment.CenterHorizontally
+            modifier = Modifier.fillMaxSize()
         ) {
 
-            Text(
-                text = "DONDE ESTOY ?",
-                color = OrangePrimary,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                fontStyle = FontStyle.Italic,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
+            Spacer(modifier = Modifier.height(80.dp))
 
-            // MAPA
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -93,20 +81,65 @@ fun BuscarMascotaScreen(
             ) {
                 when (val st = state) {
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Init -> {
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Iniciando mapa...", color = Color.Gray)
+                        Box(
+                            Modifier
+                                .fillMaxSize()
+                                .background(Color(0xFFF5F5F5)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                CircularProgressIndicator(
+                                    color = OrangePrimary,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text("Iniciando mapa...", color = Color.Gray)
+                            }
                         }
                     }
 
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Loading -> {
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            CircularProgressIndicator(color = OrangePrimary)
+                        Box(
+                            Modifier
+                                .fillMaxSize()
+                                .background(Color(0xFFF5F5F5)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                CircularProgressIndicator(
+                                    color = OrangePrimary,
+                                    modifier = Modifier.size(40.dp)
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text("Cargando ubicación...", color = Color.Gray)
+                            }
                         }
                     }
 
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Error -> {
-                        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                            Text("Error: ${st.message}", color = Color.Red)
+                        Box(
+                            Modifier
+                                .fillMaxSize()
+                                .background(Color(0xFFF5F5F5)),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.padding(24.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Pets,
+                                    contentDescription = null,
+                                    tint = Color.Red,
+                                    modifier = Modifier.size(48.dp)
+                                )
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "Error: ${st.message}",
+                                    color = Color.Red,
+                                    fontSize = 14.sp
+                                )
+                            }
                         }
                     }
 
@@ -116,37 +149,89 @@ fun BuscarMascotaScreen(
                 }
             }
 
-            // BOTÓN (FUERA DEL WHEN ✅)
-            Button(
-                onClick = { vm.iniciarBusquedaMascota() },
+
+            Spacer(modifier = Modifier.height(90.dp))
+        }
+
+
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .zIndex(10f)
+                .shadow(8.dp),
+            color = Color.White,
+            shape = RoundedCornerShape(bottomStart = 20.dp, bottomEnd = 20.dp)
+        ) {
+            Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(bottom = 24.dp)
-                    .height(50.dp),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary)
+                    .statusBarsPadding()
+                    .padding(horizontal = 24.dp, vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
             ) {
-                Text("BUSCAR MASCOTA", color = Color.White, fontWeight = FontWeight.Bold)
+                Icon(
+                    imageVector = Icons.Default.Pets,
+                    contentDescription = "Dog icon",
+                    tint = OrangePrimary,
+                    modifier = Modifier.size(28.dp)
+                )
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = "Find your ",
+                    color = Color.Gray,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Normal
+                )
+                Text(
+                    text = "dog",
+                    color = OrangePrimary,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold
+                )
             }
+        }
 
-            // INFO (si quieres mostrar algo abajo)
-            if (state is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success) {
-                val st = state as BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success
-                InfoSection("Mascota simulada moviéndose...") // o usa st.pet.direccion si quieres
-            } else {
-                InfoSection("Cargando...")
-            }
+
+        Button(
+            onClick = { vm.iniciarBusquedaMascota() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .navigationBarsPadding()
+                .padding(horizontal = 24.dp)
+                .padding(bottom = 100.dp)
+                .height(56.dp)
+                .zIndex(10f)
+                .shadow(12.dp, CircleShape),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary),
+            elevation = ButtonDefaults.buttonElevation(
+                defaultElevation = 8.dp,
+                pressedElevation = 12.dp
+            )
+        ) {
+            Text(
+                text = "BUSCAR MASCOTA",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                letterSpacing = 0.5.sp
+            )
         }
     }
 }
 
-
 @Composable
 fun MapaOSMContent(origin: BuscarMascotaModel, pet: BuscarMascotaModel) {
 
-    val originPoint = remember(origin.latitud, origin.longitud) { GeoPoint(origin.latitud, origin.longitud) }
-    val petPoint = remember(pet.latitud, pet.longitud) { GeoPoint(pet.latitud, pet.longitud) }
+    val originPoint = remember(origin.latitud, origin.longitud) {
+        GeoPoint(origin.latitud, origin.longitud)
+    }
+    val petPoint = remember(pet.latitud, pet.longitud) {
+        GeoPoint(pet.latitud, pet.longitud)
+    }
 
     AndroidView(
         factory = { ctx ->
@@ -156,39 +241,40 @@ fun MapaOSMContent(origin: BuscarMascotaModel, pet: BuscarMascotaModel) {
                 controller.setZoom(17.5)
                 controller.setCenter(originPoint)
 
-                // Crear marcadores UNA sola vez
+
                 val markerMe = Marker(this).apply {
                     position = originPoint
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                     title = "Mi ubicación"
                 }
 
+
                 val markerPet = Marker(this).apply {
                     position = petPoint
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                    title = "Mascota"
-                    icon = scaledDrawable(ctx, R.drawable.ic_paw, 36) // 👈 tamaño en dp
+                    title = "Tu mascota"
+                    icon = scaledDrawable(ctx, R.drawable.ic_paw, 48)
                 }
 
                 overlays.add(markerMe)
                 overlays.add(markerPet)
 
-                // Guardamos referencias para NO recrearlos
+
                 setTag(R.id.tag_me_marker, markerMe)
                 setTag(R.id.tag_pet_marker, markerPet)
             }
         },
         modifier = Modifier.fillMaxSize(),
         update = { mapView ->
-            // Recuperar marcadores existentes
+
             val markerMe = mapView.getTag(R.id.tag_me_marker) as? Marker
             val markerPet = mapView.getTag(R.id.tag_pet_marker) as? Marker
 
-            // Solo moverlos (NO limpiar overlays)
+
             markerMe?.position = originPoint
             markerPet?.position = petPoint
 
-            // Opcional: seguir centrando en tu ubicación
+
             mapView.controller.setCenter(originPoint)
 
             mapView.invalidate()
@@ -196,7 +282,7 @@ fun MapaOSMContent(origin: BuscarMascotaModel, pet: BuscarMascotaModel) {
     )
 }
 
-// 👇 helper para reducir tamaño del icono en dp
+
 private fun scaledDrawable(
     context: android.content.Context,
     drawableRes: Int,
@@ -208,7 +294,6 @@ private fun scaledDrawable(
     val density = context.resources.displayMetrics.density
     val sizePx = (sizeDp * density).roundToInt()
 
-    // Creamos un bitmap y dibujamos el drawable dentro
     val bitmap = Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     drawable.setBounds(0, 0, sizePx, sizePx)
@@ -216,112 +301,3 @@ private fun scaledDrawable(
 
     return BitmapDrawable(context.resources, bitmap)
 }
-
-
-//@Composable
-//fun MapaOSMContent(origin: BuscarMascotaModel, pet: BuscarMascotaModel) {
-//
-//    val originPoint = remember(origin.latitud, origin.longitud) { GeoPoint(origin.latitud, origin.longitud) }
-//    val petPoint = remember(pet.latitud, pet.longitud) { GeoPoint(pet.latitud, pet.longitud) }
-//
-//    AndroidView(
-//        factory = { ctx ->
-//            MapView(ctx).apply {
-//                setTileSource(TileSourceFactory.MAPNIK)
-//                setMultiTouchControls(true)
-//                controller.setZoom(17.5)
-//                controller.setCenter(originPoint)
-//
-//                // Marcador ORIGEN (yo)
-//                val markerMe = Marker(this).apply {
-//                    position = originPoint
-//                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-//                    title = "Mi ubicación"
-//                }
-//
-//                val markerPet = Marker(this).apply {
-//                    position = petPoint
-//                    setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-//                    title = "Mascota"
-//                    icon = androidx.core.content.ContextCompat.getDrawable(
-//                        ctx,
-//                        R.drawable.ic_paw
-//                    )
-//                }
-//
-//                overlays.add(markerMe)
-//                overlays.add(markerPet)
-//            }
-//        },
-//        modifier = Modifier.fillMaxSize(),
-//        update = { mapView ->
-//            // Centro en tu ubicación
-//            mapView.controller.setCenter(originPoint)
-//
-//            mapView.overlays.clear()
-//
-//            val markerMe = Marker(mapView).apply {
-//                position = originPoint
-//                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-//                title = "Mi ubicación"
-//            }
-//
-//            val markerPet = Marker(mapView).apply {
-//                position = petPoint
-//                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-//                title = "Mascota"
-//                icon = androidx.core.content.ContextCompat.getDrawable(
-//                    mapView.context,
-//                    R.drawable.ic_paw
-//                )
-//            }
-//
-//
-//            mapView.overlays.add(markerMe)
-//            mapView.overlays.add(markerPet)
-//
-//            mapView.invalidate()
-//        }
-//    )
-//}
-
-
-@Composable
-fun InfoSection(direccion: String) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(24.dp)
-            .padding(bottom = 40.dp)
-    ) {
-//        LocationInfoRow(label = "Ultima ubicacion:", value = "Av America")
-//        Spacer(modifier = Modifier.height(16.dp))
-//        LocationInfoRow(label = "Ubicacion actual:", value = direccion)
-    }
-}
-
-@Composable
-fun LocationInfoRow(label: String, value: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            text = label,
-            color = TextBlueGray,
-            fontSize = 14.sp,
-            modifier = Modifier.weight(1f)
-        )
-
-        Column(modifier = Modifier.weight(1.5f)) {
-            Text(
-                text = value,
-                color = Color.Black,
-                fontSize = 16.sp,
-                modifier = Modifier.padding(bottom = 4.dp)
-            )
-            Divider(color = Color.Black, thickness = 1.dp)
-        }
-    }
-}
-

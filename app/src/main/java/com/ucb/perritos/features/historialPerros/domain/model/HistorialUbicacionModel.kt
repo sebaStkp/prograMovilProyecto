@@ -1,5 +1,6 @@
 package com.ucb.perritos.features.historialPerros.domain.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -8,6 +9,6 @@ data class HistorialUbicacionModel(
     val perro_id: Long,
     val latitud: Double,
     val longitud: Double,
-    val direccion: String,
+    @SerialName("created_at")
     val fecha_hora: String? = null
 )

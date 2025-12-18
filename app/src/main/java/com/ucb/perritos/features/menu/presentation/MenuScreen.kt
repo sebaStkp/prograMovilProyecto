@@ -34,22 +34,22 @@ import com.ucb.perritos.navigation.NavigationOptions
 import com.ucb.perritos.navigation.NavigationViewModel
 import com.ucb.perritos.navigation.Screen
 
-// Este componente ahora actuará como el contenedor principal de tu diseño personalizado
+
 @Composable
 fun MenuScreen(
     navController: NavController,
     navigationViewModel: NavigationViewModel
 ) {
-    // Obtenemos la ruta actual para saber qué icono pintar
+
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
     BottomNavigationBar(
         currentRoute = currentRoute,
         onNavigate = { route ->
-            // Evitamos recargar la misma pantalla si ya estamos en ella
+
             if (currentRoute != route) {
-                // Usamos REPLACE_HOME para que no se acumulen pantallas infinitamente
+
                 navigationViewModel.navigateTo(route, NavigationOptions.REPLACE_HOME)
             }
         },
@@ -66,7 +66,7 @@ fun BottomNavigationBar(
     onMapClick: () -> Unit
 ) {
     val inactiveColor = Color(0xFF9E9E9E)
-    // El color activo se maneja internamente en el NavItem, pero lo definimos aquí por consistencia
+
     val activeGradient = Brush.linearGradient(
         colors = listOf(
             Color(0xFFFF6F00),
@@ -77,10 +77,10 @@ fun BottomNavigationBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp) // Altura total considerando el botón flotante
+            .height(100.dp)
     ) {
 
-        // 1. Fondo Blanco Curvo
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -98,13 +98,13 @@ fun BottomNavigationBar(
                 )
         )
 
-        // 2. Fila de Iconos
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp) // Reduje un poco el padding para que quepan bien
+                .padding(horizontal = 20.dp)
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 10.dp), // Ajuste visual
+                .padding(bottom = 10.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -153,12 +153,12 @@ fun BottomNavigationBar(
             )
         }
 
-        // 3. Botón Flotante Central (Mapa)
+
         Box(
             modifier = Modifier
                 .size(65.dp)
                 .align(Alignment.BottomCenter)
-                .offset(y = (-35).dp) // Sube el botón
+                .offset(y = (-35).dp)
                 .shadow(
                     elevation = 10.dp,
                     shape = CircleShape,
@@ -169,7 +169,7 @@ fun BottomNavigationBar(
                 .clickable { onMapClick() },
             contentAlignment = Alignment.Center
         ) {
-            // Círculo interior translúcido para efecto visual
+
             Box(
                 modifier = Modifier
                     .size(55.dp)
@@ -195,14 +195,14 @@ fun NavItem(
     icon: ImageVector,
     onClick: () -> Unit
 ) {
-    // Definimos el color aquí para usarlo dinámicamente
+
     val itemColor = if (isActive) Color(0xFFFF6F00) else color
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
-            .width(60.dp) // Ancho fijo para facilitar el click
+            .width(60.dp)
             .clip(RoundedCornerShape(8.dp))
             .clickable { onClick() }
             .padding(vertical = 4.dp)
@@ -224,7 +224,7 @@ fun NavItem(
             textAlign = TextAlign.Center
         )
 
-        // Indicador de punto debajo si está activo
+
         if (isActive) {
             Spacer(modifier = Modifier.height(2.dp))
             Box(
@@ -233,7 +233,7 @@ fun NavItem(
                     .background(Color(0xFFFF6F00), CircleShape)
             )
         } else {
-            Spacer(modifier = Modifier.height(6.dp)) // Espacio invisible para mantener altura
+            Spacer(modifier = Modifier.height(6.dp))
         }
     }
 }

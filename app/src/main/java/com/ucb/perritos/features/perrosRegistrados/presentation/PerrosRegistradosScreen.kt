@@ -106,8 +106,6 @@ fun PerrosRegistradosScreen(
                 }
                 is PerrosRegistradosViewModel.PerrosRegistradosStateUI.Success -> {
                     LazyColumn(
-                        // CAMBIO 1: Aumentamos el padding inferior de la lista (80dp -> 180dp)
-                        // para que el último perro se vea completo encima del botón.
                         contentPadding = PaddingValues(bottom = 180.dp),
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
