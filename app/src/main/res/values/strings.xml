@@ -4,7 +4,7 @@
  Project: Untitled project
  Locale: en-US, English (USA)
  Exported by: Agustinrobolero Ledezma
- Exported at: Thu, 18 Dec 2025 01:25:06 -0400
+ Exported at: Thu, 18 Dec 2025 01:46:57 -0400
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Dogs</string>
@@ -127,4 +127,5 @@
     <string name="encuentra_tu">Find your</string>
     <string name="perro">dog</string>
     <string name="buscar_mascota"></string>
+    <string name="no_hay_registro">No have history</string>
 </resources>

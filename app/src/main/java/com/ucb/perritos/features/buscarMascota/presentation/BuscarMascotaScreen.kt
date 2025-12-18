@@ -4,6 +4,7 @@ import android.Manifest
 import android.graphics.drawable.BitmapDrawable
 import android.preference.PreferenceManager
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -146,7 +147,11 @@ fun BuscarMascotaScreen(
                     }
 
                     is BuscarMascotaViewModel.BuscarMascotaViewModelStateUI.Success -> {
-                        MapaOSMContent(origin = st.origin, pet = st.pet)
+                        // Forzar que el mapa tenga un zIndex bajo para que los elementos Compose
+                        // (como el botón) puedan dibujarse por encima.
+                        Box(modifier = Modifier.fillMaxSize().zIndex(0f)) {
+                            MapaOSMContent(origin = st.origin, pet = st.pet)
+                        }
                     }
                 }
             }
@@ -196,26 +201,24 @@ fun BuscarMascotaScreen(
         }
 
 
-        Button(
-            onClick = { vm.iniciarBusquedaMascota() },
+        // Botón 'pill' naranja como Box con background directamente para evitar artefactos de Surface
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
                 .navigationBarsPadding()
                 .padding(horizontal = 24.dp)
-                .padding(bottom = 100.dp)
-                .height(56.dp)
-                .zIndex(10f)
-                .shadow(12.dp, CircleShape),
-            shape = CircleShape,
-            colors = ButtonDefaults.buttonColors(containerColor = OrangePrimary),
-            elevation = ButtonDefaults.buttonElevation(
-                defaultElevation = 8.dp,
-                pressedElevation = 12.dp
-            )
+                // posicionamos el botón por encima del FAB y la nav bar
+                .padding(bottom = 88.dp)
+                .height(64.dp)
+                .zIndex(80f)
+                .shadow(12.dp, CircleShape)
+                .background(color = OrangePrimary, shape = CircleShape)
+                .clickable { vm.iniciarBusquedaMascota() },
+            contentAlignment = Alignment.Center
         ) {
             Text(
-                text = stringResource(id = R.string.buscar_mascota),
+                text = stringResource(id = R.string.encuentra_tu) + " " + stringResource(id = R.string.perro),
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp,
@@ -224,8 +227,6 @@ fun BuscarMascotaScreen(
         }
     }
 }
-
-// ... El resto de tu código (MapaOSMContent, etc.) no necesita cambios
 
 
 
